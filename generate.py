@@ -558,6 +558,10 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str) -> str:
             <button id="btn-pt" class="active" onclick="setLang('pt')">🇧🇷 PT</button>
             <button id="btn-en" onclick="setLang('en')">🇺🇸 EN</button>
         </div>
+        <nav style="margin-top:0.8rem; display:flex; justify-content:center; gap:1rem; font-family:Arial,sans-serif; font-size:0.8rem;">
+            <a href="index.html" style="color:var(--ouro); text-decoration:none; padding:0.3rem 0.8rem; border-radius:20px; border:1px solid var(--ouro);">📰 Digest do Dia</a>
+            <a href="analisar.html" style="color:var(--texto-fraco); text-decoration:none; padding:0.3rem 0.8rem; border-radius:20px; border:1px solid var(--borda);">🔍 Analisar Notícia</a>
+        </nav>
     </header>
 
     <div class="container">
