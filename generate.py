@@ -29,8 +29,8 @@ RSS_FEEDS = [
     {"nome": "NYT",            "pais": "🌐", "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"},
 ]
 
-MAX_NOTICIAS_POR_FONTE = 2   # 2 por fonte × 10 fontes = até 20 notícias
-MAX_NOTICIAS_TOTAL = 18      # teto geral (9 Brasil + 9 internacional)
+MAX_NOTICIAS_POR_FONTE = 1   # 1 por fonte × 10 fontes = até 10 notícias
+MAX_NOTICIAS_TOTAL = 10      # teto geral (5 Brasil + 5 internacional)
 
 
 # ─────────────────────────────────────────────
@@ -194,7 +194,7 @@ def analisar_com_claude(noticias: list[dict], data_str: str) -> dict:
     print("\nEnviando para o Claude...")
     message = client.messages.create(
         model="claude-opus-4-8",
-        max_tokens=8192,
+        max_tokens=4096,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt}],
     )
@@ -203,11 +203,36 @@ def analisar_com_claude(noticias: list[dict], data_str: str) -> dict:
 
     # Extrai JSON da resposta (pode vir com markdown ```json ... ```)
     import re
-    json_match = re.search(r"\{.*\}", resposta_texto, re.DOTALL)
-    if json_match:
-        return json.loads(json_match.group())
-    else:
-        raise ValueError(f"Resposta do Claude não continha JSON válido:\n{resposta_texto}")
+
+    # Tenta parsear direto
+    try:
+        return json.loads(resposta_texto)
+    except json.JSONDecodeError:
+        pass
+
+    # Remove blocos markdown ```json ... ```
+    cleaned = re.sub(r"```(?:json)?\s*", "", resposta_texto).strip()
+    try:
+        return json.loads(cleaned)
+    except json.JSONDecodeError:
+        pass
+
+    # Extrai o primeiro objeto JSON completo
+    start = resposta_texto.find("{")
+    if start != -1:
+        depth = 0
+        for i, c in enumerate(resposta_texto[start:], start):
+            if c == "{":
+                depth += 1
+            elif c == "}":
+                depth -= 1
+                if depth == 0:
+                    try:
+                        return json.loads(resposta_texto[start:i+1])
+                    except json.JSONDecodeError:
+                        break
+
+    raise ValueError(f"Resposta do Claude não continha JSON válido:\n{resposta_texto[:500]}")
 
 
 def _card_pt(noticia: dict) -> str:
