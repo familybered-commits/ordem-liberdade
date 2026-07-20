@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordem &amp; Liberdade / Order &amp; Liberty — 20 de julho de 2026</title>
+    <style>
+        :root {
+            --ouro: #c9a227;
+            --ouro-escuro: #9b7c1a;
+            --bg: #0f0f0f;
+            --surface: #1a1a1a;
+            --surface2: #242424;
+            --texto: #e8e8e8;
+            --texto-fraco: #888;
+            --borda: #2e2e2e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Georgia', serif;
+            background: var(--bg);
+            color: var(--texto);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--ouro);
+            padding: 2rem 1rem 1.5rem;
+            text-align: center;
+        }
+        .logo {
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            color: var(--ouro);
+            font-style: italic;
+            font-family: 'Georgia', serif;
+            margin-bottom: 0.5rem;
+            opacity: 0.85;
+        }
+        header h1 {
+            font-size: 2.2rem;
+            color: #fff;
+            font-weight: 700;
+        }
+        header h1 span { color: var(--ouro); }
+        .data {
+            color: var(--texto-fraco);
+            font-size: 0.9rem;
+            margin-top: 0.4rem;
+            font-family: 'Arial', sans-serif;
+        }
+        /* ── Toggle de idioma ── */
+        .lang-toggle {
+            display: inline-flex;
+            margin-top: 1rem;
+            border: 1px solid var(--ouro-escuro);
+            border-radius: 30px;
+            overflow: hidden;
+        }
+        .lang-toggle button {
+            background: transparent;
+            border: none;
+            padding: 0.35rem 1.1rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            color: var(--texto-fraco);
+            font-family: 'Arial', sans-serif;
+            transition: background 0.2s, color 0.2s;
+        }
+        .lang-toggle button.active {
+            background: var(--ouro);
+            color: #000;
+            font-weight: 700;
+        }
+        /* ── Layout ── */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .editorial {
+            background: linear-gradient(135deg, #1e1a0e, #1a1a1a);
+            border-left: 4px solid var(--ouro);
+            border-radius: 8px;
+            padding: 1.5rem 1.8rem;
+            margin-bottom: 2.5rem;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: #d4c89a;
+            text-align: justify;
+            hyphens: auto;
+        }
+        .editorial-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ouro);
+            font-style: normal;
+            margin-bottom: 0.6rem;
+            display: block;
+            font-family: 'Arial', sans-serif;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--borda);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.2s;
+        }
+        .card:hover { border-color: var(--ouro-escuro); }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.7rem;
+            flex-wrap: wrap;
+        }
+        .pais { font-size: 1rem; }
+        .fonte {
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ouro);
+            font-family: 'Arial', sans-serif;
+            font-weight: 700;
+        }
+        .tag {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            background: var(--surface2);
+            border-radius: 20px;
+            color: var(--texto-fraco);
+            font-family: 'Arial', sans-serif;
+        }
+        .pensador {
+            font-size: 0.72rem;
+            padding: 0.15rem 0.6rem;
+            background: #1e1a0e;
+            border: 1px solid var(--ouro-escuro);
+            border-radius: 20px;
+            color: var(--ouro);
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+        .card-titulo {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 1.2rem;
+            line-height: 1.4;
+        }
+        .secao { margin-bottom: 1rem; }
+        .secao:last-child { margin-bottom: 0; }
+        .secao h3 {
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--texto-fraco);
+            margin-bottom: 0.4rem;
+            font-family: 'Arial', sans-serif;
+        }
+        .secao p {
+            font-size: 0.97rem;
+            color: var(--texto);
+            text-align: justify;
+            hyphens: auto;
+        }
+        .secao.analise { background: var(--surface2); border-radius: 6px; padding: 1rem; }
+        .secao.analise h3 { color: var(--ouro); }
+        .secao.analise p { color: #d4c89a; text-align: justify; hyphens: auto; }
+        .secao.atencao p { color: #f0a500; font-weight: bold; font-size: 0.93rem; text-align: justify; }
+        /* ── Separador de seções ── */
+        .section-title {
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--texto-fraco);
+            font-family: 'Arial', sans-serif;
+            margin: 2.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--borda);
+        }
+        /* ── Share button ── */
+        .share-btn {
+            margin-left: auto;
+            background: transparent;
+            border: 1px solid var(--ouro-escuro);
+            color: var(--ouro);
+            font-size: 0.72rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            transition: background 0.2s, color 0.2s;
+        }
+        .share-btn:hover { background: var(--ouro); color: #000; }
+        .share-btn.copied { background: #2a4a2a; border-color: #4caf50; color: #4caf50; }
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--texto-fraco);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--borda);
+            font-family: 'Arial', sans-serif;
+        }
+        footer a { color: var(--ouro); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <p class="logo">⚖️ <span id="logo-txt">O preço da liberdade é a eterna vigilância</span></p>
+        <h1 id="site-title">Ordem <span>&amp; Liberdade</span></h1>
+        <p class="data">20 de julho de 2026</p>
+        <div class="lang-toggle">
+            <button id="btn-pt" class="active" onclick="setLang('pt')">🇧🇷 PT</button>
+            <button id="btn-en" onclick="setLang('en')">🇺🇸 EN</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="editorial">
+            <span class="editorial-label" id="editorial-label">Editorial do dia</span>
+            <span id="editorial-text">O noticiário desta segunda-feira revela com clareza o padrão que Hayek chamaria de "caminho para a servidão". Burke nos lembrava que a liberdade não se defende com grandes gestos heroicos, mas com a resistência cotidiana e vigilante à expansão do poder.</span>
+        </div>
+
+        <div class="section-title">🇧🇷 Brasil</div>
+        
+        <article class="card card-br">
+            <div class="card-header">
+                <span class="pais">🇧🇷</span>
+                <span class="fonte">G1</span>
+                <span class="tag">fiscal</span><span class="tag">déficit</span>
+                <span class="pensador">✍️ Mises</span>
+            </div>
+            <h2 class="card-titulo">Déficit primário do governo federal chega a R$ 68 bi no primeiro semestre</h2>
+            <div class="secao">
+                <h3>📋 Resumo</h3>
+                <p>O governo federal registrou déficit primário de R$ 68 bilhões no primeiro semestre de 2026, acima da meta estabelecida pelo arcabouço fiscal.</p>
+            </div>
+            <div class="secao analise">
+                <h3>⚖️ Análise — Ordem &amp; Liberdade</h3>
+                <p>Mises demonstrou que governos que gastam além da receita inevitavelmente recorrem à inflação ou ao endividamento — ambos taxas ocultas sobre os cidadãos. Cada real de déficit hoje é imposto amanhã — pago preferencialmente pelos mais pobres.</p>
+            </div>
+            <div class="secao atencao">
+                <h3>👁️ Ponto de Atenção</h3>
+                <p>Acompanhar a evolução da dívida/PIB e o diferencial entre crescimento real e custo da dívida.</p>
+            </div>
+        </article>
+
+        <div class="section-title">🌐 Internacional · International</div>
+        
+        <article class="card card-en" data-intl="1">
+            <div class="card-header">
+                <span class="pais">🌐</span>
+                <span class="fonte">Reuters</span>
+                <span class="tag">fed</span><span class="tag">monetary policy</span>
+                <span class="pensador">✍️ Hayek</span>
+                <button class="share-btn" onclick="compartilhar('https://reuters.com', this)" title="Share">
+                    ↗ Share
+                </button>
+            </div>
+            <h2 class="card-titulo intl-titulo">Fed signals rates to stay higher for longer as inflation proves sticky</h2>
+            <div class="secao">
+                <h3 class="intl-lbl-resumo">📋 Summary</h3>
+                <p class="intl-resumo">Federal Reserve minutes reveal policymakers are increasingly concerned that inflation remains above target despite 18 months of restrictive monetary policy.</p>
+            </div>
+            <div class="secao analise">
+                <h3 class="intl-lbl-analise">⚖️ Analysis — Order &amp; Liberty</h3>
+                <p class="intl-analise">Hayek's insight on monetary theory proves enduring: when credit expansion artificially stimulates the economy beyond its real productive capacity, the correction is always painful. There is no free lunch in monetary policy.</p>
+            </div>
+            <div class="secao atencao">
+                <h3 class="intl-lbl-atencao">👁️ Watch Point</h3>
+                <p class="intl-atencao">Watch for signs of political pressure on the Fed as the election cycle approaches.</p>
+            </div>
+        </article>
+    </div>
+
+    <footer>
+        <p>Burke · Kirk · Scruton · Mises · Hayek · Bastiat · Friedman · Roberto Campos</p>
+        <p style="margin-top:0.4rem">🇧🇷 G1 · Folha · Estadão · Gazeta do Povo · Mises Brasil &nbsp;|&nbsp; 🌐 Reuters · AP · BBC · The Guardian · NYT</p>
+        <p style="margin-top:0.8rem; color:#555">Atualizado em 20 de julho de 2026 · <a href="https://mises.org.br" target="_blank">Mises Brasil</a> · <a href="https://iea.org.br" target="_blank">IEA</a> · <a href="https://www.gazetadopovo.com.br" target="_blank">Gazeta do Povo</a></p>
+    </footer>
+
+    <script>
+        const DADOS = {"editorial": {"pt": "O noticiário desta segunda-feira revela com clareza o padrão que Hayek chamaria de \"caminho para a servidão\". Burke nos lembrava que a liberdade não se defende com grandes gestos heroicos, mas com a resistência cotidiana e vigilante à expansão do poder.", "en": "Monday's news cycle reveals what Hayek called the road to serfdom. Burke reminded us that liberty is not defended by grand heroic gestures, but by daily, vigilant resistance to the expansion of power."}, "intl": {"1": {"en": {"titulo": "Fed signals rates to stay higher for longer as inflation proves sticky", "resumo": "Federal Reserve minutes reveal policymakers are increasingly concerned that inflation remains above target despite 18 months of restrictive monetary policy.", "analise": "Hayek's insight on monetary theory proves enduring: when credit expansion artificially stimulates the economy beyond its real productive capacity, the correction is always painful. There is no free lunch in monetary policy.", "atencao": "Watch for signs of political pressure on the Fed as the election cycle approaches."}, "pt": {"titulo": "Fed sinaliza manutenção de juros altos por mais tempo com inflação resistente", "resumo": "Atas do Federal Reserve revelam preocupação crescente com inflação acima da meta após 18 meses de política restritiva.", "analise": "A visão de Hayek se mostra duradoura: quando a expansão de crédito estimula artificialmente a economia além de sua capacidade produtiva real, a correção é sempre dolorosa. Não existe almoço grátis na política monetária.", "atencao": "Monitorar sinais de pressão política sobre o Fed com a aproximação do ciclo eleitoral."}}}};
+
+        function setLang(lang) {
+            const isPt = lang === 'pt';
+            document.getElementById('btn-pt').classList.toggle('active', isPt);
+            document.getElementById('btn-en').classList.toggle('active', !isPt);
+
+            // Título e logo
+            document.getElementById('site-title').innerHTML = isPt
+                ? 'Ordem <span style="color:var(--ouro)">&amp; Liberdade</span>'
+                : 'Order <span style="color:var(--ouro)">&amp; Liberty</span>';
+            document.getElementById('logo-txt').textContent = isPt
+                ? 'O preço da liberdade é a eterna vigilância'
+                : 'The price of liberty is eternal vigilance';
+
+            // Editorial
+            document.getElementById('editorial-label').textContent = isPt ? 'Editorial do dia' : "Today's editorial";
+            document.getElementById('editorial-text').textContent = DADOS.editorial[isPt ? 'pt' : 'en'];
+
+            // Cards internacionais: traduz para PT ou volta ao EN
+            document.querySelectorAll('.card-en[data-intl]').forEach(card => {
+                const idx = card.getAttribute('data-intl');
+                const d = DADOS.intl[idx];
+                if (!d) return;
+                const v = d[isPt ? 'pt' : 'en'];
+                card.querySelector('.intl-titulo').textContent  = v.titulo  || '';
+                card.querySelector('.intl-resumo').textContent  = v.resumo  || '';
+                card.querySelector('.intl-analise').textContent = v.analise || '';
+                card.querySelector('.intl-atencao').textContent = v.atencao || '';
+                // Labels das seções
+                card.querySelector('.intl-lbl-resumo').textContent  = isPt ? '📋 Resumo'  : '📋 Summary';
+                card.querySelector('.intl-lbl-analise').textContent = isPt
+                    ? '⚖️ Análise — Ordem & Liberdade' : '⚖️ Analysis — Order & Liberty';
+                card.querySelector('.intl-lbl-atencao').textContent = isPt ? '👁️ Ponto de Atenção' : '👁️ Watch Point';
+            });
+
+            document.documentElement.lang = isPt ? 'pt-BR' : 'en';
+        }
+
+        function compartilhar(url, btn) {
+            const texto = btn.closest('.card').querySelector('.card-titulo').textContent;
+            const link = url || window.location.href;
+            if (navigator.share) {
+                navigator.share({ title: texto, text: texto + ' — Order & Liberty', url: link });
+            } else {
+                navigator.clipboard.writeText(link).then(() => {
+                    btn.textContent = '✓ Copied!';
+                    btn.classList.add('copied');
+                    setTimeout(() => { btn.textContent = '↗ Share'; btn.classList.remove('copied'); }, 2000);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
