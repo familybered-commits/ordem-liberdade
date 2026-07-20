@@ -18,15 +18,15 @@ RSS_FEEDS = [
     # ── Brasil ──────────────────────────────────
     {"nome": "G1",             "pais": "🇧🇷", "url": "https://g1.globo.com/rss/g1/"},
     {"nome": "Folha",          "pais": "🇧🇷", "url": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml"},
-    {"nome": "Estadão",        "pais": "🇧🇷", "url": "https://www.estadao.com.br/rss/ultimas.xml"},
+    {"nome": "UOL Notícias",   "pais": "🇧🇷", "url": "https://rss.uol.com.br/feed/noticias.xml"},
     {"nome": "Gazeta do Povo", "pais": "🇧🇷", "url": "https://www.gazetadopovo.com.br/feed/"},
     {"nome": "Mises Brasil",   "pais": "🇧🇷", "url": "https://www.mises.org.br/feed"},
-    # ── Internacional ───────────────────────────
-    {"nome": "Reuters",        "pais": "🌐", "url": "https://feeds.reuters.com/reuters/topNews"},
-    {"nome": "AP News",        "pais": "🌐", "url": "https://feeds.apnews.com/rss/apf-topnews"},
-    {"nome": "BBC",            "pais": "🌐", "url": "https://feeds.bbci.co.uk/news/rss.xml"},
-    {"nome": "The Guardian",   "pais": "🌐", "url": "https://www.theguardian.com/world/rss"},
-    {"nome": "NYT",            "pais": "🌐", "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"},
+    # ── Internacional (🇬🇧 UK + 🇺🇸 US) ────────────
+    {"nome": "BBC",              "pais": "🌐", "url": "https://feeds.bbci.co.uk/news/rss.xml"},
+    {"nome": "The Times UK",     "pais": "🌐", "url": "https://www.thetimes.co.uk/rss/news"},
+    {"nome": "The Spectator",    "pais": "🌐", "url": "https://www.spectator.co.uk/rss"},
+    {"nome": "Fox News",         "pais": "🌐", "url": "https://moxie.foxnews.com/google-publisher/latest.xml"},
+    {"nome": "Wall Street Journal", "pais": "🌐", "url": "https://feeds.a.dj.com/rss/RSSWorldNews.xml"},
 ]
 
 MAX_NOTICIAS_POR_FONTE = 1   # 1 por fonte × 10 fontes = até 10 notícias
