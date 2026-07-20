@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
 Ordem & Liberdade — Gerador de Resumo Diário de Notícias
-Busca as principais notícias do dia e as analisa sob a ótica conservadora-libertária via Google Gemini.
+Busca as principais notícias do dia e as analisa sob a ótica conservadora-libertária via API do Claude.
 """
 
 import os
 import json
 import datetime
 import feedparser
-from google import genai
-from google.genai import types
+import anthropic
 from pathlib import Path
 
 # ─────────────────────────────────────────────
@@ -173,13 +172,13 @@ def buscar_noticias() -> list[dict]:
     return noticias[:MAX_NOTICIAS_TOTAL]
 
 
-def analisar_com_gemini(noticias: list[dict], data_str: str) -> dict:
-    """Envia as notícias para o Gemini e retorna a análise libertária."""
-    api_key = os.environ.get("GEMINI_API_KEY")
+def analisar_com_claude(noticias: list[dict], data_str: str) -> dict:
+    """Envia as notícias para o Claude e retorna a análise libertária."""
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
-        raise ValueError("Variável de ambiente GEMINI_API_KEY não definida.")
+        raise ValueError("Variável de ambiente ANTHROPIC_API_KEY não definida.")
 
-    client = genai.Client(api_key=api_key)
+    client = anthropic.Anthropic(api_key=api_key)
 
     # Monta o bloco de notícias para o prompt
     bloco_noticias = ""
@@ -192,15 +191,15 @@ def analisar_com_gemini(noticias: list[dict], data_str: str) -> dict:
 
     prompt = USER_PROMPT_TEMPLATE.format(data=data_str, noticias=bloco_noticias)
 
-    print("\nEnviando para o Gemini...")
-    response = client.models.generate_content(
-        model="gemini-1.5-flash",
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-        ),
+    print("\nEnviando para o Claude...")
+    message = client.messages.create(
+        model="claude-opus-4-8",
+        max_tokens=4096,
+        system=SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": prompt}],
     )
-    resposta_texto = response.text
+
+    resposta_texto = message.content[0].text
 
     # Extrai JSON da resposta (pode vir com markdown ```json ... ```)
     import re
@@ -208,7 +207,7 @@ def analisar_com_gemini(noticias: list[dict], data_str: str) -> dict:
     if json_match:
         return json.loads(json_match.group())
     else:
-        raise ValueError(f"Resposta do Gemini não continha JSON válido:\n{resposta_texto}")
+        raise ValueError(f"Resposta do Claude não continha JSON válido:\n{resposta_texto}")
 
 
 def _card_pt(noticia: dict) -> str:
@@ -651,8 +650,8 @@ def main():
     noticias = buscar_noticias()
     print(f"\nTotal: {len(noticias)} notícias coletadas")
 
-    print("\nAnalisando com Gemini...")
-    analise = analisar_com_gemini(noticias, data_formatada)
+    print("\nAnalisando com Claude...")
+    analise = analisar_com_claude(noticias, data_formatada)
     print(f"✓ {len(analise.get('noticias', []))} notícias analisadas")
 
     html = gerar_html(analise, data_str, data_formatada)
