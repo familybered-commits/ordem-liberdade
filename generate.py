@@ -30,7 +30,7 @@ RSS_FEEDS = [
 ]
 
 MAX_NOTICIAS_POR_FONTE = 1   # 1 por fonte × 10 fontes = até 10 notícias
-MAX_NOTICIAS_TOTAL = 10      # teto geral (5 Brasil + 5 internacional)
+MAX_NOTICIAS_TOTAL = 6       # teto geral (3 Brasil + 3 internacional)
 
 
 # ─────────────────────────────────────────────
@@ -100,11 +100,10 @@ USER_PROMPT_TEMPLATE = """Below are today's main news stories ({data}). For EACH
 - Portuguese (pt): for Brazilian readers
 - English (en): for international libertarian/conservative audience
 
-Guidelines per story:
-1. Factual summary (2-3 lines): what happened, no interpretation
-2. Analysis (4-6 lines): conservative-libertarian perspective, citing thinkers where natural
-   (Burke, Kirk, Scruton, Mises, Hayek, Bastiat, Friedman, Rothbard, Roberto Campos)
-3. Watch point (1 line): what the vigilant citizen should monitor
+Guidelines per story (be CONCISE — each field max 2 sentences):
+1. Factual summary: what happened, no interpretation (2 sentences max)
+2. Analysis: conservative-libertarian perspective, cite one thinker if natural (2 sentences max)
+3. Watch point: what the vigilant citizen should monitor (1 sentence)
 
 IMPORTANT LANGUAGE RULES:
 - Brazilian sources (🇧🇷): generate content in PORTUGUESE only (no English needed)
@@ -131,8 +130,8 @@ Respond in JSON with EXACTLY this format:
       "atencao_pt": "ONLY for 🌐: Portuguese translation of the watch point"
     }}
   ],
-  "editorial_pt": "parágrafo editorial em português (6-10 linhas, tom ensaístico)",
-  "editorial_en": "editorial paragraph in English (6-10 lines, essayistic tone)"
+  "editorial_pt": "parágrafo editorial em português (3-4 frases, tom ensaístico)",
+  "editorial_en": "editorial paragraph in English (3-4 sentences, essayistic tone)"
 }}
 
 Note: for 🇧🇷 sources, omit the _pt fields entirely. For 🌐 sources, the main fields (titulo/resumo/analise/atencao) are in English and the _pt fields are the Portuguese versions.
