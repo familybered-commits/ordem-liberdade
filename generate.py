@@ -8,7 +8,8 @@ import os
 import json
 import datetime
 import feedparser
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from pathlib import Path
 
 # ─────────────────────────────────────────────
@@ -178,11 +179,7 @@ def analisar_com_gemini(noticias: list[dict], data_str: str) -> dict:
     if not api_key:
         raise ValueError("Variável de ambiente GEMINI_API_KEY não definida.")
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(
-        model_name="gemini-2.0-flash",
-        system_instruction=SYSTEM_PROMPT,
-    )
+    client = genai.Client(api_key=api_key)
 
     # Monta o bloco de notícias para o prompt
     bloco_noticias = ""
@@ -196,7 +193,13 @@ def analisar_com_gemini(noticias: list[dict], data_str: str) -> dict:
     prompt = USER_PROMPT_TEMPLATE.format(data=data_str, noticias=bloco_noticias)
 
     print("\nEnviando para o Gemini...")
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+        ),
+    )
     resposta_texto = response.text
 
     # Extrai JSON da resposta (pode vir com markdown ```json ... ```)
