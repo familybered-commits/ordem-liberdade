@@ -206,7 +206,7 @@ def analisar_com_claude(noticias: list[dict], data_str: str) -> dict:
 
     print("\nEnviando para o Claude...")
     message = client.messages.create(
-        model="claude-opus-4-8",
+        model="claude-haiku-4-5-20251001",
         max_tokens=4096,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt}],
