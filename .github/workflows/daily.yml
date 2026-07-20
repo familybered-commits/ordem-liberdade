@@ -44,7 +44,7 @@ jobs:
           git checkout -b "$BRANCH"
           git add docs/
           git diff --staged --quiet || git commit -m "Digest $DATA — aguardando revisão"
-          git push origin "$BRANCH"
+          git push origin "$BRANCH" --force
 
           # Abre Pull Request para você revisar antes de publicar
           gh pr create \
