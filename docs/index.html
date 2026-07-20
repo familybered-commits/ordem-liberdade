@@ -224,12 +224,16 @@
             <button id="btn-pt" class="active" onclick="setLang('pt')">🇧🇷 PT</button>
             <button id="btn-en" onclick="setLang('en')">🇺🇸 EN</button>
         </div>
+        <nav style="margin-top:0.8rem; display:flex; justify-content:center; gap:1rem; font-family:Arial,sans-serif; font-size:0.8rem;">
+            <a href="index.html" style="color:var(--ouro); text-decoration:none; padding:0.3rem 0.8rem; border-radius:20px; border:1px solid var(--ouro);">📰 Digest do Dia</a>
+            <a href="analisar.html" style="color:var(--texto-fraco); text-decoration:none; padding:0.3rem 0.8rem; border-radius:20px; border:1px solid var(--borda);">🔍 Analisar Notícia</a>
+        </nav>
     </header>
 
     <div class="container">
         <div class="editorial">
             <span class="editorial-label" id="editorial-label">Editorial do dia</span>
-            <span id="editorial-text">O noticiário desta segunda-feira revela com clareza o padrão que Hayek chamaria de "caminho para a servidão". Burke nos lembrava que a liberdade não se defende com grandes gestos heroicos, mas com a resistência cotidiana e vigilante à expansão do poder.</span>
+            <span id="editorial-text">O dia revela, em fragmentos, os temas perenes da vigilância liberal-conservadora: o processo eleitoral que exige transparência, o narcotráfico alimentado pela própria proibição que finge combatê-lo, e a tecnologia que dissolve silenciosamente a fronteira entre propriedade privada e vigilância. Do personalismo partidário de Ciro Gomes às trocas de gabinete em Londres, repete-se a lição de que trocar rostos no poder importa menos do que conter o alcance do próprio poder. E na cultura, o alerta de Scruton permanece atual — quando abandonamos as instituições comuns ao capricho do momento, entregamos nosso patrimônio ao vazio. Cabe ao cidadão perguntar sempre, como ensinava Sowell, não pelas intenções, mas pelos resultados e pelos custos que ninguém anuncia.</span>
         </div>
 
         <div class="section-title">🇧🇷 Brasil</div>
@@ -238,60 +242,147 @@
             <div class="card-header">
                 <span class="pais">🇧🇷</span>
                 <span class="fonte">G1</span>
-                <span class="tag">fiscal</span><span class="tag">déficit</span>
-                <span class="pensador">✍️ Mises</span>
+                <span class="tag">eleições</span><span class="tag">política</span>
+                
             </div>
-            <h2 class="card-titulo">Déficit primário do governo federal chega a R$ 68 bi no primeiro semestre</h2>
+            <h2 class="card-titulo">Pernambuco tem 7,2 milhões de eleitores aptos em 2026, aponta TRE</h2>
             <div class="secao">
                 <h3>📋 Resumo</h3>
-                <p>O governo federal registrou déficit primário de R$ 68 bilhões no primeiro semestre de 2026, acima da meta estabelecida pelo arcabouço fiscal.</p>
+                <p>Pernambuco registra 7.225.744 eleitores aptos, tornando-se o 7º maior colégio eleitoral do país e o 2º do Nordeste. Em todo o Brasil, o número de eleitores ultrapassou 158,6 milhões.</p>
             </div>
             <div class="secao analise">
                 <h3>⚖️ Análise — Ordem &amp; Liberdade</h3>
-                <p>Mises demonstrou que governos que gastam além da receita inevitavelmente recorrem à inflação ou ao endividamento — ambos taxas ocultas sobre os cidadãos. Cada real de déficit hoje é imposto amanhã — pago preferencialmente pelos mais pobres.</p>
+                <p>Números de eleitorado são dados brutos, mas a vigilância republicana exige perguntar sempre pela integridade e auditabilidade do processo — Roberto Campos advertia que no Brasil até o passado é incerto. A confiança institucional não se decreta: constrói-se com transparência e possibilidade real de conferência.</p>
             </div>
             <div class="secao atencao">
                 <h3>👁️ Ponto de Atenção</h3>
-                <p>Acompanhar a evolução da dívida/PIB e o diferencial entre crescimento real e custo da dívida.</p>
+                <p>Observar se o TSE ampliará mecanismos de auditoria e transparência do processo eleitoral antes de outubro de 2026.</p>
+            </div>
+        </article>
+        <article class="card card-br">
+            <div class="card-header">
+                <span class="pais">🇧🇷</span>
+                <span class="fonte">Folha</span>
+                <span class="tag">narcotráfico</span><span class="tag">guerra às drogas</span>
+                <span class="pensador">✍️ Milton Friedman</span>
+            </div>
+            <h2 class="card-titulo">Chefão do Cartel de Sinaloa condenado à prisão perpétua em Nova York</h2>
+            <div class="secao">
+                <h3>📋 Resumo</h3>
+                <p>Ismael 'El Mayo' Zambada foi condenado à prisão perpétua e ao confisco de US$ 15 milhões por codirigir o Cartel de Sinaloa. A sentença foi proferida por um tribunal de Nova York.</p>
+            </div>
+            <div class="secao analise">
+                <h3>⚖️ Análise — Ordem &amp; Liberdade</h3>
+                <p>A prisão de um chefão é vitória simbólica, mas o cartel sobrevive porque a proibição cria os preços astronômicos que sustentam a violência — Friedman já demonstrava que a guerra às drogas fabrica os monopólios criminosos que diz combater. Remover um líder sem tocar na estrutura de incentivos apenas abre vaga para o sucessor.</p>
+            </div>
+            <div class="secao atencao">
+                <h3>👁️ Ponto de Atenção</h3>
+                <p>Acompanhar se a queda de Zambada provocará fragmentação e nova onda de violência na disputa pela sucessão do cartel.</p>
+            </div>
+        </article>
+        <article class="card card-br">
+            <div class="card-header">
+                <span class="pais">🇧🇷</span>
+                <span class="fonte">UOL Notícias</span>
+                <span class="tag">eleições</span><span class="tag">PSDB</span><span class="tag">Ceará</span>
+                
+            </div>
+            <h2 class="card-titulo">PSDB confirma Ciro Gomes como candidato ao governo do Ceará</h2>
+            <div class="secao">
+                <h3>📋 Resumo</h3>
+                <p>Ciro Gomes foi oficializado como candidato do PSDB ao Governo do Ceará em 2026. A candidatura foi anunciada nesta segunda-feira.</p>
+            </div>
+            <div class="secao analise">
+                <h3>⚖️ Análise — Ordem &amp; Liberdade</h3>
+                <p>A peregrinação partidária de Ciro — que já passou por meia dúzia de legendas — ilustra o personalismo que define a política brasileira, onde partidos são veículos de ambição individual, não portadores de ideias. Burke lembrava que instituições sólidas dependem de princípios, não de aventuras eleitorais avulsas.</p>
+            </div>
+            <div class="secao atencao">
+                <h3>👁️ Ponto de Atenção</h3>
+                <p>Verificar quais compromissos programáticos concretos, para além da retórica, sustentarão a candidatura no maior estado do Nordeste.</p>
+            </div>
+        </article>
+        <article class="card card-br">
+            <div class="card-header">
+                <span class="pais">🇧🇷</span>
+                <span class="fonte">Mises Brasil</span>
+                <span class="tag">privacidade</span><span class="tag">tecnologia</span><span class="tag">vigilância</span>
+                <span class="pensador">✍️ Hayek</span>
+            </div>
+            <h2 class="card-titulo">Carros modernos: o Grande Irmão está te vigiando</h2>
+            <div class="secao">
+                <h3>📋 Resumo</h3>
+                <p>O artigo denuncia como automóveis modernos coletam e transmitem dados dos motoristas, evocando o Grande Irmão de Orwell. A vigilância se torna onipresente por meio da tecnologia embarcada.</p>
+            </div>
+            <div class="secao analise">
+                <h3>⚖️ Análise — Ordem &amp; Liberdade</h3>
+                <p>O acúmulo de dados privados — seja por corporações, seja por governos ávidos por acesso a eles — constitui exatamente o tipo de conhecimento centralizado que Hayek advertia ser incompatível com a liberdade. A propriedade do próprio veículo esvazia-se quando o dono não controla o que a máquina revela sobre si.</p>
+            </div>
+            <div class="secao atencao">
+                <h3>👁️ Ponto de Atenção</h3>
+                <p>Monitorar tentativas estatais de obrigar montadoras a compartilhar dados de motoristas com órgãos de fiscalização e segurança.</p>
             </div>
         </article>
 
         <div class="section-title">🌐 Internacional · International</div>
         
-        <article class="card card-en" data-intl="1">
+        <article class="card card-en" data-intl="4">
             <div class="card-header">
                 <span class="pais">🌐</span>
-                <span class="fonte">Reuters</span>
-                <span class="tag">fed</span><span class="tag">monetary policy</span>
-                <span class="pensador">✍️ Hayek</span>
-                <button class="share-btn" onclick="compartilhar('https://reuters.com', this)" title="Share">
+                <span class="fonte">BBC</span>
+                <span class="tag">Reino Unido</span><span class="tag">política</span><span class="tag">governo</span>
+                <span class="pensador">✍️ Roberto Campos</span>
+                <button class="share-btn" onclick="compartilhar('', this)" title="Share">
                     ↗ Share
                 </button>
             </div>
-            <h2 class="card-titulo intl-titulo">Fed signals rates to stay higher for longer as inflation proves sticky</h2>
+            <h2 class="card-titulo intl-titulo">Who's in Andy Burnham's new cabinet?</h2>
             <div class="secao">
                 <h3 class="intl-lbl-resumo">📋 Summary</h3>
-                <p class="intl-resumo">Federal Reserve minutes reveal policymakers are increasingly concerned that inflation remains above target despite 18 months of restrictive monetary policy.</p>
+                <p class="intl-resumo">New Prime Minister Andy Burnham has appointed Labour MPs to his cabinet. The BBC examines the profiles of those chosen for key roles.</p>
             </div>
             <div class="secao analise">
                 <h3 class="intl-lbl-analise">⚖️ Analysis — Order &amp; Liberty</h3>
-                <p class="intl-analise">Hayek's insight on monetary theory proves enduring: when credit expansion artificially stimulates the economy beyond its real productive capacity, the correction is always painful. There is no free lunch in monetary policy.</p>
+                <p class="intl-analise">Cabinet reshuffles generate headlines, but the vigilant citizen asks what the state will actually do with its power, not merely who holds it. As Roberto Campos quipped, a change of drivers matters little if the bus keeps heading toward more spending and more control.</p>
             </div>
             <div class="secao atencao">
                 <h3 class="intl-lbl-atencao">👁️ Watch Point</h3>
-                <p class="intl-atencao">Watch for signs of political pressure on the Fed as the election cycle approaches.</p>
+                <p class="intl-atencao">Watch whether the new cabinet expands fiscal commitments and regulatory reach beyond the taxpayer's capacity to sustain them.</p>
+            </div>
+        </article>
+        <article class="card card-en" data-intl="5">
+            <div class="card-header">
+                <span class="pais">🌐</span>
+                <span class="fonte">Fox News</span>
+                <span class="tag">cultura</span><span class="tag">liberdade de expressão</span><span class="tag">EUA</span>
+                <span class="pensador">✍️ Roger Scruton</span>
+                <button class="share-btn" onclick="compartilhar('', this)" title="Share">
+                    ↗ Share
+                </button>
+            </div>
+            <h2 class="card-titulo intl-titulo">Bill Maher calls it 'stupid' for anti-Trump artists to boycott Kennedy Center</h2>
+            <div class="secao">
+                <h3 class="intl-lbl-resumo">📋 Summary</h3>
+                <p class="intl-resumo">Comedian Bill Maher criticized artists cancelling Kennedy Center performances over President Trump, arguing he doesn't 'own comedy.' Maher defended keeping cultural venues open regardless of politics.</p>
+            </div>
+            <div class="secao analise">
+                <h3 class="intl-lbl-analise">⚖️ Analysis — Order &amp; Liberty</h3>
+                <p class="intl-analise">Maher's point echoes a conservative instinct: culture is a shared inheritance that transcends whoever occupies office, and art should not be held hostage to political tribalism. Scruton taught that cultural institutions are repositories of a common patrimony, not battlegrounds to be abandoned in fits of partisan pique.</p>
+            </div>
+            <div class="secao atencao">
+                <h3 class="intl-lbl-atencao">👁️ Watch Point</h3>
+                <p class="intl-atencao">Watch whether cultural venues increasingly become instruments of political litmus tests rather than spaces of shared national heritage.</p>
             </div>
         </article>
     </div>
 
     <footer>
-        <p>Burke · Kirk · Scruton · Mises · Hayek · Bastiat · Friedman · Roberto Campos</p>
+        <p>Burke · Kirk · Scruton · Chesterton · Mises · Hayek · Bastiat · Friedman · Sowell · Rothbard · Roberto Campos</p>
         <p style="margin-top:0.4rem">🇧🇷 G1 · Folha · Estadão · Gazeta do Povo · Mises Brasil &nbsp;|&nbsp; 🌐 Reuters · AP · BBC · The Guardian · NYT</p>
         <p style="margin-top:0.8rem; color:#555">Atualizado em 20 de julho de 2026 · <a href="https://mises.org.br" target="_blank">Mises Brasil</a> · <a href="https://iea.org.br" target="_blank">IEA</a> · <a href="https://www.gazetadopovo.com.br" target="_blank">Gazeta do Povo</a></p>
     </footer>
 
     <script>
-        const DADOS = {"editorial": {"pt": "O noticiário desta segunda-feira revela com clareza o padrão que Hayek chamaria de \"caminho para a servidão\". Burke nos lembrava que a liberdade não se defende com grandes gestos heroicos, mas com a resistência cotidiana e vigilante à expansão do poder.", "en": "Monday's news cycle reveals what Hayek called the road to serfdom. Burke reminded us that liberty is not defended by grand heroic gestures, but by daily, vigilant resistance to the expansion of power."}, "intl": {"1": {"en": {"titulo": "Fed signals rates to stay higher for longer as inflation proves sticky", "resumo": "Federal Reserve minutes reveal policymakers are increasingly concerned that inflation remains above target despite 18 months of restrictive monetary policy.", "analise": "Hayek's insight on monetary theory proves enduring: when credit expansion artificially stimulates the economy beyond its real productive capacity, the correction is always painful. There is no free lunch in monetary policy.", "atencao": "Watch for signs of political pressure on the Fed as the election cycle approaches."}, "pt": {"titulo": "Fed sinaliza manutenção de juros altos por mais tempo com inflação resistente", "resumo": "Atas do Federal Reserve revelam preocupação crescente com inflação acima da meta após 18 meses de política restritiva.", "analise": "A visão de Hayek se mostra duradoura: quando a expansão de crédito estimula artificialmente a economia além de sua capacidade produtiva real, a correção é sempre dolorosa. Não existe almoço grátis na política monetária.", "atencao": "Monitorar sinais de pressão política sobre o Fed com a aproximação do ciclo eleitoral."}}}};
+        const DADOS = {"editorial": {"pt": "O dia revela, em fragmentos, os temas perenes da vigilância liberal-conservadora: o processo eleitoral que exige transparência, o narcotráfico alimentado pela própria proibição que finge combatê-lo, e a tecnologia que dissolve silenciosamente a fronteira entre propriedade privada e vigilância. Do personalismo partidário de Ciro Gomes às trocas de gabinete em Londres, repete-se a lição de que trocar rostos no poder importa menos do que conter o alcance do próprio poder. E na cultura, o alerta de Scruton permanece atual — quando abandonamos as instituições comuns ao capricho do momento, entregamos nosso patrimônio ao vazio. Cabe ao cidadão perguntar sempre, como ensinava Sowell, não pelas intenções, mas pelos resultados e pelos custos que ninguém anuncia.", "en": "Today's fragments illuminate the perennial concerns of the liberty-minded conservative: an electoral process that demands transparency, a drug trade fueled by the very prohibition that pretends to fight it, and a technology quietly erasing the line between private property and surveillance. From Ciro Gomes's party-hopping to cabinet reshuffles in London, the same lesson recurs — swapping faces in power matters less than restraining the reach of power itself. In the cultural arena, Scruton's warning endures: when we abandon shared institutions to the whims of the moment, we surrender our inheritance to emptiness. The vigilant citizen must always ask, as Sowell taught, not about intentions but about results and the costs no one announces."}, "intl": {"4": {"en": {"titulo": "Who's in Andy Burnham's new cabinet?", "resumo": "New Prime Minister Andy Burnham has appointed Labour MPs to his cabinet. The BBC examines the profiles of those chosen for key roles.", "analise": "Cabinet reshuffles generate headlines, but the vigilant citizen asks what the state will actually do with its power, not merely who holds it. As Roberto Campos quipped, a change of drivers matters little if the bus keeps heading toward more spending and more control.", "atencao": "Watch whether the new cabinet expands fiscal commitments and regulatory reach beyond the taxpayer's capacity to sustain them."}, "pt": {"titulo": "Quem está no novo gabinete de Andy Burnham?", "resumo": "O novo primeiro-ministro Andy Burnham nomeou deputados trabalhistas para seu gabinete. A BBC analisa os perfis dos escolhidos para os cargos-chave.", "analise": "Trocas de gabinete geram manchetes, mas o cidadão vigilante pergunta o que o Estado fará com seu poder, não apenas quem o detém. Como ironizava Roberto Campos, trocar o motorista pouco importa se o ônibus segue rumo a mais gastos e mais controle.", "atencao": "Observar se o novo gabinete ampliará compromissos fiscais e alcance regulatório além da capacidade do contribuinte de sustentá-los."}}, "5": {"en": {"titulo": "Bill Maher calls it 'stupid' for anti-Trump artists to boycott Kennedy Center", "resumo": "Comedian Bill Maher criticized artists cancelling Kennedy Center performances over President Trump, arguing he doesn't 'own comedy.' Maher defended keeping cultural venues open regardless of politics.", "analise": "Maher's point echoes a conservative instinct: culture is a shared inheritance that transcends whoever occupies office, and art should not be held hostage to political tribalism. Scruton taught that cultural institutions are repositories of a common patrimony, not battlegrounds to be abandoned in fits of partisan pique.", "atencao": "Watch whether cultural venues increasingly become instruments of political litmus tests rather than spaces of shared national heritage."}, "pt": {"titulo": "Bill Maher chama de 'estúpido' o boicote de artistas anti-Trump ao Kennedy Center", "resumo": "O comediante Bill Maher criticou artistas que cancelaram apresentações no Kennedy Center por causa de Trump, dizendo que ele não é 'dono da comédia'. Maher defendeu manter os espaços culturais abertos independentemente da política.", "analise": "O argumento de Maher ecoa um instinto conservador: a cultura é herança compartilhada que transcende quem ocupa o poder, e a arte não deve ser refém do tribalismo político. Scruton ensinava que instituições culturais são repositórios de um patrimônio comum, não campos de batalha a serem abandonados em acessos de birra partidária.", "atencao": "Observar se espaços culturais se tornarão cada vez mais instrumentos de testes ideológicos em vez de espaços de herança nacional compartilhada."}}}};
 
         function setLang(lang) {
             const isPt = lang === 'pt';
