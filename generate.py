@@ -22,7 +22,7 @@ RSS_FEEDS = [
     {"nome": "Gazeta do Povo","pais": "🇧🇷", "url": "https://www.gazetadopovo.com.br/feed/"},
     {"nome": "Mises Brasil",  "pais": "🇧🇷", "url": "https://www.mises.org.br/feed"},
     # ── Internacional ────────────────────────────
-    {"nome": "BBC",           "pais": "🌐", "url": "https://feeds.bbci.co.uk/news/rss.xml"},
+    {"nome": "BBC",           "pais": "🌐", "url": "https://feeds.bbci.co.uk/news/rsq.xml"},
     {"nome": "The Spectator", "pais": "🌐", "url": "https://www.spectator.co.uk/rss"},
     {"nome": "Fox News",      "pais": "🌐", "url": "https://moxie.foxnews.com/google-publisher/latest.xml"},
     {"nome": "Wall Street Journal","pais": "🌐","url": "https://feeds.a.dj.com/rss/RSSWorldNews.xml"},
@@ -217,6 +217,7 @@ def _article_card(noticia: dict) -> str:
     pensador = noticia.get("pensador")
     pensador_html = f'<div class="a-pensador">✍️ {pensador}</div>' if pensador else ""
     url = noticia.get("url", "") or "#"
+    titulo = noticia.get("titulo", "").replace("'", "\\'")
     analise = noticia.get("analise", "")
     atencao = noticia.get("atencao", "")
     analise_html = f"""  <div class="a-analise">
@@ -224,8 +225,10 @@ def _article_card(noticia: dict) -> str:
     <p>{analise}</p>
   </div>""" if analise else ""
     atencao_html = f'  <div class="a-atencao">👁 {atencao}</div>' if atencao else ""
+    share_url = url if url != "#" else "https://ordemeliberdade.org"
 
-    return f"""<a class="article-card" href="{url}" target="_blank" rel="noopener">
+    return f"""<div class="article-card">
+  <a href="{url}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
   <div class="a-fonte">{noticia.get('pais','')}&nbsp;{noticia.get('fonte','').upper()}</div>
   {tags_html}
   <h3>{noticia.get('titulo', '')}</h3>
@@ -233,7 +236,9 @@ def _article_card(noticia: dict) -> str:
 {analise_html}
 {atencao_html}
 {pensador_html}
-</a>"""
+  </a>
+  <button class="share-btn" onclick="compartilhar(event, '{titulo}', '{share_url}')">↗ Compartilhar</button>
+</div>"""
 
 
 def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict | None = None) -> str:
@@ -323,7 +328,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 56px;
+      height: 68px;
       border-bottom: 2px solid var(--ouro);
       position: sticky;
       top: 0;
@@ -333,30 +338,30 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       display: flex;
       flex-direction: column;
       line-height: 1.1;
-      gap: 2px;
+      gap: 3px;
     }}
     .nav-logo .title {{
       font-family: var(--fonte-ser);
-      font-size: 19px;
+      font-size: 24px;
       font-weight: 700;
       color: #fff;
-      letter-spacing: -0.3px;
+      letter-spacing: -0.4px;
     }}
     .nav-logo .title span {{ color: var(--ouro); }}
     .nav-logo .subtitle {{
-      font-size: 9px;
+      font-size: 10px;
       color: var(--ouro);
-      letter-spacing: 2px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
     }}
     .nav-links {{
       display: flex;
-      gap: 24px;
+      gap: 28px;
       list-style: none;
     }}
     .nav-links a {{
       color: var(--texto-sec);
-      font-size: 13px;
+      font-size: 14px;
       letter-spacing: 0.3px;
       transition: color 0.2s;
     }}
@@ -367,19 +372,29 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       gap: 12px;
     }}
     .nav-btc {{
-      font-size: 12px;
+      font-size: 13px;
       color: var(--ouro);
       font-weight: 600;
       border: 1px solid var(--ouro-esc);
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 4px;
       font-family: var(--fonte-san);
       letter-spacing: 0.3px;
     }}
     .nav-date {{
-      font-size: 11px;
+      font-size: 12px;
       color: var(--texto-fra);
       letter-spacing: 0.5px;
+    }}
+    .menu-toggle {{
+      display: none;
+      background: none;
+      border: none;
+      color: var(--texto-sec);
+      font-size: 22px;
+      cursor: pointer;
+      padding: 4px 8px;
+      line-height: 1;
     }}
 
     /* ── TICKER ── */
@@ -408,15 +423,16 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     .ticker-item .label {{ color: var(--ouro); font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }}
     .ticker-item .muted {{ color: var(--texto-fra); }}
     .ticker-item .tick-sep {{ color: var(--borda-f); }}
-    .ticker-item a {{ color: var(--ouro); opacity: 0.75; transition: opacity 0.2s; }}
+    .ticker-item a {{ color: var(--ouro); opacity: 0.75; transition: opacity 0.2s;
+}}
     .ticker-item a:hover {{ opacity: 1; }}
 
     /* ── HERO ── */
     .hero {{
       display: grid;
-      grid-template-columns: 1fr 320px;
+      grid-template-columns: 1fr 340px;
       border-bottom: 0.5px solid var(--borda-f);
-      min-height: 380px;
+      min-height: 480px;
     }}
     .hero-main {{
       position: relative;
@@ -425,7 +441,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 2.5rem 2.5rem 2rem;
+      padding: 3rem 3rem 2.5rem;
     }}
     .hero-chart {{
       position: absolute;
@@ -436,7 +452,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       position: absolute;
       inset: 0;
       z-index: 1;
-      background: linear-gradient(to top, rgba(10,8,0,0.95) 40%, rgba(10,8,0,0.6) 75%, rgba(10,8,0,0.3) 100%);
+      background: linear-gradient(to top, rgba(10,8,0,0.97) 40%, rgba(10,8,0,0.65) 75%, rgba(10,8,0,0.3) 100%);
     }}
     .hero-content {{
       position: relative;
@@ -446,35 +462,35 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       display: inline-block;
       background: var(--ouro);
       color: #0f0f0f;
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      padding: 3px 9px;
+      padding: 4px 11px;
       border-radius: 2px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }}
     .hero-title {{
       font-family: var(--fonte-ser);
-      font-size: 26px;
+      font-size: 42px;
       font-weight: 700;
       color: #fff;
-      line-height: 1.35;
-      margin-bottom: 14px;
-      max-width: 680px;
+      line-height: 1.25;
+      margin-bottom: 18px;
+      max-width: 700px;
     }}
     .hero-editorial {{
       font-family: var(--fonte-ser);
       font-style: italic;
-      font-size: 0.95rem;
+      font-size: 1.15rem;
       color: #c8bc96;
-      line-height: 1.75;
-      max-width: 640px;
+      line-height: 1.8;
+      max-width: 660px;
       text-align: justify;
     }}
     .hero-meta {{
-      margin-top: 1.2rem;
-      font-size: 11px;
+      margin-top: 1.4rem;
+      font-size: 12px;
       color: rgba(255,255,255,0.45);
       letter-spacing: 0.5px;
     }}
@@ -486,17 +502,17 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       background: var(--surface);
     }}
     .sidebar-title {{
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
       color: var(--texto-fra);
-      padding: 14px 16px 10px;
+      padding: 16px 18px 12px;
       border-bottom: 0.5px solid var(--borda-f);
     }}
     .sidebar-article {{
       display: block;
-      padding: 14px 16px;
+      padding: 16px 18px;
       border-bottom: 0.5px solid var(--borda);
       cursor: pointer;
       transition: background 0.2s;
@@ -507,19 +523,19 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       color: var(--ouro);
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
       font-weight: 600;
     }}
     .sidebar-article h4 {{
       font-family: var(--fonte-ser);
-      font-size: 13.5px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--texto);
       line-height: 1.4;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }}
     .sidebar-article .s-meta {{
-      font-size: 10px;
+      font-size: 11px;
       color: var(--texto-fra);
     }}
 
@@ -560,87 +576,109 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     }}
     .article-card {{
       display: block;
-      padding: 1.5rem;
+      padding: 1.8rem;
       border-right: 0.5px solid var(--borda-f);
       cursor: pointer;
       transition: background 0.2s;
       text-decoration: none;
+      position: relative;
     }}
     .article-card:last-child {{ border-right: none; }}
     .article-card:hover {{ background: var(--surface-1); }}
     .a-fonte {{
-      font-size: 9px;
+      font-size: 10px;
       color: var(--ouro);
       letter-spacing: 1.5px;
       text-transform: uppercase;
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
     }}
     .a-tag-chip {{
       display: inline-block;
-      font-size: 9px;
-      padding: 2px 6px;
+      font-size: 10px;
+      padding: 2px 7px;
       background: var(--surface-2);
       border: 0.5px solid var(--borda-f);
       border-radius: 3px;
       color: var(--texto-fra);
-      margin: 0 3px 6px 0;
+      margin: 0 3px 7px 0;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }}
     .article-card h3 {{
       font-family: var(--fonte-ser);
-      font-size: 16px;
+      font-size: 19px;
       font-weight: 700;
       color: var(--texto);
       line-height: 1.4;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }}
     .a-resumo {{
-      font-size: 13px;
+      font-size: 15px;
       color: var(--texto-sec);
-      line-height: 1.65;
-      margin-bottom: 12px;
+      line-height: 1.7;
+      margin-bottom: 14px;
     }}
     .a-analise {{
       background: #0d0900;
       border: 0.5px solid var(--borda-f);
       border-top: 1.5px solid var(--ouro-esc);
       border-radius: 4px;
-      padding: 10px 12px;
-      margin-bottom: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
     }}
     .a-analise-label {{
-      font-size: 8.5px;
+      font-size: 10px;
       color: var(--ouro);
       letter-spacing: 1.5px;
       text-transform: uppercase;
       font-weight: 700;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }}
     .a-analise p {{
-      font-size: 12.5px;
+      font-size: 14px;
       color: #c8bc96;
-      line-height: 1.6;
+      line-height: 1.65;
       font-family: var(--fonte-ser);
     }}
     .a-atencao {{
-      font-size: 12px;
+      font-size: 13.5px;
       color: var(--ouro);
       font-weight: 500;
       line-height: 1.5;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }}
     .a-pensador {{
       display: inline-block;
-      font-size: 10px;
-      padding: 2px 8px;
+      font-size: 11px;
+      padding: 3px 9px;
       background: #1a1400;
       border: 0.5px solid var(--ouro-esc);
       border-radius: 3px;
       color: var(--ouro-clr);
       font-style: italic;
       font-family: var(--fonte-ser);
+    }}
+    .share-btn {{
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--texto-fra);
+      background: var(--surface-2);
+      border: 0.5px solid var(--borda-f);
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      font-family: var(--fonte-san);
+      letter-spacing: 0.3px;
+    }}
+    .share-btn:hover {{
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      background: #1a1400;
     }}
 
     /* ── BSAFE BANNER ── */
@@ -730,12 +768,47 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {{
-      .hero {{ grid-template-columns: 1fr; }}
+      .hero {{ grid-template-columns: 1fr; min-height: auto; }}
+      .hero-main {{ padding: 2rem 1.5rem 2rem; }}
+      .hero-title {{ font-size: 30px; }}
+      .hero-editorial {{ font-size: 1rem; }}
       .hero-sidebar {{ display: none; }}
       .articles-grid {{ grid-template-columns: 1fr; }}
       .article-card {{ border-right: none; border-bottom: 0.5px solid var(--borda-f); }}
       .nav-links {{ display: none; }}
+      .nav-links.open {{
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 68px;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border-bottom: 2px solid var(--ouro);
+        padding: 1rem 2rem;
+        gap: 16px;
+        z-index: 99;
+      }}
+      .nav-links.open a {{ font-size: 16px; padding: 4px 0; }}
+      .menu-toggle {{ display: block; }}
       .footer {{ grid-template-columns: 1fr; gap: 1.5rem; }}
+      .ticker {{ padding: 6px 1rem; }}
+      .section-header {{ padding: 1rem 1rem 0.8rem; }}
+      .btc-banner {{ flex-wrap: wrap; padding: 1rem; gap: 12px; }}
+    }}
+    @media (max-width: 600px) {{
+      .nav {{ padding: 0 1rem; height: 60px; }}
+      .nav-logo .title {{ font-size: 20px; }}
+      .nav-btc {{ display: none; }}
+      .nav-date {{ display: none; }}
+      .hero-main {{ padding: 1.5rem 1rem 1.5rem; }}
+      .hero-title {{ font-size: 26px; }}
+      .hero-editorial {{ font-size: 0.95rem; }}
+      .article-card {{ padding: 1.2rem 1rem; }}
+      .article-card h3 {{ font-size: 17px; }}
+      .a-resumo {{ font-size: 14px; }}
+      .footer {{ padding: 1.5rem 1rem; }}
+      .footer-bottom {{ padding: 10px 1rem; flex-direction: column; gap: 4px; text-align: center; }}
     }}
   </style>
 </head>
@@ -747,7 +820,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     <span class="title">Ordem <span>&amp;</span> Liberdade</span>
     <span class="subtitle">BSafe Bitcoin · Est. 2026</span>
   </div>
-  <ul class="nav-links">
+  <ul class="nav-links" id="nav-links">
     <li><a href="index.html" class="active">Digest do Dia</a></li>
     <li><a href="analisar.html">Analisar Notícia</a></li>
     <li><a href="https://bsafebitcoin.org" target="_blank">BSafe Bitcoin ↗</a></li>
@@ -755,6 +828,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
   <div class="nav-right">
     {nav_btc}
     <span class="nav-date">{data_formatada}</span>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Menu">☰</button>
   </div>
 </nav>
 
@@ -828,6 +902,49 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
   <span>Atualizado em {data_formatada}</span>
 </div>
 
+<script>
+  // Menu hamburger
+  const toggle = document.getElementById('menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+  if (toggle && navLinks) {{
+    toggle.addEventListener('click', () => {{
+      navLinks.classList.toggle('open');
+      toggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+    }});
+    // Fecha ao clicar fora
+    document.addEventListener('click', (e) => {{
+      if (!toggle.contains(e.target) && !navLinks.contains(e.target)) {{
+        navLinks.classList.remove('open');
+        toggle.textContent = '☰';
+      }}
+    }});
+  }}
+
+  // Compartilhar
+  function compartilhar(e, titulo, url) {{
+    e.preventDefault();
+    e.stopPropagation();
+    if (navigator.share) {{
+      navigator.share({{ title: titulo, url: url }}).catch(() => {{}});
+    }} else {{
+      navigator.clipboard.writeText(url).then(() => {{
+        const btn = e.currentTarget;
+        const orig = btn.textContent;
+        btn.textContent = '✓ Link copiado!';
+        btn.style.color = 'var(--verde)';
+        btn.style.borderColor = 'var(--verde)';
+        setTimeout(() => {{
+          btn.textContent = orig;
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }}, 2000);
+      }}).catch(() => {{
+        window.open(url, '_blank');
+      }});
+    }}
+  }}
+</script>
+
 </body>
 </html>"""
 
@@ -859,7 +976,7 @@ def main():
     hoje           = datetime.date.today()
     data_str       = hoje.strftime("%Y-%m-%d")
     data_formatada = hoje.strftime("%d de %B de %Y").replace(
-        "January","janeiro").replace("February","fevereiro").replace(
+        "January","maneiro").replace("February","fevereiro").replace(
         "March","março").replace("April","abril").replace(
         "May","maio").replace("June","junho").replace(
         "July","julho").replace("August","agosto").replace(
