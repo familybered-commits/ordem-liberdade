@@ -1,442 +1,661 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ordem &amp; Liberdade / Order &amp; Liberty — 21 de julho de 2026</title>
-    <style>
-        :root {
-            --ouro: #c9a227;
-            --ouro-escuro: #9b7c1a;
-            --bg: #0f0f0f;
-            --surface: #1a1a1a;
-            --surface2: #242424;
-            --texto: #e8e8e8;
-            --texto-fraco: #888;
-            --borda: #2e2e2e;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Georgia', serif;
-            background: var(--bg);
-            color: var(--texto);
-            line-height: 1.7;
-            min-height: 100vh;
-        }
-        header {
-            background: var(--surface);
-            border-bottom: 2px solid var(--ouro);
-            padding: 2rem 1rem 1.5rem;
-            text-align: center;
-        }
-        .logo {
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-            color: var(--ouro);
-            font-style: italic;
-            font-family: 'Georgia', serif;
-            margin-bottom: 0.5rem;
-            opacity: 0.85;
-        }
-        header h1 {
-            font-size: 2.2rem;
-            color: #fff;
-            font-weight: 700;
-        }
-        header h1 span { color: var(--ouro); }
-        .data {
-            color: var(--texto-fraco);
-            font-size: 0.9rem;
-            margin-top: 0.4rem;
-            font-family: 'Arial', sans-serif;
-        }
-        /* ── Toggle de idioma ── */
-        .lang-toggle {
-            display: inline-flex;
-            margin-top: 1rem;
-            border: 1px solid var(--ouro-escuro);
-            border-radius: 30px;
-            overflow: hidden;
-        }
-        .lang-toggle button {
-            background: transparent;
-            border: none;
-            padding: 0.35rem 1.1rem;
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            color: var(--texto-fraco);
-            font-family: 'Arial', sans-serif;
-            transition: background 0.2s, color 0.2s;
-        }
-        .lang-toggle button.active {
-            background: var(--ouro);
-            color: #000;
-            font-weight: 700;
-        }
-        /* ── Layout ── */
-        .container {
-            max-width: 860px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-        .editorial {
-            background: linear-gradient(135deg, #1e1a0e, #1a1a1a);
-            border-left: 4px solid var(--ouro);
-            border-radius: 8px;
-            padding: 1.5rem 1.8rem;
-            margin-bottom: 2.5rem;
-            font-style: italic;
-            font-size: 1.05rem;
-            color: #d4c89a;
-            text-align: justify;
-            hyphens: auto;
-        }
-        .editorial-label {
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--ouro);
-            font-style: normal;
-            margin-bottom: 0.6rem;
-            display: block;
-            font-family: 'Arial', sans-serif;
-        }
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--borda);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: border-color 0.2s;
-        }
-        .card:hover { border-color: var(--ouro-escuro); }
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.7rem;
-            flex-wrap: wrap;
-        }
-        .pais { font-size: 1rem; }
-        .fonte {
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--ouro);
-            font-family: 'Arial', sans-serif;
-            font-weight: 700;
-        }
-        .tag {
-            font-size: 0.7rem;
-            padding: 0.15rem 0.5rem;
-            background: var(--surface2);
-            border-radius: 20px;
-            color: var(--texto-fraco);
-            font-family: 'Arial', sans-serif;
-        }
-        .pensador {
-            font-size: 0.72rem;
-            padding: 0.15rem 0.6rem;
-            background: #1e1a0e;
-            border: 1px solid var(--ouro-escuro);
-            border-radius: 20px;
-            color: var(--ouro);
-            font-family: 'Georgia', serif;
-            font-style: italic;
-        }
-        .card-titulo {
-            font-size: 1.2rem;
-            color: #fff;
-            margin-bottom: 1.2rem;
-            line-height: 1.4;
-        }
-        .secao { margin-bottom: 1rem; }
-        .secao:last-child { margin-bottom: 0; }
-        .secao h3 {
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--texto-fraco);
-            margin-bottom: 0.4rem;
-            font-family: 'Arial', sans-serif;
-        }
-        .secao p {
-            font-size: 0.97rem;
-            color: var(--texto);
-            text-align: justify;
-            hyphens: auto;
-        }
-        .secao.analise { background: var(--surface2); border-radius: 6px; padding: 1rem; }
-        .secao.analise h3 { color: var(--ouro); }
-        .secao.analise p { color: #d4c89a; text-align: justify; hyphens: auto; }
-        .secao.atencao p { color: #f0a500; font-weight: bold; font-size: 0.93rem; text-align: justify; }
-        /* ── Separador de seções ── */
-        .section-title {
-            font-size: 0.75rem;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--texto-fraco);
-            font-family: 'Arial', sans-serif;
-            margin: 2.5rem 0 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--borda);
-        }
-        /* ── Share button ── */
-        .share-btn {
-            margin-left: auto;
-            background: transparent;
-            border: 1px solid var(--ouro-escuro);
-            color: var(--ouro);
-            font-size: 0.72rem;
-            padding: 0.2rem 0.7rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Arial', sans-serif;
-            transition: background 0.2s, color 0.2s;
-        }
-        .share-btn:hover { background: var(--ouro); color: #000; }
-        .share-btn.copied { background: #2a4a2a; border-color: #4caf50; color: #4caf50; }
-        footer {
-            text-align: center;
-            padding: 2rem 1rem;
-            color: var(--texto-fraco);
-            font-size: 0.8rem;
-            border-top: 1px solid var(--borda);
-            font-family: 'Arial', sans-serif;
-        }
-        footer a { color: var(--ouro); text-decoration: none; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ordem &amp; Liberdade — 21 de julho de 2026</title>
+  <meta name="description" content="Digest diário de notícias interpretadas sob a ótica conservadora-libertária. Fundamentado em Mises, Hayek, Burke e Sowell.">
+  <meta property="og:title" content="Ordem &amp; Liberdade — 21 de julho de 2026">
+  <meta property="og:description" content="Digest conservador-libertário do dia.">
+  <style>
+    :root {
+      --ouro:      #e5a810;
+      --ouro-esc:  #b8860b;
+      --ouro-clr:  #f0c040;
+      --bg:        #0f0f0f;
+      --surface:   #141414;
+      --surface-1: #1a1a1a;
+      --surface-2: #222;
+      --texto:     #e0e0e0;
+      --texto-sec: #aaa;
+      --texto-fra: #666;
+      --borda:     #222;
+      --borda-f:   #333;
+      --verde:     #4caf82;
+      --fonte-ser: 'Georgia', 'Times New Roman', serif;
+      --fonte-san: Arial, 'Helvetica Neue', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--fonte-san);
+      background: var(--bg);
+      color: var(--texto);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    .nav {
+      background: var(--bg);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      border-bottom: 2px solid var(--ouro);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+      gap: 2px;
+    }
+    .nav-logo .title {
+      font-family: var(--fonte-ser);
+      font-size: 19px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.3px;
+    }
+    .nav-logo .title span { color: var(--ouro); }
+    .nav-logo .subtitle {
+      font-size: 9px;
+      color: var(--ouro);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--texto-sec);
+      font-size: 13px;
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ouro); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-btc {
+      font-size: 12px;
+      color: var(--ouro);
+      font-weight: 600;
+      border: 1px solid var(--ouro-esc);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-family: var(--fonte-san);
+      letter-spacing: 0.3px;
+    }
+    .nav-date {
+      font-size: 11px;
+      color: var(--texto-fra);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--surface-1);
+      padding: 7px 2rem;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .ticker::-webkit-scrollbar { display: none; }
+    .ticker-item {
+      font-size: 12px;
+      color: var(--texto-sec);
+      white-space: nowrap;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding: 0 18px;
+      border-right: 0.5px solid var(--borda-f);
+    }
+    .ticker-item:first-child { padding-left: 0; }
+    .ticker-item:last-child { border-right: none; }
+    .ticker-item .label { color: var(--ouro); font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
+    .ticker-item .muted { color: var(--texto-fra); }
+    .ticker-item .tick-sep { color: var(--borda-f); }
+    .ticker-item a { color: var(--ouro); opacity: 0.75; transition: opacity 0.2s; }
+    .ticker-item a:hover { opacity: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      border-bottom: 0.5px solid var(--borda-f);
+      min-height: 380px;
+    }
+    .hero-main {
+      position: relative;
+      background: var(--surface-1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2.5rem 2.5rem 2rem;
+    }
+    .hero-chart {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to top, rgba(10,8,0,0.95) 40%, rgba(10,8,0,0.6) 75%, rgba(10,8,0,0.3) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--ouro);
+      color: #0f0f0f;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 2px;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-family: var(--fonte-ser);
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.35;
+      margin-bottom: 14px;
+      max-width: 680px;
+    }
+    .hero-editorial {
+      font-family: var(--fonte-ser);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: #c8bc96;
+      line-height: 1.75;
+      max-width: 640px;
+      text-align: justify;
+    }
+    .hero-meta {
+      margin-top: 1.2rem;
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.5px;
+    }
+
+    .hero-sidebar {
+      border-left: 0.5px solid var(--borda-f);
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+    }
+    .sidebar-title {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--texto-fra);
+      padding: 14px 16px 10px;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .sidebar-article {
+      display: block;
+      padding: 14px 16px;
+      border-bottom: 0.5px solid var(--borda);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .sidebar-article:hover { background: var(--surface-1); }
+    .sidebar-article .s-tag {
+      font-size: 9px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    .sidebar-article h4 {
+      font-family: var(--fonte-ser);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--texto);
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+    .sidebar-article .s-meta {
+      font-size: 10px;
+      color: var(--texto-fra);
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 1.4rem 2rem 1rem;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .section-header .accent-line {
+      width: 36px;
+      height: 2px;
+      background: var(--ouro);
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+    .section-header h2 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--texto);
+      white-space: nowrap;
+    }
+    .section-header .sh-line {
+      flex: 1;
+      height: 0.5px;
+      background: var(--borda-f);
+    }
+
+    /* ── ARTICLES GRID ── */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .article-card {
+      display: block;
+      padding: 1.5rem;
+      border-right: 0.5px solid var(--borda-f);
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .article-card:last-child { border-right: none; }
+    .article-card:hover { background: var(--surface-1); }
+    .a-fonte {
+      font-size: 9px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .a-tag-chip {
+      display: inline-block;
+      font-size: 9px;
+      padding: 2px 6px;
+      background: var(--surface-2);
+      border: 0.5px solid var(--borda-f);
+      border-radius: 3px;
+      color: var(--texto-fra);
+      margin: 0 3px 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .article-card h3 {
+      font-family: var(--fonte-ser);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--texto);
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+    .a-resumo {
+      font-size: 13px;
+      color: var(--texto-sec);
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .a-analise {
+      background: #0d0900;
+      border: 0.5px solid var(--borda-f);
+      border-top: 1.5px solid var(--ouro-esc);
+      border-radius: 4px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .a-analise-label {
+      font-size: 8.5px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .a-analise p {
+      font-size: 12.5px;
+      color: #c8bc96;
+      line-height: 1.6;
+      font-family: var(--fonte-ser);
+    }
+    .a-atencao {
+      font-size: 12px;
+      color: var(--ouro);
+      font-weight: 500;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .a-pensador {
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 8px;
+      background: #1a1400;
+      border: 0.5px solid var(--ouro-esc);
+      border-radius: 3px;
+      color: var(--ouro-clr);
+      font-style: italic;
+      font-family: var(--fonte-ser);
+    }
+
+    /* ── BSAFE BANNER ── */
+    .btc-banner {
+      background: var(--surface);
+      border-top: 0.5px solid var(--borda-f);
+      border-bottom: 0.5px solid var(--borda-f);
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btc-banner .btc-icon {
+      font-size: 26px;
+      color: var(--ouro);
+      flex-shrink: 0;
+    }
+    .btc-banner .btc-text { flex: 1; }
+    .btc-banner .btc-text h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .btc-banner .btc-text p {
+      font-size: 12px;
+      color: var(--texto-fra);
+    }
+    .btc-banner .btc-cta {
+      font-size: 12px;
+      color: var(--ouro);
+      border: 1px solid var(--ouro-esc);
+      padding: 7px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+      font-weight: 500;
+    }
+    .btc-banner .btc-cta:hover { background: var(--ouro); color: #0f0f0f; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--bg);
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 2.5rem;
+      border-top: 2px solid var(--ouro);
+    }
+    .footer-col h5 {
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ouro);
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .footer-logo {
+      font-family: var(--fonte-ser);
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .footer-logo span { color: var(--ouro); }
+    .footer-col p, .footer-col a {
+      font-size: 12px;
+      color: var(--texto-fra);
+      line-height: 1.85;
+      display: block;
+    }
+    .footer-col a:hover { color: var(--texto-sec); }
+    .footer-bottom {
+      background: var(--bg);
+      padding: 12px 2rem;
+      border-top: 0.5px solid var(--borda);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom span {
+      font-size: 10.5px;
+      color: #3a3a3a;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-sidebar { display: none; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .article-card { border-right: none; border-bottom: 0.5px solid var(--borda-f); }
+      .nav-links { display: none; }
+      .footer { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <p class="logo">⚖️ <span id="logo-txt">O preço da liberdade é a eterna vigilância</span></p>
-        <h1 id="site-title">Ordem <span>&amp; Liberdade</span></h1>
-        <p class="data">21 de julho de 2026</p>
-        <div class="lang-toggle">
-            <button id="btn-pt" class="active" onclick="setLang('pt')">🇧🇷 PT</button>
-            <button id="btn-en" onclick="setLang('en')">🇺🇸 EN</button>
-        </div>
-        <nav style="margin-top:0.8rem; display:flex; justify-content:center; gap:1rem; font-family:Arial,sans-serif; font-size:0.8rem;">
-            <a href="index.html" style="color:var(--ouro); text-decoration:none; padding:0.3rem 0.8rem; border-radius:20px; border:1px solid var(--ouro);">📰 Digest do Dia</a>
-            <a href="analisar.html" style="color:var(--texto-fraco); text-decoration:none; padding:0.3rem 0.8rem; border-radius:20px; border:1px solid var(--borda);">🔍 Analisar Notícia</a>
-        </nav>
-    </header>
 
-    <div class="container">
-        <div class="editorial">
-            <span class="editorial-label" id="editorial-label">Editorial do dia</span>
-            <span id="editorial-text">O dia 21 de julho de 2026 ilustra a fragmentação da agenda pública brasileira: acidentes de infraestrutura deficiente ocupam manchetes brevemente, enquanto celebridades estéticas dominam redes sociais e mídia. Essa combinação não é acidental—é precisamente como o Estado predatório mantém seus cidadãos: distraídos pelo trivial, ignorantes do estrutural. Enquanto os portos desabam por falta de investimento privado e a tributação sufoca a produção, a cobertura jornalística entretém em vez de iluminar. Roberto Campos previu isso: a incompetência estatal prospera no silêncio dos que deveriam denunciá-la.</span>
-        </div>
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <span class="title">Ordem <span>&amp;</span> Liberdade</span>
+    <span class="subtitle">BSafe Bitcoin · Est. 2026</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Digest do Dia</a></li>
+    <li><a href="analisar.html">Analisar Notícia</a></li>
+    <li><a href="https://bsafebitcoin.org" target="_blank">BSafe Bitcoin ↗</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-btc">₿ R$ 336.937</span>
+    <span class="nav-date">21 de julho de 2026</span>
+  </div>
+</nav>
 
-        <div class="section-title">🇧🇷 Brasil</div>
-        
-        <article class="card card-br">
-            <div class="card-header">
-                <span class="pais">🇧🇷</span>
-                <span class="fonte">G1</span>
-                <span class="tag">infraestrutura</span><span class="tag">marítimo</span><span class="tag">Ceará</span>
-                
-            </div>
-            <h2 class="card-titulo">Navio colide em espigão e encalha na praia do Icaraí, no litoral cearense</h2>
-            <div class="secao">
-                <h3>📋 Resumo</h3>
-                <p>Um navio colidiu em espigão na praia do Icaraí, em Caucaia (CE), na manhã de terça-feira, ficando encalhado. As causas ainda não foram esclarecidas e a Marinha apura o incidente.</p>
-            </div>
-            <div class="secao analise">
-                <h3>⚖️ Análise — Ordem &amp; Liberdade</h3>
-                <p>O incidente revela a fragilidade da infraestrutura portuária brasileira e a ausência de investimento privado em modernização. Enquanto o Estado monopoliza portos e oferece serviços deficientes, acidentes como este demonstram o custo invisível do nacionalismo estatal — custos suportados pela população e não contabilizados pelos planejadores.</p>
-            </div>
-            <div class="secao atencao">
-                <h3>👁️ Ponto de Atenção</h3>
-                <p>Monitore se o relato final culpará fatores naturais ou se admitirá falhas em sinalização e manutenção — revelador do grau de transparência estatal.</p>
-            </div>
-        </article>
-        <article class="card card-br">
-            <div class="card-header">
-                <span class="pais">🇧🇷</span>
-                <span class="fonte">Folha de S.Paulo</span>
-                <span class="tag">celebridade</span><span class="tag">estética</span><span class="tag">redes sociais</span>
-                
-            </div>
-            <h2 class="card-titulo">O que Vini Jr. fez no rosto? Dermatologista explica procedimentos no atleta</h2>
-            <div class="secao">
-                <h3>📋 Resumo</h3>
-                <p>Vinicius Junior, atacante do Real Madrid e da seleção brasileira, apareceu com visual renovado após procedimentos de naturalização facial, gerando especulação nas redes sociais.</p>
-            </div>
-            <div class="secao analise">
-                <h3>⚖️ Análise — Ordem &amp; Liberdade</h3>
-                <p>Trata-se de discussão menor que revela o apetite de mídia por trivialidades. A obsessão midiática com detalhes da vida pessoal de celebridades funciona como anestésico narrativo — enquanto discutem o rosto de um jogador, silenciam-se debates estruturais sobre economia, liberdade e ordem institucional.</p>
-            </div>
-            <div class="secao atencao">
-                <h3>👁️ Ponto de Atenção</h3>
-                <p>Observe quanto espaço de cobertura jornalística é dedicado a temas fúteis versus questões de política econômica e liberdade civil.</p>
-            </div>
-        </article>
-        <article class="card card-br">
-            <div class="card-header">
-                <span class="pais">🇧🇷</span>
-                <span class="fonte">Mises Brasil</span>
-                <span class="tag">filosofia política</span><span class="tag">libertarianismo</span><span class="tag">ideologia</span>
-                <span class="pensador">✍️ Mises</span>
-            </div>
-            <h2 class="card-titulo">Em defesa do idealismo radical</h2>
-            <div class="secao">
-                <h3>📋 Resumo</h3>
-                <p>Artigo de opinião defende o idealismo radical libertário contra acusações de utopia, argumentando que ideólogos não devem temer parecer radicais demais.</p>
-            </div>
-            <div class="secao analise">
-                <h3>⚖️ Análise — Ordem &amp; Liberdade</h3>
-                <p>A questão coloca-se corretamente: é a liberdade radical que é utópica, ou é o igualitarismo estatal que viola a realidade humana? Mises demonstrou que o socialismo é logicamente impossível (cálculo econômico), não aspiração nobre incompletamente realizada. O 'realismo' que aceita a servidão como possível apenas prova a capitulação intelectual.</p>
-            </div>
-            <div class="secao atencao">
-                <h3>👁️ Ponto de Atenção</h3>
-                <p>Acompanhe se o movimento libertário brasileiro consegue manter coerência ideológica ou cede ao apelo da 'gradualidade' pragmática que termina em capitulação.</p>
-            </div>
-        </article>
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-item"><span class="label">BTC/BRL</span> R$ 336.937 <span class="tick-sep">·</span> <span class="muted">$ 66.262</span></div>
+  <div class="ticker-item"><span class="label">USD/BRL</span> 5,08</div>
+  <div class="ticker-item"><span class="label">BSafe Bitcoin</span> <a href="https://bsafebitcoin.org" target="_blank">bsafebitcoin.org ↗</a></div>
+</div>
 
-        <div class="section-title">🌐 Internacional · International</div>
-        
-        <article class="card card-en" data-intl="2">
-            <div class="card-header">
-                <span class="pais">🌐</span>
-                <span class="fonte">UOL Notícias</span>
-                <span class="tag">geopolítica</span><span class="tag">Irã</span><span class="tag">Oriente Médio</span><span class="tag">conflito</span>
-                <span class="pensador">✍️ Hayek</span>
-                <button class="share-btn" onclick="compartilhar('', this)" title="Share">
-                    ↗ Share
-                </button>
-            </div>
-            <h2 class="card-titulo intl-titulo">Iranian Forces Attack Bahrain and Kuwait After US Strikes Southern Iran</h2>
-            <div class="secao">
-                <h3 class="intl-lbl-resumo">📋 Summary</h3>
-                <p class="intl-resumo">Iranian military forces launched attacks against Bahrain and Kuwait following US military operations in southern Iran, escalating regional tensions in the Middle East.</p>
-            </div>
-            <div class="secao analise">
-                <h3 class="intl-lbl-analise">⚖️ Analysis — Order &amp; Liberty</h3>
-                <p class="intl-analise">This pattern exemplifies the unintended consequences of military interventionism that Hayek warned about in 'The Road to Serfdom'—each strike begets retaliation, each retaliation demands response, creating an escalation spiral that no central planner can control. The dispersed knowledge of regional actors, local grievances, and nationalist fervor resists imperial calculation.</p>
-            </div>
-            <div class="secao atencao">
-                <h3 class="intl-lbl-atencao">👁️ Watch Point</h3>
-                <p class="intl-atencao">Watch whether Western governments will acknowledge their role in the cycle or blame Iran exclusively, obscuring the true cost-benefit analysis of interventionism.</p>
-            </div>
-        </article>
-        <article class="card card-en" data-intl="4">
-            <div class="card-header">
-                <span class="pais">🌐</span>
-                <span class="fonte">BBC</span>
-                <span class="tag">política britânica</span><span class="tag">tributação</span><span class="tag">governo trabalhista</span>
-                <span class="pensador">✍️ Hayek</span>
-                <button class="share-btn" onclick="compartilhar('', this)" title="Share">
-                    ↗ Share
-                </button>
-            </div>
-            <h2 class="card-titulo intl-titulo">Starmer Ally Questions Burnham's VAT Cut as Unfunded Policy</h2>
-            <div class="secao">
-                <h3 class="intl-lbl-resumo">📋 Summary</h3>
-                <p class="intl-resumo">Darren Jones, a close adviser to UK Prime Minister Keir Starmer, criticized Andy Burnham's proposed VAT reduction, claiming it lacks funding mechanisms.</p>
-            </div>
-            <div class="secao analise">
-                <h3 class="intl-lbl-analise">⚖️ Analysis — Order &amp; Liberty</h3>
-                <p class="intl-analise">This intra-Labour dispute reveals the core tension of all redistributive states: once the tax base is exploited to fund expansive commitments, any reduction appears 'unfunded.' Hayek understood that such systems necessarily collapse into fiscal illusion—politicians promise cuts while expanding spending, and citizens bear the hidden inflation tax. The real question is never 'how to fund it,' but 'why steal from citizens to fund government schemes?'</p>
-            </div>
-            <div class="secao atencao">
-                <h3 class="intl-lbl-atencao">👁️ Watch Point</h3>
-                <p class="intl-atencao">Monitor whether British media frames tax reduction as requiring 'offsetting cuts' rather than questioning why government spending grew unsustainably.</p>
-            </div>
-        </article>
-        <article class="card card-en" data-intl="5">
-            <div class="card-header">
-                <span class="pais">🌐</span>
-                <span class="fonte">Fox News</span>
-                <span class="tag">política americana</span><span class="tag">relações exteriores</span><span class="tag">personalidades políticas</span>
-                
-                <button class="share-btn" onclick="compartilhar('', this)" title="Share">
-                    ↗ Share
-                </button>
-            </div>
-            <h2 class="card-titulo intl-titulo">Lindsey Graham's Sister Breaks from Foreign Policy Playbook with Alternative Agenda</h2>
-            <div class="secao">
-                <h3 class="intl-lbl-resumo">📋 Summary</h3>
-                <p class="intl-resumo">A family member of Senator Lindsey Graham has diverged from mainstream foreign policy positions, pursuing a distinct political agenda.</p>
-            </div>
-            <div class="secao analise">
-                <h3 class="intl-lbl-analise">⚖️ Analysis — Order &amp; Liberty</h3>
-                <p class="intl-analise">Without specific content, this headline exemplifies how modern media treats politics as personality theater rather than examining substantive policy divergences. The focus on familial relationships obscures actual disagreements about interventionism, trade, or alliance structures—replacing intellectual substance with relational gossip.</p>
-            </div>
-            <div class="secao atencao">
-                <h3 class="intl-lbl-atencao">👁️ Watch Point</h3>
-                <p class="intl-atencao">Demand that coverage specify the actual policy disagreement; if it focuses on family dynamics rather than ideas, you're witnessing narrative evasion.</p>
-            </div>
-        </article>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-main">
+    <svg class="hero-chart" viewBox="0 0 700 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="700" height="380" fill="#0d0900"/>
+      <polyline points="0,320 70,300 140,310 210,260 280,210 350,230 420,170 490,110 560,85 630,60 700,35"
+        fill="none" stroke="#e5a810" stroke-width="1.5" opacity="0.5"/>
+      <polygon points="0,320 70,300 140,310 210,260 280,210 350,230 420,170 490,110 560,85 630,60 700,35 700,380 0,380"
+        fill="#e5a810" opacity="0.04"/>
+    </svg>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-tag">Editorial do Dia</span>
+      <h2 class="hero-title">Ordem &amp; Liberdade — 21 de julho de 2026</h2>
+      <p class="hero-editorial">O dia revela tensões recorrentes entre legitimidade institucional e captura política. Enquanto crimes violentos privados recebem resposta estatal adequada, notícias da elite — vazamentos de diálogos de familiares de poderosos — escalam ao topo do judiciário com prioridade suspeita. Terceirização educacional é modelo sensato (pluralismo reduz monopólio estatal), mas editais direcionados e governos que fingem transparência enquanto distribuem favores minam confiança. Nos EUA, o contrato de $ 6,2 mi não-competitivo de Newsom exemplifica como 'gasto social' frequentemente significa transferência de riqueza dos contribuintes a oligarquias progressistas — exatamente o que Bastiat diagnosticava há 180 anos. A falta de armas nas mãos de cidadãos britânicos enquanto criminosos atacam sem resposta imediata sublinha o paradoxo do monopólio estatal de violência: promete segurança, entrega desamparo. Estes não são eventos desconectados: formam padrão em que instituições públicas servem elites conectadas, não cidadania comum.</p>
+      <p class="hero-meta">Burke · Mises · Hayek · Sowell · Roberto Campos</p>
     </div>
+  </div>
 
-    <footer>
-        <p>Burke · Kirk · Scruton · Chesterton · Mises · Hayek · Bastiat · Friedman · Sowell · Rothbard · Roberto Campos</p>
-        <p style="margin-top:0.4rem">🇧🇷 G1 · Folha · Estadão · Gazeta do Povo · Mises Brasil &nbsp;|&nbsp; 🌐 Reuters · AP · BBC · The Guardian · NYT</p>
-        <p style="margin-top:0.8rem; color:#555">Atualizado em 21 de julho de 2026 · <a href="https://mises.org.br" target="_blank">Mises Brasil</a> · <a href="https://iea.org.br" target="_blank">IEA</a> · <a href="https://www.gazetadopovo.com.br" target="_blank">Gazeta do Povo</a></p>
-    </footer>
+  <div class="hero-sidebar">
+    <div class="sidebar-title">Destaques de Hoje</div>
+  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">G1 · SEGURANÇA PÚBLICA · VIOLÊNCIA DOMÉSTICA</div>
+    <h4>Homem é preso por agressão à companheira em Várzea Paulista</h4>
+    <div class="s-meta">🇧🇷 G1</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">FOLHA DE S.PAULO · INSTITUCIONALISMO · SIGILO</div>
+    <h4>Defesa de amiga de Lulinha pede ao STF investigação sobre vazamento de diálogos</h4>
+    <div class="s-meta">🇧🇷 Folha de S.Paulo</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">UOL NOTÍCIAS · EDUCAÇÃO · TERCEIRIZAÇÃO</div>
+    <h4>Juíza dá 72 horas para SP explicar edital de terceirização de escolas municipais</h4>
+    <div class="s-meta">🇧🇷 UOL Notícias</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">MISES BRASIL · HISTÓRIA · FEDERALISMO</div>
+    <h4>As 13 colônias americanas não eram unidades políticas homogêneas</h4>
+    <div class="s-meta">🇧🇷 Mises Brasil</div>
+  </a>
+  </div>
+</div>
 
-    <script>
-        const DADOS = {"editorial": {"pt": "O dia 21 de julho de 2026 ilustra a fragmentação da agenda pública brasileira: acidentes de infraestrutura deficiente ocupam manchetes brevemente, enquanto celebridades estéticas dominam redes sociais e mídia. Essa combinação não é acidental—é precisamente como o Estado predatório mantém seus cidadãos: distraídos pelo trivial, ignorantes do estrutural. Enquanto os portos desabam por falta de investimento privado e a tributação sufoca a produção, a cobertura jornalística entretém em vez de iluminar. Roberto Campos previu isso: a incompetência estatal prospera no silêncio dos que deveriam denunciá-la.", "en": "July 21st, 2026 illustrates the fragmentation of Brazil's public agenda: infrastructure accidents occupy headlines briefly while celebrity aesthetics dominate social media and press coverage. This is no accident—it is precisely how the predatory state keeps its citizens: distracted by trivia, ignorant of structure. As ports crumble from lack of private investment and taxation strangles production, journalistic coverage entertains rather than illuminates. Roberto Campos foresaw this: state incompetence thrives in the silence of those who should expose it. The vigilant citizen must resist both narratives: the false comfort of technological interventionism and the false hope of incremental reform within a system designed for extraction."}, "intl": {"2": {"en": {"titulo": "Iranian Forces Attack Bahrain and Kuwait After US Strikes Southern Iran", "resumo": "Iranian military forces launched attacks against Bahrain and Kuwait following US military operations in southern Iran, escalating regional tensions in the Middle East.", "analise": "This pattern exemplifies the unintended consequences of military interventionism that Hayek warned about in 'The Road to Serfdom'—each strike begets retaliation, each retaliation demands response, creating an escalation spiral that no central planner can control. The dispersed knowledge of regional actors, local grievances, and nationalist fervor resists imperial calculation.", "atencao": "Watch whether Western governments will acknowledge their role in the cycle or blame Iran exclusively, obscuring the true cost-benefit analysis of interventionism."}, "pt": {"titulo": "Forças iranianas atacam Barein e Kuweit após EUA atacarem sul do Irã", "resumo": "Forças militares iranianas lançaram ataques contra Barein e Kuweit após operações militares dos EUA no sul do Irã, escalando tensões na região.", "analise": "Este padrão exemplifica as consequências não intencionais do intervencionismo militar que Hayek advertiu em 'O Caminho da Servidão'—cada ataque gera retaliação, cada retaliação exige resposta, criando uma espiral de escalação que nenhum planejador central consegue controlar. O conhecimento disperso de atores regionais, ressentimentos locais e fervor nacionalista resistem ao cálculo imperial.", "atencao": "Observe se governos ocidentais admitirão seu papel no ciclo ou culparão apenas o Irã, obscurecendo a verdadeira análise de custo-benefício do intervencionismo."}}, "4": {"en": {"titulo": "Starmer Ally Questions Burnham's VAT Cut as Unfunded Policy", "resumo": "Darren Jones, a close adviser to UK Prime Minister Keir Starmer, criticized Andy Burnham's proposed VAT reduction, claiming it lacks funding mechanisms.", "analise": "This intra-Labour dispute reveals the core tension of all redistributive states: once the tax base is exploited to fund expansive commitments, any reduction appears 'unfunded.' Hayek understood that such systems necessarily collapse into fiscal illusion—politicians promise cuts while expanding spending, and citizens bear the hidden inflation tax. The real question is never 'how to fund it,' but 'why steal from citizens to fund government schemes?'", "atencao": "Monitor whether British media frames tax reduction as requiring 'offsetting cuts' rather than questioning why government spending grew unsustainably."}, "pt": {"titulo": "Aliado de Starmer questiona corte de IVA de Burnham como política sem financiamento", "resumo": "Darren Jones, próximo assessor do primeiro-ministro britânico Keir Starmer, criticou a redução proposta de IVA por Andy Burnham, alegando falta de mecanismos de financiamento.", "analise": "Esta disputa intrapartidária revela a tensão central de todos os Estados redistributivos: uma vez que a base tributária é explorada para financiar compromissos expansivos, qualquer redução parece 'sem financiamento'. Hayek compreendeu que tais sistemas necessariamente colapsam em ilusão fiscal—políticos prometem cortes enquanto expandem gastos, e cidadãos arcam com o imposto inflacionário oculto. A questão real nunca é 'como financiar', mas 'por que roubar dos cidadãos para financiar esquemas governamentais?'", "atencao": "Monitore se a mídia britânica enquadra redução tributária como exigindo 'cortes compensatórios' em vez de questionar por que os gastos governamentais cresceram insustentavelmente."}}, "5": {"en": {"titulo": "Lindsey Graham's Sister Breaks from Foreign Policy Playbook with Alternative Agenda", "resumo": "A family member of Senator Lindsey Graham has diverged from mainstream foreign policy positions, pursuing a distinct political agenda.", "analise": "Without specific content, this headline exemplifies how modern media treats politics as personality theater rather than examining substantive policy divergences. The focus on familial relationships obscures actual disagreements about interventionism, trade, or alliance structures—replacing intellectual substance with relational gossip.", "atencao": "Demand that coverage specify the actual policy disagreement; if it focuses on family dynamics rather than ideas, you're witnessing narrative evasion."}, "pt": {"titulo": "Irmã de Lindsey Graham se afasta do manual de política externa com agenda alternativa", "resumo": "Um membro da família do senador Lindsey Graham divergiu das posições convencionais de política externa, buscando uma agenda política distinta.", "analise": "Sem conteúdo específico, este título exemplifica como a mídia moderna trata política como teatro de personalidades em vez de examinar divergências substantivas. O foco em relações familiares obscurece desacordos reais sobre intervencionismo, comércio ou estruturas de alianças—substituindo substância intelectual por fofoca relacional.", "atencao": "Exija que a cobertura especifique o desacordo político real; se focar em dinâmica familiar em vez de ideias, você está presenciando evasão narrativa."}}}};
+<!-- SEÇÃO BRASIL -->
+<div class="section-header">
+  <div class="accent-line"></div>
+  <h2>🇧🇷 Brasil</h2>
+  <div class="sh-line"></div>
+</div>
+<div class="articles-grid">
+<a class="article-card" href="#" target="_blank" rel="noopener">
+  <div class="a-fonte">🇧🇷&nbsp;G1</div>
+  <span class="a-tag-chip">segurança pública</span><span class="a-tag-chip">violência doméstica</span>
+  <h3>Homem é preso por agressão à companheira em Várzea Paulista</h3>
+  <p class="a-resumo">Um homem de 30 anos foi detido após agredir sua companheira dentro de casa, também destruindo e queimando objetos no imóvel. A Guarda Municipal respondeu à ocorrência e ambos foram encaminhados.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>A aplicação célere da lei reforça o primado da ordem e proteção ao indivíduo contra violência privada — função legítima do Estado. A eficiência da resposta institucional, porém, depende da continuidade processual e da certeza da punição, não apenas da prisão imediata.</p>
+  </div>
+  <div class="a-atencao">👁 Monitore se o caso prossegue na Justiça com celeridade ou enfrenta morosidade processual típica do sistema.</div>
 
-        function setLang(lang) {
-            const isPt = lang === 'pt';
-            document.getElementById('btn-pt').classList.toggle('active', isPt);
-            document.getElementById('btn-en').classList.toggle('active', !isPt);
+</a><a class="article-card" href="#" target="_blank" rel="noopener">
+  <div class="a-fonte">🇧🇷&nbsp;FOLHA DE S.PAULO</div>
+  <span class="a-tag-chip">institucionalismo</span><span class="a-tag-chip">sigilo</span>
+  <h3>Defesa de amiga de Lulinha pede ao STF investigação sobre vazamento de diálogos</h3>
+  <p class="a-resumo">A defesa de Roberta Luchsinger solicitou abertura imediata de investigação ao ministro André Mendonça por suspeita de quebra de sigilo telemático após vazamento de diálogos privados. O caso envolve possível ligação com Flávio Bolsonaro.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>A proteção do sigilo telemático é direito fundamental, mas é perturbador que celebridades conectadas à elite política recebam pronto acesso ao STF enquanto cidadãos comuns enfrentam filas. Scruton alerta contra a corrosão da igualdade perante a lei quando instituições se tornam instrumentos de poder privado.</p>
+  </div>
+  <div class="a-atencao">👁 Observe se a investigação avança com a mesma celeridade para vazamentos envolvendo adversários políticos, ou se há aplicação seletiva da lei.</div>
+<div class="a-pensador">✍️ Scruton</div>
+</a><a class="article-card" href="#" target="_blank" rel="noopener">
+  <div class="a-fonte">🇧🇷&nbsp;UOL NOTÍCIAS</div>
+  <span class="a-tag-chip">educação</span><span class="a-tag-chip">terceirização</span>
+  <h3>Juíza dá 72 horas para SP explicar edital de terceirização de escolas municipais</h3>
+  <p class="a-resumo">A Justiça paulista exigiu que a Prefeitura de São Paulo esclareça o edital que transferiria gestão de três escolas municipais para organizações da sociedade civil. O prazo é de três dias.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>A terceirização de escolas públicas é legítima — pluralismo de provedores e descentralização, como argumenta Hayek, são preferíveis ao monopólio estatal. Contudo, editais devem ser genuinamente competitivos e transparentes; a suspeita judicial sugere possível captura de processo, minando confiança.</p>
+  </div>
+  <div class="a-atencao">👁 Investigue se o edital foi direcionado a organizações pré-selecionadas ou se houve efetiva abertura de mercado e isonomia entre concorrentes.</div>
+<div class="a-pensador">✍️ Hayek</div>
+</a><a class="article-card" href="#" target="_blank" rel="noopener">
+  <div class="a-fonte">🇧🇷&nbsp;MISES BRASIL</div>
+  <span class="a-tag-chip">história</span><span class="a-tag-chip">federalismo</span>
+  <h3>As 13 colônias americanas não eram unidades políticas homogêneas</h3>
+  <p class="a-resumo">Artigo histórico ressalta que as 13 colônias inglesas na América do Norte, apesar de compartilharem língua e tradição cristã, apresentavam grande heterogeneidade política e institucional ao longo do século XVII. Cada colônia desenvolveu sua própria estrutura de governo.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Rothbard sublinha que diversidade institucional, não centralização, gera dinamismo e respeito às preferências locais. A heterogeneidade das colônias — laboratórios de governança — foi precondição para o federalismo americano e para a inovação política que seguiu.</p>
+  </div>
+  <div class="a-atencao">👁 Reflita: modernos projetos de 'integração federal' que obliteram autonomia local reproduzem erro do centralismo britânico que as colônias recusaram.</div>
+<div class="a-pensador">✍️ Rothbard</div>
+</a>
+</div>
 
-            // Título e logo
-            document.getElementById('site-title').innerHTML = isPt
-                ? 'Ordem <span style="color:var(--ouro)">&amp; Liberdade</span>'
-                : 'Order <span style="color:var(--ouro)">&amp; Liberty</span>';
-            document.getElementById('logo-txt').textContent = isPt
-                ? 'O preço da liberdade é a eterna vigilância'
-                : 'The price of liberty is eternal vigilance';
+<!-- BANNER BSAFE -->
+<div class="btc-banner">
+  <span class="btc-icon">₿</span>
+  <div class="btc-text">
+    <h4>BSafe Bitcoin — Sua segurança, sua soberania</h4>
+    <p>Aprenda a guardar Bitcoin com segurança. Custódia própria, sem depender de terceiros.</p>
+  </div>
+  <a href="https://bsafebitcoin.org" target="_blank" class="btc-cta">Conhecer →</a>
+</div>
 
-            // Editorial
-            document.getElementById('editorial-label').textContent = isPt ? 'Editorial do dia' : "Today's editorial";
-            document.getElementById('editorial-text').textContent = DADOS.editorial[isPt ? 'pt' : 'en'];
+<!-- SEÇÃO INTERNACIONAL -->
+<div class="section-header">
+  <div class="accent-line"></div>
+  <h2>🌐 Internacional</h2>
+  <div class="sh-line"></div>
+</div>
+<div class="articles-grid">
+<a class="article-card" href="#" target="_blank" rel="noopener">
+  <div class="a-fonte">🌐&nbsp;BBC</div>
+  <span class="a-tag-chip">crime violento</span><span class="a-tag-chip">segurança pessoal</span>
+  <h3>Homem acusado de atacar Ann Widdecombe 21 vezes com martelo</h3>
+  <p class="a-resumo">Joshua Kerry, 28 anos, é acusado de agredir violentamente a ex-deputada Ann Widdecombe em sua casa em Devon, desferindo 21 golpes com martelo, antes de roubar sua carteira. O caso expõe lacunas na proteção pessoal.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>A brutalidade do crime reflete falha estrutural: o Estado monopoliza segurança mas não a garante. Indivíduos desarmados dependem integralmente de resposta estatal tardia; este é o custo oculto do desarmamento civil na Inglaterra.</p>
+  </div>
+  <div class="a-atencao">👁 Acompanhe se debates sobre defesa pessoal e direito de proteção própria ressurgem no Reino Unido após este incidente.</div>
 
-            // Cards internacionais: traduz para PT ou volta ao EN
-            document.querySelectorAll('.card-en[data-intl]').forEach(card => {
-                const idx = card.getAttribute('data-intl');
-                const d = DADOS.intl[idx];
-                if (!d) return;
-                const v = d[isPt ? 'pt' : 'en'];
-                card.querySelector('.intl-titulo').textContent  = v.titulo  || '';
-                card.querySelector('.intl-resumo').textContent  = v.resumo  || '';
-                card.querySelector('.intl-analise').textContent = v.analise || '';
-                card.querySelector('.intl-atencao').textContent = v.atencao || '';
-                // Labels das seções
-                card.querySelector('.intl-lbl-resumo').textContent  = isPt ? '📋 Resumo'  : '📋 Summary';
-                card.querySelector('.intl-lbl-analise').textContent = isPt
-                    ? '⚖️ Análise — Ordem & Liberdade' : '⚖️ Analysis — Order & Liberty';
-                card.querySelector('.intl-lbl-atencao').textContent = isPt ? '👁️ Ponto de Atenção' : '👁️ Watch Point';
-            });
+</a><a class="article-card" href="#" target="_blank" rel="noopener">
+  <div class="a-fonte">🌐&nbsp;FOX NEWS</div>
+  <span class="a-tag-chip">gastos públicos</span><span class="a-tag-chip">despesa social</span>
+  <h3>Governo Newsom enfrenta denúncias sobre contrato de $6,2 mi sem licitação competitiva</h3>
+  <p class="a-resumo">Registros do Estado apontam que contrato de US$ 6,2 milhões com Baby2Baby para programa de fraldas foi classificado como 'não competitivamente licitado', contradizendo alegações anteriores do governador sobre processo competitivo. Suspeita de favorecimento.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Bastiat mostraria como a promessa de 'compaixão estatal' mascara transferência de riqueza para conectados políticos. O cidadão paga imposto acreditando em serviço universal; governo entrega privilégio privado sem transparência nem concorrência.</p>
+  </div>
+  <div class="a-atencao">👁 Verifique se há investigação criminal por fraude contratual ou se o caso será arquivado sob pressão política.</div>
+<div class="a-pensador">✍️ Bastiat</div>
+</a><a class="article-card" href="#" target="_blank" rel="noopener">
+  <div class="a-fonte">🌐&nbsp;WALL STREET JOURNAL</div>
+  <span class="a-tag-chip">conflito Israel-Gaza</span><span class="a-tag-chip">deslocamento populacional</span>
+  <h3>Gazaríes retornam a pé para norte de Gaza após desbloqueio militar</h3>
+  <p class="a-resumo">Israel permitiu que palestinos deslocados começassem a retornar através de zona militar que divide Gaza após resolução de impasse sobre liberação de reféns. Movimento representa abertura após período de restrições.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Sowell nos lembra: julgue políticas por resultados reais, não promessas. O retorno de deslocados é fato positivo, mas o critério deve ser se reduz sofrimento humano sustentavelmente ou é manobra tática de curto prazo. Acompanhe se infraestrutura, segurança e acesso seguem.</p>
+  </div>
+  <div class="a-atencao">👁 Monitore se os retornos prosseguem sistematicamente ou se novas restrições reaparecem quando negociações seguintes emperrarem.</div>
+<div class="a-pensador">✍️ Sowell</div>
+</a>
+</div>
 
-            document.documentElement.lang = isPt ? 'pt-BR' : 'en';
-        }
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-col">
+    <div class="footer-logo">Ordem <span>&amp;</span> Liberdade</div>
+    <p>Jornalismo independente sobre Bitcoin, economia e liberdade individual. Sem anunciantes, sem agenda oculta.</p>
+  </div>
+  <div class="footer-col">
+    <h5>Editorias</h5>
+    <a href="#">Brasil</a>
+    <a href="#">Internacional</a>
+    <a href="analisar.html">Analisar Notícia</a>
+    <a href="https://mises.org.br" target="_blank">Mises Brasil ↗</a>
+    <a href="https://www.gazetadopovo.com.br" target="_blank">Gazeta do Povo ↗</a>
+  </div>
+  <div class="footer-col">
+    <h5>BSafe Bitcoin</h5>
+    <a href="https://bsafebitcoin.org" target="_blank">bsafebitcoin.org</a>
+    <a href="mailto:bsafe@bsafebitcoin.org">bsafe@bsafebitcoin.org</a>
+    <a href="https://bsafebitcoin.org" target="_blank">Apoie com Bitcoin</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2026 Ordem &amp; Liberdade · BSafe Bitcoin</span>
+  <span>Atualizado em 21 de julho de 2026</span>
+</div>
 
-        function compartilhar(url, btn) {
-            const texto = btn.closest('.card').querySelector('.card-titulo').textContent;
-            const link = url || window.location.href;
-            if (navigator.share) {
-                navigator.share({ title: texto, text: texto + ' — Order & Liberty', url: link });
-            } else {
-                navigator.clipboard.writeText(link).then(() => {
-                    btn.textContent = '✓ Copied!';
-                    btn.classList.add('copied');
-                    setTimeout(() => { btn.textContent = '↗ Share'; btn.classList.remove('copied'); }, 2000);
-                });
-            }
-        }
-    </script>
 </body>
 </html>
