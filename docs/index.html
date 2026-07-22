@@ -369,6 +369,42 @@
       font-family: var(--fonte-ser);
     }
 
+    /* ── NAVEGAÇÃO ENTRE DIAS ── */
+    .pag-nav {
+      background: var(--surface-1);
+      border-top: 0.5px solid var(--borda-f);
+      border-bottom: 0.5px solid var(--borda-f);
+      padding: 14px 2.5rem;
+    }
+    .pag-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    .pag-nav-link {
+      font-size: 14px;
+      color: var(--texto-sec);
+      letter-spacing: 0.3px;
+      padding: 8px 20px;
+      border: 0.5px solid var(--borda-f);
+      border-radius: 4px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      background: transparent;
+    }
+    .pag-nav-link:hover {
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      background: #1a1400;
+    }
+    .pag-nav-link.arquivo {
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      font-weight: 600;
+    }
+    .pag-nav-link.prev::before { content: ''; }
+    .pag-nav-link.next::after  { content: ''; }
+
     /* ── SHARE BUTTON ── */
     .share-btn {
       display: inline-flex;
@@ -541,11 +577,12 @@
   </div>
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html" class="active">Digest do Dia</a></li>
+    <li><a href="arquivo.html">Arquivo</a></li>
     <li><a href="analisar.html">Analisar Notícia</a></li>
     <li><a href="https://bsafebitcoin.org" target="_blank">BSafe Bitcoin ↗</a></li>
   </ul>
   <div class="nav-right">
-    <span class="nav-btc">₿ $ 66,041</span>
+    <span class="nav-btc">₿ $ 66,138</span>
     <span class="nav-date">22 de julho de 2026</span>
     <button class="menu-toggle" id="menu-toggle" aria-label="Menu">☰</button>
   </div>
@@ -553,7 +590,7 @@
 
 <!-- TICKER -->
 <div class="ticker">
-  <div class="ticker-item"><span class="label">BTC/USD</span> $ 66,041</div>
+  <div class="ticker-item"><span class="label">BTC/USD</span> $ 66,138</div>
   <div class="ticker-item"><span class="label">BSafe Bitcoin</span> <a href="https://bsafebitcoin.org" target="_blank">bsafebitcoin.org ↗</a></div>
 </div>
 
@@ -571,7 +608,7 @@
     <div class="hero-content">
       <span class="hero-tag">Editorial do Dia</span>
       <h2 class="hero-title">Ordem &amp; Liberdade — 22 de julho de 2026</h2>
-      <p class="hero-editorial">O padrão do dia revela dilemas econômicos e morais que o estatismo nunca resolve: Brasil subsidia empresas ineficientes em vez de reformar estruturalmente; geopolítica energética reafirma que segurança não vem de ideologia climática imposta, mas de diversificação real e alianças confiáveis; surtos de doença exigem ciência, não pânico regulatório; e justiça criminal esvazia-se quando a conveniência administrativa sobrepõe-se ao direito das vítimas. Em cada frente, vemos o Estado inchar—gastando, controlando, relativizando princípios—enquanto os resultados pioram. A lição de Hayek e Bastiat permanece intacta: centralizar poder e recursos sob promessas de 'soberania' ou 'eficiência' sempre produz o oposto.</p>
+      <p class="hero-editorial">O dia revela três tendências perturbadoras sob perspectiva conservadora-libertária: a concentração estatal de dados (TSE), a incapacidade de conter as consequências não intencionais de guerras regionais (Mar Vermelho), e a erosão da confiança institucional quando o Estado não cumpre suas próprias sentenças (UK). Hayek e Burke convergem em alerta: poder centralizado sem limite — seja burocrático, militar ou judicial — tende ao abuso, porque remove fricções que protegem liberdade. O cidadão vigilante observará não apenas o que os governos prometem, mas quem financia essas promessas e quem de fato as pagará — e se as instituições ainda possuem integridade para cumpri-las quando o custo ficar alto.</p>
       <p class="hero-meta">Burke · Mises · Hayek · Sowell · Roberto Campos</p>
     </div>
   </div>
@@ -579,20 +616,20 @@
   <div class="hero-sidebar">
     <div class="sidebar-title">Destaques de Hoje</div>
   <a class="sidebar-article" href="#" target="_blank" rel="noopener">
-    <div class="s-tag">FOLHA DE S.PAULO · ECONOMIA · PROTECIONISMO</div>
-    <h4>Lula anuncia R$ 13,5 bilhões em auxílio a empresas atingidas por tarifas americanas</h4>
+    <div class="s-tag">FOLHA DE S.PAULO · ELEIÇÕES · PESQUISAS</div>
+    <h4>TSE prepara novo modelo de registro que pode centralizar e manipular pesquisas eleitorais</h4>
     <div class="s-meta">🇧🇷 Folha de S.Paulo</div>
   </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
-    <div class="s-tag">NEW YORK TIMES · GEOPOLÍTICA · ENERGIA</div>
-    <h4>Houthis ameaçam bloquear rotas alternativas do petróleo no Mar Vermelho</h4>
+    <div class="s-tag">NEW YORK TIMES · GEOPOLÍTICA · COMÉRCIO</div>
+    <h4>Houthis ameaçam bloquear Mar Vermelho e interromper rotas alternativas de petróleo saudita</h4>
     <div class="s-meta">🌐 New York Times</div>
   </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
     <div class="s-tag">THE GUARDIAN · SAÚDE PÚBLICA · EBOLA</div>
-    <h4>Trabalhador humanitário em Londres monitorado após possível exposição ao ebola na RDC</h4>
+    <h4>Trabalhador humanitário evacuado da RDC é monitorado para Ebola em hospital de Londres</h4>
     <div class="s-meta">🌐 The Guardian</div>
   </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
-    <div class="s-tag">BBC NEWS · JUSTIÇA CRIMINAL · SEGURANÇA PÚBLICA</div>
-    <h4>Viúva de policial critica plano de libertação antecipada de presos no Reino Unido</h4>
+    <div class="s-tag">BBC NEWS · JUSTIÇA CRIMINAL · POLÍCIA</div>
+    <h4>Viúva de policial critica plano de soltura antecipada de detentos; incluem assassinos do marido</h4>
     <div class="s-meta">🌐 BBC News</div>
   </a>
   </div>
@@ -608,20 +645,20 @@
 <div class="article-card">
   <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
   <div class="a-fonte">🇧🇷&nbsp;FOLHA DE S.PAULO</div>
-  <span class="a-tag-chip">economia</span><span class="a-tag-chip">protecionismo</span>
-  <h3>Lula anuncia R$ 13,5 bilhões em auxílio a empresas atingidas por tarifas americanas</h3>
-  <p class="a-resumo">O presidente Lula anunciará novo pacote de R$ 13,5 bilhões em ajuda a empresas afetadas pelas tarifas impostas pelos EUA contra produtos brasileiros, através do BNDES e do plano Brasil Soberano. A medida representa mais uma rodada de subsídios estatais em resposta à guerra comercial.</p>
+  <span class="a-tag-chip">eleições</span><span class="a-tag-chip">pesquisas</span>
+  <h3>TSE prepara novo modelo de registro que pode centralizar e manipular pesquisas eleitorais</h3>
+  <p class="a-resumo">O presidente do TSE, ministro Kassio Nunes Marques, propõe formulário detalhado para pesquisas eleitorais exigindo perfil de entrevistados. Especialistas alertam para riscos de manipulação estatal dos dados.</p>
   <div class="a-analise">
     <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
-    <p>Bastiat perguntaria: quem paga essa conta? Ao invés de enfrentar a raiz (competitividade estrutural), o governo socializa prejuízos e perpetua empresas ineficientes. O BNDES torna-se instrumento de proteção corporativa disfarçado de 'soberania', enquanto o cidadão comum financia perdas de setores privilegiados.</p>
+    <p>Hayek advertiu que concentração de informação nas mãos do Estado é prelúdio do controle totalitário. Um registro burocrático centralizado de pesquisas, sob pretexto de transparência, cria oportunidade para filtros e coerções disfarçadas — exatamente o oposto do que deveria ocorrer em democracia eleitoral.</p>
   </div>
-  <div class="a-atencao">👁 Monitore quais empresas recebem recursos e se há critério técnico ou indicação política nas aprovações do BNDES.</div>
-<div class="a-pensador">✍️ Bastiat</div>
+  <div class="a-atencao">👁 Monitore se o formulário exige dados de identificação que permitam rastreamento de respondentes ou se há critérios de aprovação prévia que funcionem como censura velada.</div>
+<div class="a-pensador">✍️ Hayek</div>
   </a>
   <button class="share-btn"
-    data-titulo="Lula anuncia R$ 13,5 bilhões em auxílio a empresas atingidas por tarifas americanas"
-    data-resumo="O presidente Lula anunciará novo pacote de R$ 13,5 bilhões em ajuda a empresas afetadas pelas tarifas impostas pelos EUA contra produtos brasileiros, através do BNDES e do plano Brasil Soberano. A medida representa mais uma rodada de subsídios estatais em resposta à guerra comercial."
-    data-analise="Bastiat perguntaria: quem paga essa conta? Ao invés de enfrentar a raiz (competitividade estrutural), o governo socializa prejuízos e perpetua empresas ineficientes. O BNDES torna-se instrumento de proteção corporativa disfarçado de &#x27;soberania&#x27;, enquanto o cidadão comum financia perdas de setores privilegiados."
+    data-titulo="TSE prepara novo modelo de registro que pode centralizar e manipular pesquisas eleitorais"
+    data-resumo="O presidente do TSE, ministro Kassio Nunes Marques, propõe formulário detalhado para pesquisas eleitorais exigindo perfil de entrevistados. Especialistas alertam para riscos de manipulação estatal dos dados."
+    data-analise="Hayek advertiu que concentração de informação nas mãos do Estado é prelúdio do controle totalitário. Um registro burocrático centralizado de pesquisas, sob pretexto de transparência, cria oportunidade para filtros e coerções disfarçadas — exatamente o oposto do que deveria ocorrer em democracia eleitoral."
     data-url="#"
     onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
 </div>
@@ -647,61 +684,70 @@
 <div class="article-card">
   <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
   <div class="a-fonte">🌐&nbsp;NEW YORK TIMES</div>
-  <span class="a-tag-chip">geopolítica</span><span class="a-tag-chip">energia</span>
-  <h3>Houthis ameaçam bloquear rotas alternativas do petróleo no Mar Vermelho</h3>
-  <p class="a-resumo">Após a guerra entre Irã e Arábia Saudita, o reino saudita desviou volumes significativos de petróleo para rotas do Mar Vermelho, mas milicianos houthis apoiados pelo Irã agora ameaçam bloquear essas passagens. A instabilidade ameaça a segurança energética global e encarecimento do combustível.</p>
+  <span class="a-tag-chip">geopolítica</span><span class="a-tag-chip">comércio</span>
+  <h3>Houthis ameaçam bloquear Mar Vermelho e interromper rotas alternativas de petróleo saudita</h3>
+  <p class="a-resumo">Desde o início da guerra com o Irã, a Arábia Saudita desviou grandes volumes de petróleo para o Mar Vermelho. Agora, militantes Houthis apoiados pelo Irã ameaçam bloquear essa rota alternativa.</p>
   <div class="a-analise">
     <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
-    <p>Trata-se de mais uma manifestação de como conflitos geopolíticos e equilíbrios de poder imperial afetam diretamente o mercado de energia. A vulnerabilidade das rotas marítimas revela o risco de depender de intermediários politicamente instáveis e ressalta por que diversificação energética real — não Green New Deal imposto — é estratégica.</p>
+    <p>Bastiat ensinaria que toda intervenção militar gera custos não previstos e cascatas de consequências. O conflito regional, financiado por potências externas, agora ameaça o comércio global — os contribuintes sauditas e ocidentais pagam duas vezes: pela guerra e pelas interrupções nas linhas de suprimento.</p>
   </div>
-  <div class="a-atencao">👁 Acompanhe flutuações de preço do petróleo e pressões inflacionárias que possam resultar de bloqueios efetivos no Mar Vermelho.</div>
-<div class="a-pensador">✍️ null</div>
+  <div class="a-atencao">👁 Acompanhe se pressões de preço de energia alimentarão inflação ou demandas por mais subsídios governamentais em combustíveis.</div>
+<div class="a-pensador">✍️ Bastiat</div>
   </a>
   <button class="share-btn"
-    data-titulo="Houthis ameaçam bloquear rotas alternativas do petróleo no Mar Vermelho"
-    data-resumo="Após a guerra entre Irã e Arábia Saudita, o reino saudita desviou volumes significativos de petróleo para rotas do Mar Vermelho, mas milicianos houthis apoiados pelo Irã agora ameaçam bloquear essas passagens. A instabilidade ameaça a segurança energética global e encarecimento do combustível."
-    data-analise="Trata-se de mais uma manifestação de como conflitos geopolíticos e equilíbrios de poder imperial afetam diretamente o mercado de energia. A vulnerabilidade das rotas marítimas revela o risco de depender de intermediários politicamente instáveis e ressalta por que diversificação energética real — não Green New Deal imposto — é estratégica."
+    data-titulo="Houthis ameaçam bloquear Mar Vermelho e interromper rotas alternativas de petróleo saudita"
+    data-resumo="Desde o início da guerra com o Irã, a Arábia Saudita desviou grandes volumes de petróleo para o Mar Vermelho. Agora, militantes Houthis apoiados pelo Irã ameaçam bloquear essa rota alternativa."
+    data-analise="Bastiat ensinaria que toda intervenção militar gera custos não previstos e cascatas de consequências. O conflito regional, financiado por potências externas, agora ameaça o comércio global — os contribuintes sauditas e ocidentais pagam duas vezes: pela guerra e pelas interrupções nas linhas de suprimento."
     data-url="#"
     onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
 </div><div class="article-card">
   <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
   <div class="a-fonte">🌐&nbsp;THE GUARDIAN</div>
-  <span class="a-tag-chip">saúde pública</span><span class="a-tag-chip">ebola</span>
-  <h3>Trabalhador humanitário em Londres monitorado após possível exposição ao ebola na RDC</h3>
-  <p class="a-resumo">Um residente do Reino Unido foi evacuado da República Democrática do Congo, onde há surto de ebola, e está sob monitoramento em hospital especializado em Londres. A pessoa estava prestando assistência humanitária e teve contato com pacientes infectados.</p>
+  <span class="a-tag-chip">saúde pública</span><span class="a-tag-chip">Ebola</span>
+  <h3>Trabalhador humanitário evacuado da RDC é monitorado para Ebola em hospital de Londres</h3>
+  <p class="a-resumo">Um residente do Reino Unido foi evacuado da República Democrática do Congo, onde trabalha em combate ao surto de Ebola, após possível exposição ao vírus. Está internado em hospital especializado em Londres.</p>
   <div class="a-analise">
     <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
-    <p>Embora a vigilância epidemiológica seja apropriada, é crucial que não se politize uma questão sanitária com histeria ou restrições despropositadas — a ebola requer contenção precisa, não pânico. Investimentos em infraestrutura de saúde nas regiões de origem, não apenas em monitoramento terminal, seriam mais prudentes.</p>
+    <p>Trata-se de procedimento padrão de biossegurança internacional, sem implicações ideológicas relevantes. O monitoramento responsável de risco à saúde pública é função legítima do Estado.</p>
   </div>
-  <div class="a-atencao">👁 Verifique se protocolos de isolamento são científicos e proporcionais, sem margem para políticas de medo que justifiquem expansão regulatória.</div>
-<div class="a-pensador">✍️ null</div>
+  <div class="a-atencao">👁 Verifique se a comunicação oficial mantém clareza sobre risco real e evita tanto alarmismo quanto minimização que prejudiquem confiança pública.</div>
+
   </a>
   <button class="share-btn"
-    data-titulo="Trabalhador humanitário em Londres monitorado após possível exposição ao ebola na RDC"
-    data-resumo="Um residente do Reino Unido foi evacuado da República Democrática do Congo, onde há surto de ebola, e está sob monitoramento em hospital especializado em Londres. A pessoa estava prestando assistência humanitária e teve contato com pacientes infectados."
-    data-analise="Embora a vigilância epidemiológica seja apropriada, é crucial que não se politize uma questão sanitária com histeria ou restrições despropositadas — a ebola requer contenção precisa, não pânico. Investimentos em infraestrutura de saúde nas regiões de origem, não apenas em monitoramento terminal, seriam mais prudentes."
+    data-titulo="Trabalhador humanitário evacuado da RDC é monitorado para Ebola em hospital de Londres"
+    data-resumo="Um residente do Reino Unido foi evacuado da República Democrática do Congo, onde trabalha em combate ao surto de Ebola, após possível exposição ao vírus. Está internado em hospital especializado em Londres."
+    data-analise="Trata-se de procedimento padrão de biossegurança internacional, sem implicações ideológicas relevantes. O monitoramento responsável de risco à saúde pública é função legítima do Estado."
     data-url="#"
     onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
 </div><div class="article-card">
   <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
   <div class="a-fonte">🌐&nbsp;BBC NEWS</div>
-  <span class="a-tag-chip">justiça criminal</span><span class="a-tag-chip">segurança pública</span>
-  <h3>Viúva de policial critica plano de libertação antecipada de presos no Reino Unido</h3>
-  <p class="a-resumo">Lissie Harper, viúva do policial PC Harper, criticou como 'deplorável' possível libertação antecipada de prisioneiros, incluindo dois dos assassinos de seu marido. O prefeito Andy Burnham anunciou revisão do esquema de liberação acelerada.</p>
+  <span class="a-tag-chip">justiça criminal</span><span class="a-tag-chip">polícia</span>
+  <h3>Viúva de policial critica plano de soltura antecipada de detentos; incluem assassinos do marido</h3>
+  <p class="a-resumo">Lissie Harper, viúva do policial PC Harper morto em crime grave, criticou como "deplorável" o plano de liberação antecipada de prisioneiros. Reports indicam que dois dos assassinos de seu marido podem ser soltos antes do prazo.</p>
   <div class="a-analise">
     <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
-    <p>Burke nos lembra que a ordem civil repousa na confiança de que a lei protege os inocentes e responsabiliza os culpados. Liberar assassinos por razões administrativas (superlotação) é trocar a segurança da comunidade por conveniência burocrática — viola o contrato social. A vítima merecia justiça permanente, não cálculo carcerário.</p>
+    <p>Burke enfatizava que ordem social repousa em confiança nas instituições e na certeza das consequências. Quando o Estado viola sua própria sentença sob pressão fiscal ou ideológica, corrói o contrato que liga cidadão ao direito — e oferece afronta deliberada aos que sofreram crime.</p>
   </div>
-  <div class="a-atencao">👁 Acompanhe se críticas públicas levam a mudança real de política ou se servem apenas como teatro enquanto o esquema continua sob novo nome.</div>
+  <div class="a-atencao">👁 Investigue se a decisão de soltura é motivada por economia carcerária, pressão ideológica por "ressocialização" ou ambos — e qual o impacto na confiança pública na justiça.</div>
 <div class="a-pensador">✍️ Burke</div>
   </a>
   <button class="share-btn"
-    data-titulo="Viúva de policial critica plano de libertação antecipada de presos no Reino Unido"
-    data-resumo="Lissie Harper, viúva do policial PC Harper, criticou como &#x27;deplorável&#x27; possível libertação antecipada de prisioneiros, incluindo dois dos assassinos de seu marido. O prefeito Andy Burnham anunciou revisão do esquema de liberação acelerada."
-    data-analise="Burke nos lembra que a ordem civil repousa na confiança de que a lei protege os inocentes e responsabiliza os culpados. Liberar assassinos por razões administrativas (superlotação) é trocar a segurança da comunidade por conveniência burocrática — viola o contrato social. A vítima merecia justiça permanente, não cálculo carcerário."
+    data-titulo="Viúva de policial critica plano de soltura antecipada de detentos; incluem assassinos do marido"
+    data-resumo="Lissie Harper, viúva do policial PC Harper morto em crime grave, criticou como &quot;deplorável&quot; o plano de liberação antecipada de prisioneiros. Reports indicam que dois dos assassinos de seu marido podem ser soltos antes do prazo."
+    data-analise="Burke enfatizava que ordem social repousa em confiança nas instituições e na certeza das consequências. Quando o Estado viola sua própria sentença sob pressão fiscal ou ideológica, corrói o contrato que liga cidadão ao direito — e oferece afronta deliberada aos que sofreram crime."
     data-url="#"
     onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
 </div>
+</div>
+
+<!-- NAVEGAÇÃO ENTRE DIAS -->
+<div class="pag-nav">
+  <div class="pag-nav-inner">
+    <a class="pag-nav-link prev" href="2026-07-21.html">← Dia anterior</a>
+    <a class="pag-nav-link arquivo" href="arquivo.html">📅 Arquivo</a>
+    
+  </div>
 </div>
 
 <!-- FOOTER -->
