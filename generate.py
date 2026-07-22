@@ -18,9 +18,9 @@ from pathlib import Path
 # ─────────────────────────────────────────────
 RSS_FEEDS = [
     # ── Brasil ──────────────────────────────────
-    {"nome": "O Globo",  "pais": "🇧🇷", "url": "https://oglobo.globo.com/rss.xml"},
-    {"nome": "Folha",    "pais": "🇧🇷", "url": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml"},
-    {"nome": "Estadão",  "pais": "🇧🇷", "url": "https://www.estadao.com.br/arc/outboundfeeds/rss/"},
+    {"nome": "G1 / Globo",      "pais": "🇧🇷", "url": "https://g1.globo.com/rss/g1/"},
+    {"nome": "Folha",           "pais": "🇧🇷", "url": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml"},
+    {"nome": "Gazeta do Povo",  "pais": "🇧🇷", "url": "https://www.gazetadopovo.com.br/feed/"},
     # ── Internacional ────────────────────────────
     {"nome": "New York Times", "pais": "🌐", "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"},
     {"nome": "The Guardian",   "pais": "🌐", "url": "https://www.theguardian.com/world/rss"},
