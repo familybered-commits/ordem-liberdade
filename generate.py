@@ -9,22 +9,26 @@ import json
 import datetime
 import feedparser
 import anthropic
+import html as htmllib
 from pathlib import Path
 
 # ─────────────────────────────────────────────
 # CONFIGURAÇÃO DE FONTES RSS
+# 3 nacionais + 3 internacionais → 1 manchete por fonte
 # ─────────────────────────────────────────────
 RSS_FEEDS = [
     # ── Brasil ──────────────────────────────────
     {"nome": "O Globo",  "pais": "🇧🇷", "url": "https://oglobo.globo.com/rss.xml"},
     {"nome": "Folha",    "pais": "🇧🇷", "url": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml"},
+    {"nome": "Estadão",  "pais": "🇧🇷", "url": "https://www.estadao.com.br/arc/outboundfeeds/rss/"},
     # ── Internacional ────────────────────────────
     {"nome": "New York Times", "pais": "🌐", "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"},
     {"nome": "The Guardian",   "pais": "🌐", "url": "https://www.theguardian.com/world/rss"},
+    {"nome": "BBC News",       "pais": "🌐", "url": "https://feeds.bbci.co.uk/news/rss.xml"},
 ]
 
-MAX_NOTICIAS_POR_FONTE = 2
-MAX_NOTICIAS_TOTAL     = 8
+MAX_NOTICIAS_POR_FONTE = 1
+MAX_NOTICIAS_TOTAL     = 6
 
 # ─────────────────────────────────────────────
 # PROMPTS
@@ -82,19 +86,16 @@ MANCHETES DE HOJE:
 # ─────────────────────────────────────────────
 
 def buscar_ticker() -> dict:
-    """Busca preço do Bitcoin, câmbio USD/BRL e outros indicadores."""
+    """Busca preço do Bitcoin em USD."""
     import urllib.request
-    ticker = {"btc_brl": None, "btc_usd": None, "usd_brl": None}
+    ticker = {"btc_usd": None}
     try:
-        url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=brl,usd"
+        url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
         req = urllib.request.Request(url, headers={"User-Agent": "OrdemLiberdade/1.0"})
         with urllib.request.urlopen(req, timeout=8) as r:
             data = json.loads(r.read())
-            ticker["btc_brl"] = data["bitcoin"]["brl"]
             ticker["btc_usd"] = data["bitcoin"]["usd"]
-        if ticker["btc_brl"] and ticker["btc_usd"]:
-            ticker["usd_brl"] = round(ticker["btc_brl"] / ticker["btc_usd"], 2)
-        print(f" ✓ Ticker: BTC R$ {ticker['btc_brl']:,.0f} | USD/BRL {ticker['usd_brl']}")
+        print(f" ✓ Ticker: BTC $ {ticker['btc_usd']:,.0f}")
     except Exception as e:
         print(f" ⚠ Ticker indisponível: {e}")
     return ticker
@@ -118,7 +119,7 @@ def buscar_noticias() -> list[dict]:
                     "url":    entry.get("link", ""),
                     "resumo_original": resumo,
                 })
-            print(f" ✓ {feed_info['pais']} {feed_info['nome']}: {len(entradas)} manchetes")
+            print(f" ✓ {feed_info['pais']} {feed_info['nome']}: {len(entradas)} manchete(s)")
         except Exception as e:
             print(f" ✗ {feed_info['nome']}: erro — {e}")
     return noticias[:MAX_NOTICIAS_TOTAL]
@@ -173,22 +174,19 @@ def analisar_com_claude(noticias: list[dict], data_str: str) -> dict:
 # FUNÇÕES DE HTML
 # ─────────────────────────────────────────────
 
-def _fmt_btc(valor) -> str:
-    return f"R$ {valor:,.0f}".replace(",", ".")
+def _fmt_btc_usd(valor) -> str:
+    return f"$ {valor:,.0f}"
 
 
 def _ticker_html(ticker: dict) -> str:
-    """Ticker bar com BTC e indicadores."""
-    if not ticker.get("btc_brl"):
+    """Ticker bar com BTC/USD."""
+    if not ticker.get("btc_usd"):
         return '<div class="ticker"><div class="ticker-item"><span class="label">BSafe Bitcoin</span> <a href="https://bsafebitcoin.org" target="_blank" style="color:#e5a810">bsafebitcoin.org ↗</a></div></div>'
 
-    btc_brl = _fmt_btc(ticker["btc_brl"])
-    btc_usd = f"$ {ticker['btc_usd']:,.0f}".replace(",", ".")
-    usd_brl = f"{ticker['usd_brl']:.2f}".replace(".", ",") if ticker.get("usd_brl") else "—"
+    btc_usd = _fmt_btc_usd(ticker["btc_usd"])
 
     return f"""<div class="ticker">
-  <div class="ticker-item"><span class="label">BTC/BRL</span> {btc_brl} <span class="tick-sep">·</span> <span class="muted">{btc_usd}</span></div>
-  <div class="ticker-item"><span class="label">USD/BRL</span> {usd_brl}</div>
+  <div class="ticker-item"><span class="label">BTC/USD</span> {btc_usd}</div>
   <div class="ticker-item"><span class="label">BSafe Bitcoin</span> <a href="https://bsafebitcoin.org" target="_blank">bsafebitcoin.org ↗</a></div>
 </div>"""
 
@@ -206,12 +204,11 @@ def _sidebar_item(noticia: dict) -> str:
 
 
 def _article_card(noticia: dict) -> str:
-    """Card compacto para o grid de 3 colunas."""
+    """Card para o grid de 3 colunas com compartilhamento individual."""
     tags_html = "".join(f'<span class="a-tag-chip">{t}</span>' for t in noticia.get("tags", [])[:2])
     pensador = noticia.get("pensador")
     pensador_html = f'<div class="a-pensador">✍️ {pensador}</div>' if pensador else ""
     url = noticia.get("url", "") or "#"
-    titulo = noticia.get("titulo", "").replace("'", "\\'")
     analise = noticia.get("analise", "")
     atencao = noticia.get("atencao", "")
     analise_html = f"""  <div class="a-analise">
@@ -219,10 +216,15 @@ def _article_card(noticia: dict) -> str:
     <p>{analise}</p>
   </div>""" if analise else ""
     atencao_html = f'  <div class="a-atencao">👁 {atencao}</div>' if atencao else ""
-    share_url = url if url != "#" else "https://ordemeliberdade.org"
+
+    # Escape seguro para data attributes
+    titulo_esc  = htmllib.escape(noticia.get("titulo", ""), quote=True)
+    resumo_esc  = htmllib.escape(noticia.get("resumo", ""), quote=True)
+    analise_esc = htmllib.escape(analise, quote=True)
+    url_esc     = htmllib.escape(url, quote=True)
 
     return f"""<div class="article-card">
-  <a href="{url}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <a href="{url_esc}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
   <div class="a-fonte">{noticia.get('pais','')}&nbsp;{noticia.get('fonte','').upper()}</div>
   {tags_html}
   <h3>{noticia.get('titulo', '')}</h3>
@@ -231,12 +233,17 @@ def _article_card(noticia: dict) -> str:
 {atencao_html}
 {pensador_html}
   </a>
-  <button class="share-btn" onclick="compartilhar(event, '{titulo}', '{share_url}')">↗ Compartilhar</button>
+  <button class="share-btn"
+    data-titulo="{titulo_esc}"
+    data-resumo="{resumo_esc}"
+    data-analise="{analise_esc}"
+    data-url="{url_esc}"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
 </div>"""
 
 
 def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict | None = None) -> str:
-    """Gera o HTML no novo layout de jornal digital."""
+    """Gera o HTML no layout de jornal digital."""
 
     noticias    = analise.get("noticias", [])
     editorial   = analise.get("editorial", "")
@@ -245,20 +252,18 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     noticias_br   = [n for n in noticias if n.get("pais") == "🇧🇷"]
     noticias_intl = [n for n in noticias if n.get("pais") == "🌐"]
 
-    # Sidebar: até 4 primeiras notícias
-    sidebar_items = "".join(_sidebar_item(n) for n in noticias[:4])
+    # Sidebar: até 6 manchetes
+    sidebar_items = "".join(_sidebar_item(n) for n in noticias[:6])
 
     # Grids
     grid_br   = "".join(_article_card(n) for n in noticias_br)
     grid_intl = "".join(_article_card(n) for n in noticias_intl)
 
-    # Ticker
+    # Ticker e nav badge
     ticker_html = _ticker_html(ticker)
-
-    # BTC price badge no navbar
     nav_btc = ""
-    if ticker.get("btc_brl"):
-        nav_btc = f'<span class="nav-btc">₿ {_fmt_btc(ticker["btc_brl"])}</span>'
+    if ticker.get("btc_usd"):
+        nav_btc = f'<span class="nav-btc">₿ {_fmt_btc_usd(ticker["btc_usd"])}</span>'
 
     # Seções condicionais
     secao_br = f"""<div class="section-header">
@@ -315,15 +320,15 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     }}
     a {{ color: inherit; text-decoration: none; }}
 
-    /* ── NAV ── */
+    /* ── NAV (mais alto e com fontes maiores) ── */
     .nav {{
       background: var(--bg);
-      padding: 0 2rem;
+      padding: 0 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 68px;
-      border-bottom: 2px solid var(--ouro);
+      height: 100px;
+      border-bottom: 3px solid var(--ouro);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -331,31 +336,31 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     .nav-logo {{
       display: flex;
       flex-direction: column;
-      line-height: 1.1;
-      gap: 3px;
+      line-height: 1.15;
+      gap: 5px;
     }}
     .nav-logo .title {{
       font-family: var(--fonte-ser);
-      font-size: 24px;
+      font-size: 34px;
       font-weight: 700;
       color: #fff;
-      letter-spacing: -0.4px;
+      letter-spacing: -0.5px;
     }}
     .nav-logo .title span {{ color: var(--ouro); }}
     .nav-logo .subtitle {{
-      font-size: 10px;
+      font-size: 13px;
       color: var(--ouro);
-      letter-spacing: 2.5px;
+      letter-spacing: 3px;
       text-transform: uppercase;
     }}
     .nav-links {{
       display: flex;
-      gap: 28px;
+      gap: 36px;
       list-style: none;
     }}
     .nav-links a {{
       color: var(--texto-sec);
-      font-size: 14px;
+      font-size: 16px;
       letter-spacing: 0.3px;
       transition: color 0.2s;
     }}
@@ -363,20 +368,20 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     .nav-right {{
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }}
     .nav-btc {{
-      font-size: 13px;
+      font-size: 15px;
       color: var(--ouro);
       font-weight: 600;
       border: 1px solid var(--ouro-esc);
-      padding: 5px 12px;
+      padding: 7px 16px;
       border-radius: 4px;
       font-family: var(--fonte-san);
       letter-spacing: 0.3px;
     }}
     .nav-date {{
-      font-size: 12px;
+      font-size: 14px;
       color: var(--texto-fra);
       letter-spacing: 0.5px;
     }}
@@ -385,7 +390,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       background: none;
       border: none;
       color: var(--texto-sec);
-      font-size: 22px;
+      font-size: 26px;
       cursor: pointer;
       padding: 4px 8px;
       line-height: 1;
@@ -394,7 +399,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     /* ── TICKER ── */
     .ticker {{
       background: var(--surface-1);
-      padding: 7px 2rem;
+      padding: 8px 2.5rem;
       display: flex;
       gap: 0;
       overflow-x: auto;
@@ -403,30 +408,27 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     }}
     .ticker::-webkit-scrollbar {{ display: none; }}
     .ticker-item {{
-      font-size: 12px;
+      font-size: 13px;
       color: var(--texto-sec);
       white-space: nowrap;
       display: flex;
-      gap: 6px;
+      gap: 8px;
       align-items: center;
-      padding: 0 18px;
+      padding: 0 22px;
       border-right: 0.5px solid var(--borda-f);
     }}
     .ticker-item:first-child {{ padding-left: 0; }}
     .ticker-item:last-child {{ border-right: none; }}
-    .ticker-item .label {{ color: var(--ouro); font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }}
-    .ticker-item .muted {{ color: var(--texto-fra); }}
-    .ticker-item .tick-sep {{ color: var(--borda-f); }}
-    .ticker-item a {{ color: var(--ouro); opacity: 0.75; transition: opacity 0.2s;
-}}
+    .ticker-item .label {{ color: var(--ouro); font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }}
+    .ticker-item a {{ color: var(--ouro); opacity: 0.75; transition: opacity 0.2s; }}
     .ticker-item a:hover {{ opacity: 1; }}
 
-    /* ── HERO ── */
+    /* ── HERO (sidebar mais larga) ── */
     .hero {{
       display: grid;
-      grid-template-columns: 1fr 340px;
+      grid-template-columns: 1fr 480px;
       border-bottom: 0.5px solid var(--borda-f);
-      min-height: 480px;
+      min-height: 500px;
     }}
     .hero-main {{
       position: relative;
@@ -456,17 +458,17 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       display: inline-block;
       background: var(--ouro);
       color: #0f0f0f;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      padding: 4px 11px;
+      padding: 5px 13px;
       border-radius: 2px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }}
     .hero-title {{
       font-family: var(--fonte-ser);
-      font-size: 42px;
+      font-size: 44px;
       font-weight: 700;
       color: #fff;
       line-height: 1.25;
@@ -476,7 +478,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     .hero-editorial {{
       font-family: var(--fonte-ser);
       font-style: italic;
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       color: #c8bc96;
       line-height: 1.8;
       max-width: 660px;
@@ -484,11 +486,12 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     }}
     .hero-meta {{
       margin-top: 1.4rem;
-      font-size: 12px;
+      font-size: 13px;
       color: rgba(255,255,255,0.45);
       letter-spacing: 0.5px;
     }}
 
+    /* ── SIDEBAR (mais larga) ── */
     .hero-sidebar {{
       border-left: 0.5px solid var(--borda-f);
       display: flex;
@@ -496,40 +499,40 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       background: var(--surface);
     }}
     .sidebar-title {{
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
       color: var(--texto-fra);
-      padding: 16px 18px 12px;
+      padding: 18px 22px 14px;
       border-bottom: 0.5px solid var(--borda-f);
     }}
     .sidebar-article {{
       display: block;
-      padding: 16px 18px;
+      padding: 18px 22px;
       border-bottom: 0.5px solid var(--borda);
       cursor: pointer;
       transition: background 0.2s;
     }}
     .sidebar-article:hover {{ background: var(--surface-1); }}
     .sidebar-article .s-tag {{
-      font-size: 9px;
+      font-size: 10px;
       color: var(--ouro);
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
       font-weight: 600;
     }}
     .sidebar-article h4 {{
       font-family: var(--fonte-ser);
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--texto);
       line-height: 1.4;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }}
     .sidebar-article .s-meta {{
-      font-size: 11px;
+      font-size: 12px;
       color: var(--texto-fra);
     }}
 
@@ -538,7 +541,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 1.4rem 2rem 1rem;
+      padding: 1.4rem 2.5rem 1rem;
       border-bottom: 0.5px solid var(--borda-f);
     }}
     .section-header .accent-line {{
@@ -549,7 +552,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       flex-shrink: 0;
     }}
     .section-header h2 {{
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
@@ -562,7 +565,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       background: var(--borda-f);
     }}
 
-    /* ── ARTICLES GRID ── */
+    /* ── ARTICLES GRID — 3 colunas fixas ── */
     .articles-grid {{
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -572,12 +575,10 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       display: block;
       padding: 1.8rem;
       border-right: 0.5px solid var(--borda-f);
-      cursor: pointer;
       transition: background 0.2s;
-      text-decoration: none;
       position: relative;
     }}
-    .article-card:last-child {{ border-right: none; }}
+    .article-card:nth-child(3n) {{ border-right: none; }}
     .article-card:hover {{ background: var(--surface-1); }}
     .a-fonte {{
       font-size: 10px;
@@ -653,17 +654,19 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       font-style: italic;
       font-family: var(--fonte-ser);
     }}
+
+    /* ── SHARE BUTTON ── */
     .share-btn {{
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 12px;
       color: var(--texto-fra);
       background: var(--surface-2);
       border: 0.5px solid var(--borda-f);
       border-radius: 4px;
-      padding: 6px 12px;
+      padding: 7px 14px;
       cursor: pointer;
       transition: color 0.2s, border-color 0.2s, background 0.2s;
       font-family: var(--fonte-san);
@@ -674,38 +677,42 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       border-color: var(--ouro-esc);
       background: #1a1400;
     }}
+    .share-btn.copiado {{
+      color: var(--verde);
+      border-color: var(--verde);
+    }}
 
     /* ── BSAFE BANNER ── */
     .btc-banner {{
       background: var(--surface);
       border-top: 0.5px solid var(--borda-f);
       border-bottom: 0.5px solid var(--borda-f);
-      padding: 1.1rem 2rem;
+      padding: 1.2rem 2.5rem;
       display: flex;
       align-items: center;
       gap: 16px;
     }}
     .btc-banner .btc-icon {{
-      font-size: 26px;
+      font-size: 28px;
       color: var(--ouro);
       flex-shrink: 0;
     }}
     .btc-banner .btc-text {{ flex: 1; }}
     .btc-banner .btc-text h4 {{
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       color: #fff;
       margin-bottom: 3px;
     }}
     .btc-banner .btc-text p {{
-      font-size: 12px;
+      font-size: 13px;
       color: var(--texto-fra);
     }}
     .btc-banner .btc-cta {{
-      font-size: 12px;
+      font-size: 13px;
       color: var(--ouro);
       border: 1px solid var(--ouro-esc);
-      padding: 7px 16px;
+      padding: 8px 18px;
       border-radius: 4px;
       cursor: pointer;
       white-space: nowrap;
@@ -717,14 +724,14 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     /* ── FOOTER ── */
     .footer {{
       background: var(--bg);
-      padding: 2rem;
+      padding: 2.5rem;
       display: grid;
       grid-template-columns: 1.4fr 1fr 1fr;
       gap: 2.5rem;
       border-top: 2px solid var(--ouro);
     }}
     .footer-col h5 {{
-      font-size: 9px;
+      font-size: 10px;
       letter-spacing: 2.5px;
       text-transform: uppercase;
       color: var(--ouro);
@@ -733,14 +740,14 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     }}
     .footer-logo {{
       font-family: var(--fonte-ser);
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
       color: #fff;
       margin-bottom: 8px;
     }}
     .footer-logo span {{ color: var(--ouro); }}
     .footer-col p, .footer-col a {{
-      font-size: 12px;
+      font-size: 13px;
       color: var(--texto-fra);
       line-height: 1.85;
       display: block;
@@ -748,19 +755,22 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     .footer-col a:hover {{ color: var(--texto-sec); }}
     .footer-bottom {{
       background: var(--bg);
-      padding: 12px 2rem;
+      padding: 14px 2.5rem;
       border-top: 0.5px solid var(--borda);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }}
     .footer-bottom span {{
-      font-size: 10.5px;
+      font-size: 11px;
       color: #3a3a3a;
       letter-spacing: 0.3px;
     }}
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {{
+      .hero {{ grid-template-columns: 1fr 360px; }}
+    }}
     @media (max-width: 900px) {{
       .hero {{ grid-template-columns: 1fr; min-height: auto; }}
       .hero-main {{ padding: 2rem 1.5rem 2rem; }}
@@ -774,7 +784,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 68px;
+        top: 100px;
         left: 0;
         right: 0;
         background: var(--surface);
@@ -783,7 +793,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
         gap: 16px;
         z-index: 99;
       }}
-      .nav-links.open a {{ font-size: 16px; padding: 4px 0; }}
+      .nav-links.open a {{ font-size: 18px; padding: 4px 0; }}
       .menu-toggle {{ display: block; }}
       .footer {{ grid-template-columns: 1fr; gap: 1.5rem; }}
       .ticker {{ padding: 6px 1rem; }}
@@ -791,8 +801,9 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       .btc-banner {{ flex-wrap: wrap; padding: 1rem; gap: 12px; }}
     }}
     @media (max-width: 600px) {{
-      .nav {{ padding: 0 1rem; height: 60px; }}
-      .nav-logo .title {{ font-size: 20px; }}
+      .nav {{ padding: 0 1rem; height: 76px; }}
+      .nav-logo .title {{ font-size: 26px; }}
+      .nav-logo .subtitle {{ font-size: 11px; }}
       .nav-btc {{ display: none; }}
       .nav-date {{ display: none; }}
       .hero-main {{ padding: 1.5rem 1rem 1.5rem; }}
@@ -881,8 +892,6 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     <a href="#">Brasil</a>
     <a href="#">Internacional</a>
     <a href="analisar.html">Analisar Notícia</a>
-    <a href="https://mises.org.br" target="_blank">Mises Brasil ↗</a>
-    <a href="https://www.gazetadopovo.com.br" target="_blank">Gazeta do Povo ↗</a>
   </div>
   <div class="footer-col">
     <h5>BSafe Bitcoin</h5>
@@ -905,7 +914,6 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       navLinks.classList.toggle('open');
       toggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
     }});
-    // Fecha ao clicar fora
     document.addEventListener('click', (e) => {{
       if (!toggle.contains(e.target) && !navLinks.contains(e.target)) {{
         navLinks.classList.remove('open');
@@ -914,27 +922,38 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
     }});
   }}
 
-  // Compartilhar
-  function compartilhar(e, titulo, url) {{
+  // Compartilhamento individual: título + resumo + análise
+  function compartilharArtigo(e, btn) {{
     e.preventDefault();
     e.stopPropagation();
+
+    const titulo  = btn.dataset.titulo;
+    const resumo  = btn.dataset.resumo;
+    const analise = btn.dataset.analise;
+    const url     = btn.dataset.url;
+
+    const texto = titulo
+      + '\\n\\n' + resumo
+      + '\\n\\n⚖️ Ordem & Liberdade: ' + analise
+      + (url ? '\\n\\n🔗 ' + url : '');
+
+    function feedback(ok) {{
+      btn.classList.add(ok ? 'copiado' : '');
+      const orig = btn.textContent;
+      btn.textContent = ok ? '✓ Copiado!' : '✗ Erro';
+      setTimeout(() => {{
+        btn.textContent = orig;
+        btn.classList.remove('copiado');
+      }}, 2200);
+    }}
+
     if (navigator.share) {{
-      navigator.share({{ title: titulo, url: url }}).catch(() => {{}});
+      navigator.share({{ title: titulo, text: texto, url: url || undefined }})
+        .catch(() => {{}}); // user dismissed — silencioso
     }} else {{
-      navigator.clipboard.writeText(url).then(() => {{
-        const btn = e.currentTarget;
-        const orig = btn.textContent;
-        btn.textContent = '✓ Link copiado!';
-        btn.style.color = 'var(--verde)';
-        btn.style.borderColor = 'var(--verde)';
-        setTimeout(() => {{
-          btn.textContent = orig;
-          btn.style.color = '';
-          btn.style.borderColor = '';
-        }}, 2000);
-      }}).catch(() => {{
-        window.open(url, '_blank');
-      }});
+      navigator.clipboard.writeText(texto)
+        .then(() => feedback(true))
+        .catch(() => feedback(false));
     }}
   }}
 </script>
@@ -979,7 +998,7 @@ def main():
 
     print(f"=== Ordem & Liberdade — {data_formatada} ===\n")
 
-    print("Buscando cotações...")
+    print("Buscando cotação do Bitcoin...")
     ticker = buscar_ticker()
 
     print("\nBuscando manchetes...")
