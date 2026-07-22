@@ -16,20 +16,14 @@ from pathlib import Path
 # ─────────────────────────────────────────────
 RSS_FEEDS = [
     # ── Brasil ──────────────────────────────────
-    {"nome": "G1",            "pais": "🇧🇷", "url": "https://g1.globo.com/rss/g1/"},
-    {"nome": "Folha",         "pais": "🇧🇷", "url": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml"},
-    {"nome": "UOL Notícias",  "pais": "🇧🇷", "url": "https://rss.uol.com.br/feed/noticias.xml"},
-    {"nome": "Gazeta do Povo","pais": "🇧🇷", "url": "https://www.gazetadopovo.com.br/feed/"},
-    {"nome": "Mises Brasil",  "pais": "🇧🇷", "url": "https://www.mises.org.br/feed"},
+    {"nome": "O Globo",  "pais": "🇧🇷", "url": "https://oglobo.globo.com/rss.xml"},
+    {"nome": "Folha",    "pais": "🇧🇷", "url": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml"},
     # ── Internacional ────────────────────────────
-    {"nome": "BBC",           "pais": "🌐", "url": "https://feeds.bbci.co.uk/news/rsq.xml"},
-    {"nome": "The Spectator", "pais": "🌐", "url": "https://www.spectator.co.uk/rss"},
-    {"nome": "Fox News",      "pais": "🌐", "url": "https://moxie.foxnews.com/google-publisher/latest.xml"},
-    {"nome": "Wall Street Journal","pais": "🌐","url": "https://feeds.a.dj.com/rss/RSSWorldNews.xml"},
-    {"nome": "The Times UK",  "pais": "🌐", "url": "https://www.thetimes.co.uk/rss/news"},
+    {"nome": "New York Times", "pais": "🌐", "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"},
+    {"nome": "The Guardian",   "pais": "🌐", "url": "https://www.theguardian.com/world/rss"},
 ]
 
-MAX_NOTICIAS_POR_FONTE = 1
+MAX_NOTICIAS_POR_FONTE = 2
 MAX_NOTICIAS_TOTAL     = 8
 
 # ─────────────────────────────────────────────
@@ -51,7 +45,7 @@ Chesterton: não derrube uma cerca sem entender por que foi erguida.
 
 Ao analisar: cite o pensador mais pertinente, use linguagem clara e culta, seja incisivo mas justo."""
 
-USER_PROMPT_TEMPLATE = """Abaixo estão as principais notícias de hoje ({data}).
+USER_PROMPT_TEMPLATE = """Abaixo estão as principais manchetes de hoje ({data}).
 
 Para CADA notícia, forneça análise em PORTUGUÊS (mesmo para fontes internacionais, traduza e analise em PT).
 
@@ -76,10 +70,10 @@ Responda em JSON com EXATAMENTE este formato:
       "atencao": "ponto de atenção em 1 frase"
     }}
   ],
-  "editorial": "parágrafo editorial em português (3-4 frases, tom ensaístico, perspectiva conservadora-libertária sobre o conjunto das notícias do dia)"
+  "editorial": "parágrafo editorial em português (3-4 frases, tom ensaístico, perspectiva conservadora-libertária sobre o conjunto das manchetes do dia)"
 }}
 
-NOTÍCIAS DE HOJE:
+MANCHETES DE HOJE:
 {noticias}"""
 
 
@@ -124,7 +118,7 @@ def buscar_noticias() -> list[dict]:
                     "url":    entry.get("link", ""),
                     "resumo_original": resumo,
                 })
-            print(f" ✓ {feed_info['pais']} {feed_info['nome']}: {len(entradas)} notícias")
+            print(f" ✓ {feed_info['pais']} {feed_info['nome']}: {len(entradas)} manchetes")
         except Exception as e:
             print(f" ✗ {feed_info['nome']}: erro — {e}")
     return noticias[:MAX_NOTICIAS_TOTAL]
@@ -976,7 +970,7 @@ def main():
     hoje           = datetime.date.today()
     data_str       = hoje.strftime("%Y-%m-%d")
     data_formatada = hoje.strftime("%d de %B de %Y").replace(
-        "January","maneiro").replace("February","fevereiro").replace(
+        "January","janeiro").replace("February","fevereiro").replace(
         "March","março").replace("April","abril").replace(
         "May","maio").replace("June","junho").replace(
         "July","julho").replace("August","agosto").replace(
@@ -988,13 +982,13 @@ def main():
     print("Buscando cotações...")
     ticker = buscar_ticker()
 
-    print("\nBuscando notícias...")
+    print("\nBuscando manchetes...")
     noticias = buscar_noticias()
-    print(f"\nTotal: {len(noticias)} notícias coletadas")
+    print(f"\nTotal: {len(noticias)} manchetes coletadas")
 
     print("\nAnalisando com Claude...")
     analise = analisar_com_claude(noticias, data_formatada)
-    print(f"✓ {len(analise.get('noticias', []))} notícias analisadas")
+    print(f"✓ {len(analise.get('noticias', []))} manchetes analisadas")
 
     html = gerar_html(analise, data_str, data_formatada, ticker)
 
