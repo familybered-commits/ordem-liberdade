@@ -242,12 +242,49 @@ def _article_card(noticia: dict) -> str:
 </div>"""
 
 
-def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict | None = None) -> str:
+def dia_util_anterior(data: datetime.date) -> datetime.date:
+    """Retorna o dia útil anterior (pula fins de semana)."""
+    d = data - datetime.timedelta(days=1)
+    while d.weekday() >= 5:  # 5=Sáb, 6=Dom
+        d -= datetime.timedelta(days=1)
+    return d
+
+
+def formatar_data_pt(data: datetime.date) -> str:
+    return data.strftime("%d de %B de %Y").replace(
+        "January","janeiro").replace("February","fevereiro").replace(
+        "March","março").replace("April","abril").replace(
+        "May","maio").replace("June","junho").replace(
+        "July","julho").replace("August","agosto").replace(
+        "September","setembro").replace("October","outubro").replace(
+        "November","novembro").replace("December","dezembro")
+
+
+def gerar_html(analise: dict, data_str: str, data_formatada: str,
+               ticker: dict | None = None,
+               data_anterior: str | None = None,
+               data_proxima: str | None = None) -> str:
     """Gera o HTML no layout de jornal digital."""
 
     noticias    = analise.get("noticias", [])
     editorial   = analise.get("editorial", "")
     ticker      = ticker or {}
+
+    # ── Navegação entre dias ──
+    nav_anterior = ""
+    nav_proxima  = ""
+    if data_anterior:
+        nav_anterior = f'<a class="pag-nav-link prev" href="{data_anterior}.html">← Dia anterior</a>'
+    if data_proxima:
+        nav_proxima = f'<a class="pag-nav-link next" href="{data_proxima}.html">Próximo →</a>'
+    pag_nav_html = f"""<div class="pag-nav">
+  <div class="pag-nav-inner">
+    {nav_anterior}
+    <a class="pag-nav-link arquivo" href="arquivo.html">📅 Arquivo</a>
+    {nav_proxima}
+  </div>
+</div>""" if (data_anterior or data_proxima) else \
+    '<div class="pag-nav"><div class="pag-nav-inner"><a class="pag-nav-link arquivo" href="arquivo.html">📅 Arquivo de Edições</a></div></div>'
 
     noticias_br   = [n for n in noticias if n.get("pais") == "🇧🇷"]
     noticias_intl = [n for n in noticias if n.get("pais") == "🌐"]
@@ -655,6 +692,42 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
       font-family: var(--fonte-ser);
     }}
 
+    /* ── NAVEGAÇÃO ENTRE DIAS ── */
+    .pag-nav {{
+      background: var(--surface-1);
+      border-top: 0.5px solid var(--borda-f);
+      border-bottom: 0.5px solid var(--borda-f);
+      padding: 14px 2.5rem;
+    }}
+    .pag-nav-inner {{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }}
+    .pag-nav-link {{
+      font-size: 14px;
+      color: var(--texto-sec);
+      letter-spacing: 0.3px;
+      padding: 8px 20px;
+      border: 0.5px solid var(--borda-f);
+      border-radius: 4px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      background: transparent;
+    }}
+    .pag-nav-link:hover {{
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      background: #1a1400;
+    }}
+    .pag-nav-link.arquivo {{
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      font-weight: 600;
+    }}
+    .pag-nav-link.prev::before {{ content: ''; }}
+    .pag-nav-link.next::after  {{ content: ''; }}
+
     /* ── SHARE BUTTON ── */
     .share-btn {{
       display: inline-flex;
@@ -827,6 +900,7 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
   </div>
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html" class="active">Digest do Dia</a></li>
+    <li><a href="arquivo.html">Arquivo</a></li>
     <li><a href="analisar.html">Analisar Notícia</a></li>
     <li><a href="https://bsafebitcoin.org" target="_blank">BSafe Bitcoin ↗</a></li>
   </ul>
@@ -880,6 +954,9 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
 
 <!-- SEÇÃO INTERNACIONAL -->
 {secao_intl}
+
+<!-- NAVEGAÇÃO ENTRE DIAS -->
+{pag_nav_html}
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -966,8 +1043,112 @@ def gerar_html(analise: dict, data_str: str, data_formatada: str, ticker: dict |
 # SALVAR
 # ─────────────────────────────────────────────
 
+def gerar_arquivo_html(output_dir: Path) -> None:
+    """Gera/atualiza arquivo.html com a lista de todos os digests publicados."""
+    import re
+    pattern = re.compile(r"^(\d{4}-\d{2}-\d{2})\.html$")
+    dias = []
+    for f in output_dir.iterdir():
+        m = pattern.match(f.name)
+        if m:
+            dias.append(m.group(1))
+    dias.sort(reverse=True)
+
+    if not dias:
+        return
+
+    items_html = ""
+    for d in dias:
+        try:
+            data_obj = datetime.date.fromisoformat(d)
+            label = formatar_data_pt(data_obj)
+        except ValueError:
+            label = d
+        items_html += f'    <li><a class="arq-link" href="{d}.html">📰 {label}</a></li>\n'
+
+    html = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arquivo — Ordem &amp; Liberdade</title>
+  <style>
+    :root {{
+      --ouro: #e5a810; --ouro-esc: #b8860b;
+      --bg: #0f0f0f; --surface: #141414; --surface-1: #1a1a1a;
+      --texto: #e0e0e0; --texto-sec: #aaa; --texto-fra: #666;
+      --borda-f: #333;
+      --fonte-ser: 'Georgia','Times New Roman',serif;
+      --fonte-san: Arial,'Helvetica Neue',sans-serif;
+    }}
+    * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+    body {{ font-family: var(--fonte-san); background: var(--bg); color: var(--texto); }}
+    .nav {{
+      background: var(--bg); padding: 0 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 100px; border-bottom: 3px solid var(--ouro);
+      position: sticky; top: 0; z-index: 100;
+    }}
+    .nav-logo .title {{
+      font-family: var(--fonte-ser); font-size: 34px; font-weight: 700; color: #fff;
+    }}
+    .nav-logo .title span {{ color: var(--ouro); }}
+    .nav-logo .subtitle {{
+      font-size: 13px; color: var(--ouro); letter-spacing: 3px; text-transform: uppercase;
+    }}
+    .nav-back {{
+      font-size: 15px; color: var(--texto-sec); border: 0.5px solid var(--borda-f);
+      padding: 8px 20px; border-radius: 4px; transition: color 0.2s, border-color 0.2s;
+    }}
+    .nav-back:hover {{ color: var(--ouro); border-color: var(--ouro-esc); }}
+    .container {{
+      max-width: 800px; margin: 0 auto; padding: 3rem 2rem;
+    }}
+    h1 {{
+      font-family: var(--fonte-ser); font-size: 32px; color: #fff;
+      margin-bottom: 8px;
+    }}
+    .subtitle-page {{
+      font-size: 14px; color: var(--texto-fra); margin-bottom: 2.5rem;
+    }}
+    ul {{ list-style: none; }}
+    li {{ border-bottom: 0.5px solid var(--borda-f); }}
+    .arq-link {{
+      display: block; padding: 18px 0;
+      font-family: var(--fonte-ser); font-size: 18px;
+      color: var(--texto-sec); transition: color 0.2s, padding-left 0.2s;
+    }}
+    .arq-link:hover {{ color: var(--ouro); padding-left: 10px; }}
+    .footer-bottom {{
+      text-align: center; padding: 2rem; font-size: 11px; color: #3a3a3a;
+      border-top: 0.5px solid var(--borda-f); margin-top: 3rem;
+    }}
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <div class="title">Ordem <span>&amp;</span> Liberdade</div>
+    <div class="subtitle">BSafe Bitcoin · Est. 2026</div>
+  </div>
+  <a class="nav-back" href="index.html">← Edição de Hoje</a>
+</nav>
+<div class="container">
+  <h1>📅 Arquivo de Edições</h1>
+  <p class="subtitle-page">{len(dias)} edição{'ões' if len(dias) != 1 else ''} publicada{'s' if len(dias) != 1 else ''}</p>
+  <ul>
+{items_html}  </ul>
+</div>
+<div class="footer-bottom">© 2026 Ordem &amp; Liberdade · BSafe Bitcoin</div>
+</body>
+</html>"""
+
+    (output_dir / "arquivo.html").write_text(html, encoding="utf-8")
+    print(f"✓ arquivo.html atualizado ({len(dias)} edições)")
+
+
 def salvar_arquivo(html: str, data_str: str, output_dir: Path):
-    """Salva o HTML e atualiza o index.html."""
+    """Salva o HTML, atualiza index.html e regenera arquivo.html."""
     output_dir.mkdir(parents=True, exist_ok=True)
 
     arquivo_dia = output_dir / f"{data_str}.html"
@@ -977,6 +1158,8 @@ def salvar_arquivo(html: str, data_str: str, output_dir: Path):
     index = output_dir / "index.html"
     index.write_text(html, encoding="utf-8")
     print(f"✓ index.html atualizado")
+
+    gerar_arquivo_html(output_dir)
 
     return arquivo_dia
 
@@ -988,15 +1171,23 @@ def salvar_arquivo(html: str, data_str: str, output_dir: Path):
 def main():
     hoje           = datetime.date.today()
     data_str       = hoje.strftime("%Y-%m-%d")
-    data_formatada = hoje.strftime("%d de %B de %Y").replace(
-        "January","janeiro").replace("February","fevereiro").replace(
-        "March","março").replace("April","abril").replace(
-        "May","maio").replace("June","junho").replace(
-        "July","julho").replace("August","agosto").replace(
-        "September","setembro").replace("October","outubro").replace(
-        "November","novembro").replace("December","dezembro")
+    data_formatada = formatar_data_pt(hoje)
 
     print(f"=== Ordem & Liberdade — {data_formatada} ===\n")
+
+    output_dir = Path(__file__).parent / "docs"
+
+    # ── Dias anterior e próximo (só mostra link se o arquivo existir) ──
+    anterior_obj  = dia_util_anterior(hoje)
+    anterior_str  = anterior_obj.strftime("%Y-%m-%d")
+    tem_anterior  = (output_dir / f"{anterior_str}.html").exists()
+
+    # Próximo dia útil — só relevante se estivermos regenerando um digest antigo
+    proximo_obj   = hoje + datetime.timedelta(days=1)
+    while proximo_obj.weekday() >= 5:
+        proximo_obj += datetime.timedelta(days=1)
+    proximo_str   = proximo_obj.strftime("%Y-%m-%d")
+    tem_proximo   = (output_dir / f"{proximo_str}.html").exists()
 
     print("Buscando cotação do Bitcoin...")
     ticker = buscar_ticker()
@@ -1009,9 +1200,12 @@ def main():
     analise = analisar_com_claude(noticias, data_formatada)
     print(f"✓ {len(analise.get('noticias', []))} manchetes analisadas")
 
-    html = gerar_html(analise, data_str, data_formatada, ticker)
+    html = gerar_html(
+        analise, data_str, data_formatada, ticker,
+        data_anterior=anterior_str if tem_anterior else None,
+        data_proxima=proximo_str  if tem_proximo  else None,
+    )
 
-    output_dir = Path(__file__).parent / "docs"
     salvar_arquivo(html, data_str, output_dir)
 
     print("\n✅ Digest gerado com sucesso!")
