@@ -34,15 +34,15 @@
     }
     a { color: inherit; text-decoration: none; }
 
-    /* ── NAV ── */
+    /* ── NAV (mais alto e com fontes maiores) ── */
     .nav {
       background: var(--bg);
-      padding: 0 2rem;
+      padding: 0 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 68px;
-      border-bottom: 2px solid var(--ouro);
+      height: 100px;
+      border-bottom: 3px solid var(--ouro);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -50,31 +50,31 @@
     .nav-logo {
       display: flex;
       flex-direction: column;
-      line-height: 1.1;
-      gap: 3px;
+      line-height: 1.15;
+      gap: 5px;
     }
     .nav-logo .title {
       font-family: var(--fonte-ser);
-      font-size: 24px;
+      font-size: 34px;
       font-weight: 700;
       color: #fff;
-      letter-spacing: -0.4px;
+      letter-spacing: -0.5px;
     }
     .nav-logo .title span { color: var(--ouro); }
     .nav-logo .subtitle {
-      font-size: 10px;
+      font-size: 13px;
       color: var(--ouro);
-      letter-spacing: 2.5px;
+      letter-spacing: 3px;
       text-transform: uppercase;
     }
     .nav-links {
       display: flex;
-      gap: 28px;
+      gap: 36px;
       list-style: none;
     }
     .nav-links a {
       color: var(--texto-sec);
-      font-size: 14px;
+      font-size: 16px;
       letter-spacing: 0.3px;
       transition: color 0.2s;
     }
@@ -82,20 +82,20 @@
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
     .nav-btc {
-      font-size: 13px;
+      font-size: 15px;
       color: var(--ouro);
       font-weight: 600;
       border: 1px solid var(--ouro-esc);
-      padding: 5px 12px;
+      padding: 7px 16px;
       border-radius: 4px;
       font-family: var(--fonte-san);
       letter-spacing: 0.3px;
     }
     .nav-date {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--texto-fra);
       letter-spacing: 0.5px;
     }
@@ -104,7 +104,7 @@
       background: none;
       border: none;
       color: var(--texto-sec);
-      font-size: 22px;
+      font-size: 26px;
       cursor: pointer;
       padding: 4px 8px;
       line-height: 1;
@@ -113,7 +113,7 @@
     /* ── TICKER ── */
     .ticker {
       background: var(--surface-1);
-      padding: 7px 2rem;
+      padding: 8px 2.5rem;
       display: flex;
       gap: 0;
       overflow-x: auto;
@@ -122,30 +122,27 @@
     }
     .ticker::-webkit-scrollbar { display: none; }
     .ticker-item {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--texto-sec);
       white-space: nowrap;
       display: flex;
-      gap: 6px;
+      gap: 8px;
       align-items: center;
-      padding: 0 18px;
+      padding: 0 22px;
       border-right: 0.5px solid var(--borda-f);
     }
     .ticker-item:first-child { padding-left: 0; }
     .ticker-item:last-child { border-right: none; }
-    .ticker-item .label { color: var(--ouro); font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
-    .ticker-item .muted { color: var(--texto-fra); }
-    .ticker-item .tick-sep { color: var(--borda-f); }
-    .ticker-item a { color: var(--ouro); opacity: 0.75; transition: opacity 0.2s;
-}
+    .ticker-item .label { color: var(--ouro); font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
+    .ticker-item a { color: var(--ouro); opacity: 0.75; transition: opacity 0.2s; }
     .ticker-item a:hover { opacity: 1; }
 
-    /* ── HERO ── */
+    /* ── HERO (sidebar mais larga) ── */
     .hero {
       display: grid;
-      grid-template-columns: 1fr 340px;
+      grid-template-columns: 1fr 480px;
       border-bottom: 0.5px solid var(--borda-f);
-      min-height: 480px;
+      min-height: 500px;
     }
     .hero-main {
       position: relative;
@@ -175,17 +172,17 @@
       display: inline-block;
       background: var(--ouro);
       color: #0f0f0f;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      padding: 4px 11px;
+      padding: 5px 13px;
       border-radius: 2px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
     .hero-title {
       font-family: var(--fonte-ser);
-      font-size: 42px;
+      font-size: 44px;
       font-weight: 700;
       color: #fff;
       line-height: 1.25;
@@ -195,7 +192,7 @@
     .hero-editorial {
       font-family: var(--fonte-ser);
       font-style: italic;
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       color: #c8bc96;
       line-height: 1.8;
       max-width: 660px;
@@ -203,11 +200,12 @@
     }
     .hero-meta {
       margin-top: 1.4rem;
-      font-size: 12px;
+      font-size: 13px;
       color: rgba(255,255,255,0.45);
       letter-spacing: 0.5px;
     }
 
+    /* ── SIDEBAR (mais larga) ── */
     .hero-sidebar {
       border-left: 0.5px solid var(--borda-f);
       display: flex;
@@ -215,40 +213,40 @@
       background: var(--surface);
     }
     .sidebar-title {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
       color: var(--texto-fra);
-      padding: 16px 18px 12px;
+      padding: 18px 22px 14px;
       border-bottom: 0.5px solid var(--borda-f);
     }
     .sidebar-article {
       display: block;
-      padding: 16px 18px;
+      padding: 18px 22px;
       border-bottom: 0.5px solid var(--borda);
       cursor: pointer;
       transition: background 0.2s;
     }
     .sidebar-article:hover { background: var(--surface-1); }
     .sidebar-article .s-tag {
-      font-size: 9px;
+      font-size: 10px;
       color: var(--ouro);
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
       font-weight: 600;
     }
     .sidebar-article h4 {
       font-family: var(--fonte-ser);
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--texto);
       line-height: 1.4;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }
     .sidebar-article .s-meta {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--texto-fra);
     }
 
@@ -257,7 +255,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 1.4rem 2rem 1rem;
+      padding: 1.4rem 2.5rem 1rem;
       border-bottom: 0.5px solid var(--borda-f);
     }
     .section-header .accent-line {
@@ -268,7 +266,7 @@
       flex-shrink: 0;
     }
     .section-header h2 {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
@@ -281,7 +279,7 @@
       background: var(--borda-f);
     }
 
-    /* ── ARTICLES GRID ── */
+    /* ── ARTICLES GRID — 3 colunas fixas ── */
     .articles-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -291,12 +289,10 @@
       display: block;
       padding: 1.8rem;
       border-right: 0.5px solid var(--borda-f);
-      cursor: pointer;
       transition: background 0.2s;
-      text-decoration: none;
       position: relative;
     }
-    .article-card:last-child { border-right: none; }
+    .article-card:nth-child(3n) { border-right: none; }
     .article-card:hover { background: var(--surface-1); }
     .a-fonte {
       font-size: 10px;
@@ -372,17 +368,19 @@
       font-style: italic;
       font-family: var(--fonte-ser);
     }
+
+    /* ── SHARE BUTTON ── */
     .share-btn {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 12px;
       color: var(--texto-fra);
       background: var(--surface-2);
       border: 0.5px solid var(--borda-f);
       border-radius: 4px;
-      padding: 6px 12px;
+      padding: 7px 14px;
       cursor: pointer;
       transition: color 0.2s, border-color 0.2s, background 0.2s;
       font-family: var(--fonte-san);
@@ -393,38 +391,42 @@
       border-color: var(--ouro-esc);
       background: #1a1400;
     }
+    .share-btn.copiado {
+      color: var(--verde);
+      border-color: var(--verde);
+    }
 
     /* ── BSAFE BANNER ── */
     .btc-banner {
       background: var(--surface);
       border-top: 0.5px solid var(--borda-f);
       border-bottom: 0.5px solid var(--borda-f);
-      padding: 1.1rem 2rem;
+      padding: 1.2rem 2.5rem;
       display: flex;
       align-items: center;
       gap: 16px;
     }
     .btc-banner .btc-icon {
-      font-size: 26px;
+      font-size: 28px;
       color: var(--ouro);
       flex-shrink: 0;
     }
     .btc-banner .btc-text { flex: 1; }
     .btc-banner .btc-text h4 {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       color: #fff;
       margin-bottom: 3px;
     }
     .btc-banner .btc-text p {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--texto-fra);
     }
     .btc-banner .btc-cta {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--ouro);
       border: 1px solid var(--ouro-esc);
-      padding: 7px 16px;
+      padding: 8px 18px;
       border-radius: 4px;
       cursor: pointer;
       white-space: nowrap;
@@ -436,14 +438,14 @@
     /* ── FOOTER ── */
     .footer {
       background: var(--bg);
-      padding: 2rem;
+      padding: 2.5rem;
       display: grid;
       grid-template-columns: 1.4fr 1fr 1fr;
       gap: 2.5rem;
       border-top: 2px solid var(--ouro);
     }
     .footer-col h5 {
-      font-size: 9px;
+      font-size: 10px;
       letter-spacing: 2.5px;
       text-transform: uppercase;
       color: var(--ouro);
@@ -452,14 +454,14 @@
     }
     .footer-logo {
       font-family: var(--fonte-ser);
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
       color: #fff;
       margin-bottom: 8px;
     }
     .footer-logo span { color: var(--ouro); }
     .footer-col p, .footer-col a {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--texto-fra);
       line-height: 1.85;
       display: block;
@@ -467,19 +469,22 @@
     .footer-col a:hover { color: var(--texto-sec); }
     .footer-bottom {
       background: var(--bg);
-      padding: 12px 2rem;
+      padding: 14px 2.5rem;
       border-top: 0.5px solid var(--borda);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .footer-bottom span {
-      font-size: 10.5px;
+      font-size: 11px;
       color: #3a3a3a;
       letter-spacing: 0.3px;
     }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr 360px; }
+    }
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; min-height: auto; }
       .hero-main { padding: 2rem 1.5rem 2rem; }
@@ -493,7 +498,7 @@
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 68px;
+        top: 100px;
         left: 0;
         right: 0;
         background: var(--surface);
@@ -502,7 +507,7 @@
         gap: 16px;
         z-index: 99;
       }
-      .nav-links.open a { font-size: 16px; padding: 4px 0; }
+      .nav-links.open a { font-size: 18px; padding: 4px 0; }
       .menu-toggle { display: block; }
       .footer { grid-template-columns: 1fr; gap: 1.5rem; }
       .ticker { padding: 6px 1rem; }
@@ -510,8 +515,9 @@
       .btc-banner { flex-wrap: wrap; padding: 1rem; gap: 12px; }
     }
     @media (max-width: 600px) {
-      .nav { padding: 0 1rem; height: 60px; }
-      .nav-logo .title { font-size: 20px; }
+      .nav { padding: 0 1rem; height: 76px; }
+      .nav-logo .title { font-size: 26px; }
+      .nav-logo .subtitle { font-size: 11px; }
       .nav-btc { display: none; }
       .nav-date { display: none; }
       .hero-main { padding: 1.5rem 1rem 1.5rem; }
@@ -539,7 +545,7 @@
     <li><a href="https://bsafebitcoin.org" target="_blank">BSafe Bitcoin ↗</a></li>
   </ul>
   <div class="nav-right">
-    <span class="nav-btc">₿ R$ 332.748</span>
+    <span class="nav-btc">₿ $ 66,041</span>
     <span class="nav-date">22 de julho de 2026</span>
     <button class="menu-toggle" id="menu-toggle" aria-label="Menu">☰</button>
   </div>
@@ -547,8 +553,7 @@
 
 <!-- TICKER -->
 <div class="ticker">
-  <div class="ticker-item"><span class="label">BTC/BRL</span> R$ 332.748 <span class="tick-sep">·</span> <span class="muted">$ 65.522</span></div>
-  <div class="ticker-item"><span class="label">USD/BRL</span> 5,08</div>
+  <div class="ticker-item"><span class="label">BTC/USD</span> $ 66,041</div>
   <div class="ticker-item"><span class="label">BSafe Bitcoin</span> <a href="https://bsafebitcoin.org" target="_blank">bsafebitcoin.org ↗</a></div>
 </div>
 
@@ -566,7 +571,7 @@
     <div class="hero-content">
       <span class="hero-tag">Editorial do Dia</span>
       <h2 class="hero-title">Ordem &amp; Liberdade — 22 de julho de 2026</h2>
-      <p class="hero-editorial">O dia revela uma tríade de fracassos: o enfraquecimento das instituições liberais por captura política (caso Bolsonaro-PT), a ilusão de que acordos comerciais entre Estados criam paz quando interesses de poder divergem (nuclear saudita), e a incapacidade crônica de governos em resolver problemas econômicos básicos (fome e preços). A morte de Luiz Carlos Barreto marca a transição de uma era de construção cultural por mérito para outra de dependência estatal e clientelismo—verdadeira perda civilizacional. Enquanto isso, a ganância regulatória distorce mercados alimentares e nações rivalizam por armas nucleares, tudo enquanto progressistas apelam por mais governo e mais controle. O cidadão vigilante deve reconhecer que liberdade econômica real e respeito institucional não são luxos políticos, mas fundações de estabilidade humana.</p>
+      <p class="hero-editorial">O padrão do dia revela dilemas econômicos e morais que o estatismo nunca resolve: Brasil subsidia empresas ineficientes em vez de reformar estruturalmente; geopolítica energética reafirma que segurança não vem de ideologia climática imposta, mas de diversificação real e alianças confiáveis; surtos de doença exigem ciência, não pânico regulatório; e justiça criminal esvazia-se quando a conveniência administrativa sobrepõe-se ao direito das vítimas. Em cada frente, vemos o Estado inchar—gastando, controlando, relativizando princípios—enquanto os resultados pioram. A lição de Hayek e Bastiat permanece intacta: centralizar poder e recursos sob promessas de 'soberania' ou 'eficiência' sempre produz o oposto.</p>
       <p class="hero-meta">Burke · Mises · Hayek · Sowell · Roberto Campos</p>
     </div>
   </div>
@@ -574,21 +579,21 @@
   <div class="hero-sidebar">
     <div class="sidebar-title">Destaques de Hoje</div>
   <a class="sidebar-article" href="#" target="_blank" rel="noopener">
-    <div class="s-tag">FOLHA DE S.PAULO · CULTURA · CINEMA</div>
-    <h4>Morre Luiz Carlos Barreto, lenda do cinema brasileiro aos 98 anos</h4>
+    <div class="s-tag">FOLHA DE S.PAULO · ECONOMIA · PROTECIONISMO</div>
+    <h4>Lula anuncia R$ 13,5 bilhões em auxílio a empresas atingidas por tarifas americanas</h4>
     <div class="s-meta">🇧🇷 Folha de S.Paulo</div>
   </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
-    <div class="s-tag">FOLHA DE S.PAULO · POLÍTICA · JUSTIÇA</div>
-    <h4>PT ameaça processar Flávio Bolsonaro por críticas às urnas eletrônicas</h4>
-    <div class="s-meta">🇧🇷 Folha de S.Paulo</div>
+    <div class="s-tag">NEW YORK TIMES · GEOPOLÍTICA · ENERGIA</div>
+    <h4>Houthis ameaçam bloquear rotas alternativas do petróleo no Mar Vermelho</h4>
+    <div class="s-meta">🌐 New York Times</div>
   </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
-    <div class="s-tag">THE NEW YORK TIMES · GEOPOLÍTICA · ENERGIA NUCLEAR</div>
-    <h4>EUA negociam acordo que permitiria Arábia Saudita enriquecer combustível nuclear</h4>
-    <div class="s-meta">🌐 The New York Times</div>
+    <div class="s-tag">THE GUARDIAN · SAÚDE PÚBLICA · EBOLA</div>
+    <h4>Trabalhador humanitário em Londres monitorado após possível exposição ao ebola na RDC</h4>
+    <div class="s-meta">🌐 The Guardian</div>
   </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
-    <div class="s-tag">THE NEW YORK TIMES · GEOPOLÍTICA · SEGURANÇA INTERNACIONAL</div>
-    <h4>Acordo nuclear EUA-Arábia Saudita acirra temores de corrida armamentista no Oriente Médio</h4>
-    <div class="s-meta">🌐 The New York Times</div>
+    <div class="s-tag">BBC NEWS · JUSTIÇA CRIMINAL · SEGURANÇA PÚBLICA</div>
+    <h4>Viúva de policial critica plano de libertação antecipada de presos no Reino Unido</h4>
+    <div class="s-meta">🌐 BBC News</div>
   </a>
   </div>
 </div>
@@ -603,31 +608,22 @@
 <div class="article-card">
   <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
   <div class="a-fonte">🇧🇷&nbsp;FOLHA DE S.PAULO</div>
-  <span class="a-tag-chip">cultura</span><span class="a-tag-chip">cinema</span>
-  <h3>Morre Luiz Carlos Barreto, lenda do cinema brasileiro aos 98 anos</h3>
-  <p class="a-resumo">Faleceu Luiz Carlos Barreto, um dos maiores produtores de cinema do Brasil que atuou na indústria desde os anos 1960, aos 98 anos. Barreto nasceu em 1928 no Ceará numa época em que a mortalidade infantil era altíssima e dedicou sete décadas à produção cinematográfica nacional.</p>
+  <span class="a-tag-chip">economia</span><span class="a-tag-chip">protecionismo</span>
+  <h3>Lula anuncia R$ 13,5 bilhões em auxílio a empresas atingidas por tarifas americanas</h3>
+  <p class="a-resumo">O presidente Lula anunciará novo pacote de R$ 13,5 bilhões em ajuda a empresas afetadas pelas tarifas impostas pelos EUA contra produtos brasileiros, através do BNDES e do plano Brasil Soberano. A medida representa mais uma rodada de subsídios estatais em resposta à guerra comercial.</p>
   <div class="a-analise">
     <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
-    <p>A morte de Barreto representa o fim de uma época de construção cultural orgânica, quando a tradição cinematográfica brasileira se erguia pelo talento e persistência individual, não por subsídios estatal. Como diria Chesterton, perdemos um guardião vivo de nossa herança cultural—aquele que entendeu que a arte prospera pela maestria, não pela política.</p>
+    <p>Bastiat perguntaria: quem paga essa conta? Ao invés de enfrentar a raiz (competitividade estrutural), o governo socializa prejuízos e perpetua empresas ineficientes. O BNDES torna-se instrumento de proteção corporativa disfarçado de 'soberania', enquanto o cidadão comum financia perdas de setores privilegiados.</p>
   </div>
-  <div class="a-atencao">👁 Monitore se a indústria cinematográfica brasileira conseguirá renovar-se sem depender crescentemente de financiamento público e políticas de diversidade em detrimento do mérito.</div>
-<div class="a-pensador">✍️ Chesterton</div>
+  <div class="a-atencao">👁 Monitore quais empresas recebem recursos e se há critério técnico ou indicação política nas aprovações do BNDES.</div>
+<div class="a-pensador">✍️ Bastiat</div>
   </a>
-  <button class="share-btn" onclick="compartilhar(event, 'Morre Luiz Carlos Barreto, lenda do cinema brasileiro aos 98 anos', 'https://ordemeliberdade.org')">↗ Compartilhar</button>
-</div><div class="article-card">
-  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
-  <div class="a-fonte">🇧🇷&nbsp;FOLHA DE S.PAULO</div>
-  <span class="a-tag-chip">política</span><span class="a-tag-chip">justiça</span>
-  <h3>PT ameaça processar Flávio Bolsonaro por críticas às urnas eletrônicas</h3>
-  <p class="a-resumo">O presidente do PT anunciou que o partido avalia acionar a Justiça contra o senador Flávio Bolsonaro por este ter propagado informações sobre supostas falhas nas urnas eletrônicas numa reunião com embaixadores. O PT equiparou Flávio ao ex-presidente Jair Bolsonaro, acusando ambos de "cultura golpista".</p>
-  <div class="a-analise">
-    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
-    <p>Usar a máquina judicial para silenciar críticas políticas—ainda que infundadas—é precisamente o tipo de 'escalada institucional' que Sowell identifica como destrutiva para democracias liberais. O remédio correto é o contra-discurso público e transparência eleitoral, não litigância política que desgasta o Judiciário e valida o adversário.</p>
-  </div>
-  <div class="a-atencao">👁 Observe se este padrão de acionamentos judiciais entre partidos se intensifica, sinalizando colapso da competição política civilizada e instrumentalização do Poder Judiciário.</div>
-<div class="a-pensador">✍️ Sowell</div>
-  </a>
-  <button class="share-btn" onclick="compartilhar(event, 'PT ameaça processar Flávio Bolsonaro por críticas às urnas eletrônicas', 'https://ordemeliberdade.org')">↗ Compartilhar</button>
+  <button class="share-btn"
+    data-titulo="Lula anuncia R$ 13,5 bilhões em auxílio a empresas atingidas por tarifas americanas"
+    data-resumo="O presidente Lula anunciará novo pacote de R$ 13,5 bilhões em ajuda a empresas afetadas pelas tarifas impostas pelos EUA contra produtos brasileiros, através do BNDES e do plano Brasil Soberano. A medida representa mais uma rodada de subsídios estatais em resposta à guerra comercial."
+    data-analise="Bastiat perguntaria: quem paga essa conta? Ao invés de enfrentar a raiz (competitividade estrutural), o governo socializa prejuízos e perpetua empresas ineficientes. O BNDES torna-se instrumento de proteção corporativa disfarçado de &#x27;soberania&#x27;, enquanto o cidadão comum financia perdas de setores privilegiados."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
 </div>
 </div>
 
@@ -650,60 +646,61 @@
 <div class="articles-grid">
 <div class="article-card">
   <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
-  <div class="a-fonte">🌐&nbsp;THE NEW YORK TIMES</div>
-  <span class="a-tag-chip">geopolítica</span><span class="a-tag-chip">energia nuclear</span>
-  <h3>EUA negociam acordo que permitiria Arábia Saudita enriquecer combustível nuclear</h3>
-  <p class="a-resumo">A administração Trump anunciará um acordo permitindo que a Arábia Saudita enriqueça combustível nuclear para fins civis. Congressistas americanos e autoridades israelenses expressam oposição, temendo que o programa civil possa ser desviado para desenvolvimento de armas nucleares.</p>
+  <div class="a-fonte">🌐&nbsp;NEW YORK TIMES</div>
+  <span class="a-tag-chip">geopolítica</span><span class="a-tag-chip">energia</span>
+  <h3>Houthis ameaçam bloquear rotas alternativas do petróleo no Mar Vermelho</h3>
+  <p class="a-resumo">Após a guerra entre Irã e Arábia Saudita, o reino saudita desviou volumes significativos de petróleo para rotas do Mar Vermelho, mas milicianos houthis apoiados pelo Irã agora ameaçam bloquear essas passagens. A instabilidade ameaça a segurança energética global e encarecimento do combustível.</p>
   <div class="a-analise">
     <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
-    <p>Este acordo expõe a ilusão liberal de que interesses econômicos garantem paz: Mises dizia que o cálculo econômico racional previne conflitos, mas ignora que atores estatais operam por lógica de poder, não de lucro. Subsidiar (via tecnologia) a capacidade nuclear de uma monarquia absolutista, por ganhos comerciais, é estratégia de curto prazo que ignora incentivos perversos.</p>
+    <p>Trata-se de mais uma manifestação de como conflitos geopolíticos e equilíbrios de poder imperial afetam diretamente o mercado de energia. A vulnerabilidade das rotas marítimas revela o risco de depender de intermediários politicamente instáveis e ressalta por que diversificação energética real — não Green New Deal imposto — é estratégica.</p>
   </div>
-  <div class="a-atencao">👁 Acompanhe se Israel e/ou Irã acelerarão seus próprios programas nucleares em resposta, desencadeando corrida armamentista regional.</div>
-<div class="a-pensador">✍️ Mises</div>
+  <div class="a-atencao">👁 Acompanhe flutuações de preço do petróleo e pressões inflacionárias que possam resultar de bloqueios efetivos no Mar Vermelho.</div>
+<div class="a-pensador">✍️ null</div>
   </a>
-  <button class="share-btn" onclick="compartilhar(event, 'EUA negociam acordo que permitiria Arábia Saudita enriquecer combustível nuclear', 'https://ordemeliberdade.org')">↗ Compartilhar</button>
-</div><div class="article-card">
-  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
-  <div class="a-fonte">🌐&nbsp;THE NEW YORK TIMES</div>
-  <span class="a-tag-chip">geopolítica</span><span class="a-tag-chip">segurança internacional</span>
-  <h3>Acordo nuclear EUA-Arábia Saudita acirra temores de corrida armamentista no Oriente Médio</h3>
-  <p class="a-resumo">Críticos alertam que o acordo nuclear americano com a Arábia Saudita pode incentivar outros países regionais a desenvolver programas nucleares próprios, precipitando uma corrida armamentista. Ministros israelenses tentam diminuir a importância do acordo, mas especialistas preveem escalada.</p>
-  <div class="a-analise">
-    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
-    <p>Hayek demonstrou como planejadores centrais—mesmo com boa fé—desencadeiam consequências não previstas ao ignorarem sinais dispersos no sistema. Este acordo ignora que sinais de enriquecimento nuclear legitimam outras potências regionais a fazerem o mesmo, criando instabilidade que nenhum contrato consegue reverter.</p>
-  </div>
-  <div class="a-atencao">👁 Rastreie comunicados oficiais do Irã, Egito e outros atores regionais sobre seus próprios programas nucleares nos próximos 90 dias.</div>
-<div class="a-pensador">✍️ Hayek</div>
-  </a>
-  <button class="share-btn" onclick="compartilhar(event, 'Acordo nuclear EUA-Arábia Saudita acirra temores de corrida armamentista no Oriente Médio', 'https://ordemeliberdade.org')">↗ Compartilhar</button>
+  <button class="share-btn"
+    data-titulo="Houthis ameaçam bloquear rotas alternativas do petróleo no Mar Vermelho"
+    data-resumo="Após a guerra entre Irã e Arábia Saudita, o reino saudita desviou volumes significativos de petróleo para rotas do Mar Vermelho, mas milicianos houthis apoiados pelo Irã agora ameaçam bloquear essas passagens. A instabilidade ameaça a segurança energética global e encarecimento do combustível."
+    data-analise="Trata-se de mais uma manifestação de como conflitos geopolíticos e equilíbrios de poder imperial afetam diretamente o mercado de energia. A vulnerabilidade das rotas marítimas revela o risco de depender de intermediários politicamente instáveis e ressalta por que diversificação energética real — não Green New Deal imposto — é estratégica."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
 </div><div class="article-card">
   <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
   <div class="a-fonte">🌐&nbsp;THE GUARDIAN</div>
-  <span class="a-tag-chip">saúde</span><span class="a-tag-chip">epidemiologia</span>
-  <h3>Agente humanitário monitorado para Ebola em Londres após atuar na RDC</h3>
-  <p class="a-resumo">Um agente humanitário britânico foi evacuado da República Democrática do Congo e está sendo monitorado num hospital especializado de Londres por possível exposição ao vírus Ebola durante atendimento a pacientes. A Agência de Segurança em Saúde do Reino Unido (UKHSA) confirmou o monitoramento.</p>
+  <span class="a-tag-chip">saúde pública</span><span class="a-tag-chip">ebola</span>
+  <h3>Trabalhador humanitário em Londres monitorado após possível exposição ao ebola na RDC</h3>
+  <p class="a-resumo">Um residente do Reino Unido foi evacuado da República Democrática do Congo, onde há surto de ebola, e está sob monitoramento em hospital especializado em Londres. A pessoa estava prestando assistência humanitária e teve contato com pacientes infectados.</p>
   <div class="a-analise">
     <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
-    <p>Este caso ilustra os riscos reais de trabalho humanitário em zonas de frágil governança estatal—justamente onde instituições de saúde pública desabam pela má gestão, não falta de recursos. A contenção de epidemias demanda capacidade institucional local que voluntariado internacional não substitui.</p>
+    <p>Embora a vigilância epidemiológica seja apropriada, é crucial que não se politize uma questão sanitária com histeria ou restrições despropositadas — a ebola requer contenção precisa, não pânico. Investimentos em infraestrutura de saúde nas regiões de origem, não apenas em monitoramento terminal, seriam mais prudentes.</p>
   </div>
-  <div class="a-atencao">👁 Monitore boletins da OMS sobre evolução do surto de Ebola na RDC e possíveis transmissões secundárias no Reino Unido.</div>
-
+  <div class="a-atencao">👁 Verifique se protocolos de isolamento são científicos e proporcionais, sem margem para políticas de medo que justifiquem expansão regulatória.</div>
+<div class="a-pensador">✍️ null</div>
   </a>
-  <button class="share-btn" onclick="compartilhar(event, 'Agente humanitário monitorado para Ebola em Londres após atuar na RDC', 'https://ordemeliberdade.org')">↗ Compartilhar</button>
+  <button class="share-btn"
+    data-titulo="Trabalhador humanitário em Londres monitorado após possível exposição ao ebola na RDC"
+    data-resumo="Um residente do Reino Unido foi evacuado da República Democrática do Congo, onde há surto de ebola, e está sob monitoramento em hospital especializado em Londres. A pessoa estava prestando assistência humanitária e teve contato com pacientes infectados."
+    data-analise="Embora a vigilância epidemiológica seja apropriada, é crucial que não se politize uma questão sanitária com histeria ou restrições despropositadas — a ebola requer contenção precisa, não pânico. Investimentos em infraestrutura de saúde nas regiões de origem, não apenas em monitoramento terminal, seriam mais prudentes."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
 </div><div class="article-card">
   <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
-  <div class="a-fonte">🌐&nbsp;THE GUARDIAN</div>
-  <span class="a-tag-chip">alimentação</span><span class="a-tag-chip">pobreza</span>
-  <h3>Relatório da ONU: um terço da humanidade não consegue pagar por dieta saudável</h3>
-  <p class="a-resumo">Segundo novo relatório da ONU, 2,69 bilhões de pessoas não conseguem arcar com uma alimentação nutritiva e diversificada que atenda suas necessidades energéticas. O organismo apela por ação urgente para reduzir custos de frutas, verduras e laticínios, enquanto a fome global recua pelo terceiro ano consecutivo.</p>
+  <div class="a-fonte">🌐&nbsp;BBC NEWS</div>
+  <span class="a-tag-chip">justiça criminal</span><span class="a-tag-chip">segurança pública</span>
+  <h3>Viúva de policial critica plano de libertação antecipada de presos no Reino Unido</h3>
+  <p class="a-resumo">Lissie Harper, viúva do policial PC Harper, criticou como 'deplorável' possível libertação antecipada de prisioneiros, incluindo dois dos assassinos de seu marido. O prefeito Andy Burnham anunciou revisão do esquema de liberação acelerada.</p>
   <div class="a-analise">
     <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
-    <p>Bastiat observaria que o problema não é falta de comida (que recua), mas preços elevados—sintoma de distorções regulatórias e subsídios que favorecem alimentos ultraprocessados. A solução progressista (controle de preços, racionamento) agravaria escassez; a libertária é eliminar regulações que impedem produção local e importação de alimentos baratos.</p>
+    <p>Burke nos lembra que a ordem civil repousa na confiança de que a lei protege os inocentes e responsabiliza os culpados. Liberar assassinos por razões administrativas (superlotação) é trocar a segurança da comunidade por conveniência burocrática — viola o contrato social. A vítima merecia justiça permanente, não cálculo carcerário.</p>
   </div>
-  <div class="a-atencao">👁 Investigue quais políticas agrícolas nacionais e tarifas internacionais impedem que alimentos nutritivos alcancem preços acessíveis nas regiões mais pobres.</div>
-<div class="a-pensador">✍️ Bastiat</div>
+  <div class="a-atencao">👁 Acompanhe se críticas públicas levam a mudança real de política ou se servem apenas como teatro enquanto o esquema continua sob novo nome.</div>
+<div class="a-pensador">✍️ Burke</div>
   </a>
-  <button class="share-btn" onclick="compartilhar(event, 'Relatório da ONU: um terço da humanidade não consegue pagar por dieta saudável', 'https://ordemeliberdade.org')">↗ Compartilhar</button>
+  <button class="share-btn"
+    data-titulo="Viúva de policial critica plano de libertação antecipada de presos no Reino Unido"
+    data-resumo="Lissie Harper, viúva do policial PC Harper, criticou como &#x27;deplorável&#x27; possível libertação antecipada de prisioneiros, incluindo dois dos assassinos de seu marido. O prefeito Andy Burnham anunciou revisão do esquema de liberação acelerada."
+    data-analise="Burke nos lembra que a ordem civil repousa na confiança de que a lei protege os inocentes e responsabiliza os culpados. Liberar assassinos por razões administrativas (superlotação) é trocar a segurança da comunidade por conveniência burocrática — viola o contrato social. A vítima merecia justiça permanente, não cálculo carcerário."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
 </div>
 </div>
 
@@ -718,8 +715,6 @@
     <a href="#">Brasil</a>
     <a href="#">Internacional</a>
     <a href="analisar.html">Analisar Notícia</a>
-    <a href="https://mises.org.br" target="_blank">Mises Brasil ↗</a>
-    <a href="https://www.gazetadopovo.com.br" target="_blank">Gazeta do Povo ↗</a>
   </div>
   <div class="footer-col">
     <h5>BSafe Bitcoin</h5>
@@ -742,7 +737,6 @@
       navLinks.classList.toggle('open');
       toggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
     });
-    // Fecha ao clicar fora
     document.addEventListener('click', (e) => {
       if (!toggle.contains(e.target) && !navLinks.contains(e.target)) {
         navLinks.classList.remove('open');
@@ -751,27 +745,38 @@
     });
   }
 
-  // Compartilhar
-  function compartilhar(e, titulo, url) {
+  // Compartilhamento individual: título + resumo + análise
+  function compartilharArtigo(e, btn) {
     e.preventDefault();
     e.stopPropagation();
+
+    const titulo  = btn.dataset.titulo;
+    const resumo  = btn.dataset.resumo;
+    const analise = btn.dataset.analise;
+    const url     = btn.dataset.url;
+
+    const texto = titulo
+      + '\n\n' + resumo
+      + '\n\n⚖️ Ordem & Liberdade: ' + analise
+      + (url ? '\n\n🔗 ' + url : '');
+
+    function feedback(ok) {
+      btn.classList.add(ok ? 'copiado' : '');
+      const orig = btn.textContent;
+      btn.textContent = ok ? '✓ Copiado!' : '✗ Erro';
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('copiado');
+      }, 2200);
+    }
+
     if (navigator.share) {
-      navigator.share({ title: titulo, url: url }).catch(() => {});
+      navigator.share({ title: titulo, text: texto, url: url || undefined })
+        .catch(() => {}); // user dismissed — silencioso
     } else {
-      navigator.clipboard.writeText(url).then(() => {
-        const btn = e.currentTarget;
-        const orig = btn.textContent;
-        btn.textContent = '✓ Link copiado!';
-        btn.style.color = 'var(--verde)';
-        btn.style.borderColor = 'var(--verde)';
-        setTimeout(() => {
-          btn.textContent = orig;
-          btn.style.color = '';
-          btn.style.borderColor = '';
-        }, 2000);
-      }).catch(() => {
-        window.open(url, '_blank');
-      });
+      navigator.clipboard.writeText(texto)
+        .then(() => feedback(true))
+        .catch(() => feedback(false));
     }
   }
 </script>
