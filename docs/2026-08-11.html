@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ordem &amp; Liberdade — 11 de agosto de 2026</title>
+  <meta name="description" content="Digest diário de notícias interpretadas sob a ótica conservadora-libertária. Fundamentado em Mises, Hayek, Burke e Sowell.">
+  <meta property="og:title" content="Ordem &amp; Liberdade — 11 de agosto de 2026">
+  <meta property="og:description" content="Digest conservador-libertário do dia.">
+  <style>
+    :root {
+      --ouro:      #e5a810;
+      --ouro-esc:  #b8860b;
+      --ouro-clr:  #f0c040;
+      --bg:        #0f0f0f;
+      --surface:   #141414;
+      --surface-1: #1a1a1a;
+      --surface-2: #222;
+      --texto:     #e0e0e0;
+      --texto-sec: #aaa;
+      --texto-fra: #666;
+      --borda:     #222;
+      --borda-f:   #333;
+      --verde:     #4caf82;
+      --fonte-ser: 'Georgia', 'Times New Roman', serif;
+      --fonte-san: Arial, 'Helvetica Neue', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--fonte-san);
+      background: var(--bg);
+      color: var(--texto);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV (mais alto e com fontes maiores) ── */
+    .nav {
+      background: var(--bg);
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100px;
+      border-bottom: 3px solid var(--ouro);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+      gap: 5px;
+    }
+    .nav-logo .title {
+      font-family: var(--fonte-ser);
+      font-size: 34px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo .title span { color: var(--ouro); }
+    .nav-logo .subtitle {
+      font-size: 13px;
+      color: var(--ouro);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--texto-sec);
+      font-size: 16px;
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ouro); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .nav-btc {
+      font-size: 15px;
+      color: var(--ouro);
+      font-weight: 600;
+      border: 1px solid var(--ouro-esc);
+      padding: 7px 16px;
+      border-radius: 4px;
+      font-family: var(--fonte-san);
+      letter-spacing: 0.3px;
+    }
+    .nav-date {
+      font-size: 14px;
+      color: var(--texto-fra);
+      letter-spacing: 0.5px;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--texto-sec);
+      font-size: 26px;
+      cursor: pointer;
+      padding: 4px 8px;
+      line-height: 1;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--surface-1);
+      padding: 8px 2.5rem;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .ticker::-webkit-scrollbar { display: none; }
+    .ticker-item {
+      font-size: 13px;
+      color: var(--texto-sec);
+      white-space: nowrap;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 0 22px;
+      border-right: 0.5px solid var(--borda-f);
+    }
+    .ticker-item:first-child { padding-left: 0; }
+    .ticker-item:last-child { border-right: none; }
+    .ticker-item .label { color: var(--ouro); font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
+    .ticker-item a { color: var(--ouro); opacity: 0.75; transition: opacity 0.2s; }
+    .ticker-item a:hover { opacity: 1; }
+
+    /* ── HERO (sidebar mais larga) ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      border-bottom: 0.5px solid var(--borda-f);
+      min-height: 500px;
+    }
+    .hero-main {
+      position: relative;
+      background: var(--surface-1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 3rem 3rem 2.5rem;
+    }
+    .hero-chart {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to top, rgba(10,8,0,0.97) 40%, rgba(10,8,0,0.65) 75%, rgba(10,8,0,0.3) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--ouro);
+      color: #0f0f0f;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 5px 13px;
+      border-radius: 2px;
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-family: var(--fonte-ser);
+      font-size: 44px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 18px;
+      max-width: 700px;
+    }
+    .hero-editorial {
+      font-family: var(--fonte-ser);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #c8bc96;
+      line-height: 1.8;
+      max-width: 660px;
+      text-align: justify;
+    }
+    .hero-meta {
+      margin-top: 1.4rem;
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── SIDEBAR (mais larga) ── */
+    .hero-sidebar {
+      border-left: 0.5px solid var(--borda-f);
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+    }
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--texto-fra);
+      padding: 18px 22px 14px;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .sidebar-article {
+      display: block;
+      padding: 18px 22px;
+      border-bottom: 0.5px solid var(--borda);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .sidebar-article:hover { background: var(--surface-1); }
+    .sidebar-article .s-tag {
+      font-size: 10px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+    .sidebar-article h4 {
+      font-family: var(--fonte-ser);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--texto);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .sidebar-article .s-meta {
+      font-size: 12px;
+      color: var(--texto-fra);
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 1.4rem 2.5rem 1rem;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .section-header .accent-line {
+      width: 36px;
+      height: 2px;
+      background: var(--ouro);
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+    .section-header h2 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--texto);
+      white-space: nowrap;
+    }
+    .section-header .sh-line {
+      flex: 1;
+      height: 0.5px;
+      background: var(--borda-f);
+    }
+
+    /* ── ARTICLES GRID — 3 colunas fixas ── */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .article-card {
+      display: block;
+      padding: 1.8rem;
+      border-right: 0.5px solid var(--borda-f);
+      transition: background 0.2s;
+      position: relative;
+    }
+    .article-card:nth-child(3n) { border-right: none; }
+    .article-card:hover { background: var(--surface-1); }
+    .a-fonte {
+      font-size: 10px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+    .a-tag-chip {
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 7px;
+      background: var(--surface-2);
+      border: 0.5px solid var(--borda-f);
+      border-radius: 3px;
+      color: var(--texto-fra);
+      margin: 0 3px 7px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .article-card h3 {
+      font-family: var(--fonte-ser);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--texto);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .a-resumo {
+      font-size: 15px;
+      color: var(--texto-sec);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .a-analise {
+      background: #0d0900;
+      border: 0.5px solid var(--borda-f);
+      border-top: 1.5px solid var(--ouro-esc);
+      border-radius: 4px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
+    .a-analise-label {
+      font-size: 10px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .a-analise p {
+      font-size: 14px;
+      color: #c8bc96;
+      line-height: 1.65;
+      font-family: var(--fonte-ser);
+    }
+    .a-atencao {
+      font-size: 13.5px;
+      color: var(--ouro);
+      font-weight: 500;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .a-pensador {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 9px;
+      background: #1a1400;
+      border: 0.5px solid var(--ouro-esc);
+      border-radius: 3px;
+      color: var(--ouro-clr);
+      font-style: italic;
+      font-family: var(--fonte-ser);
+    }
+
+    /* ── NAVEGAÇÃO ENTRE DIAS ── */
+    .pag-nav {
+      background: var(--surface-1);
+      border-top: 0.5px solid var(--borda-f);
+      border-bottom: 0.5px solid var(--borda-f);
+      padding: 14px 2.5rem;
+    }
+    .pag-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    .pag-nav-link {
+      font-size: 14px;
+      color: var(--texto-sec);
+      letter-spacing: 0.3px;
+      padding: 8px 20px;
+      border: 0.5px solid var(--borda-f);
+      border-radius: 4px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      background: transparent;
+    }
+    .pag-nav-link:hover {
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      background: #1a1400;
+    }
+    .pag-nav-link.arquivo {
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      font-weight: 600;
+    }
+    .pag-nav-link.prev::before { content: ''; }
+    .pag-nav-link.next::after  { content: ''; }
+
+    /* ── SHARE BUTTON ── */
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--texto-fra);
+      background: var(--surface-2);
+      border: 0.5px solid var(--borda-f);
+      border-radius: 4px;
+      padding: 7px 14px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      font-family: var(--fonte-san);
+      letter-spacing: 0.3px;
+    }
+    .share-btn:hover {
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      background: #1a1400;
+    }
+    .share-btn.copiado {
+      color: var(--verde);
+      border-color: var(--verde);
+    }
+
+    /* ── BSAFE BANNER ── */
+    .btc-banner {
+      background: var(--surface);
+      border-top: 0.5px solid var(--borda-f);
+      border-bottom: 0.5px solid var(--borda-f);
+      padding: 1.2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btc-banner .btc-icon {
+      font-size: 28px;
+      color: var(--ouro);
+      flex-shrink: 0;
+    }
+    .btc-banner .btc-text { flex: 1; }
+    .btc-banner .btc-text h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .btc-banner .btc-text p {
+      font-size: 13px;
+      color: var(--texto-fra);
+    }
+    .btc-banner .btc-cta {
+      font-size: 13px;
+      color: var(--ouro);
+      border: 1px solid var(--ouro-esc);
+      padding: 8px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+      font-weight: 500;
+    }
+    .btc-banner .btc-cta:hover { background: var(--ouro); color: #0f0f0f; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--bg);
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 2.5rem;
+      border-top: 2px solid var(--ouro);
+    }
+    .footer-col h5 {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ouro);
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .footer-logo {
+      font-family: var(--fonte-ser);
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .footer-logo span { color: var(--ouro); }
+    .footer-col p, .footer-col a {
+      font-size: 13px;
+      color: var(--texto-fra);
+      line-height: 1.85;
+      display: block;
+    }
+    .footer-col a:hover { color: var(--texto-sec); }
+    .footer-bottom {
+      background: var(--bg);
+      padding: 14px 2.5rem;
+      border-top: 0.5px solid var(--borda);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom span {
+      font-size: 11px;
+      color: #3a3a3a;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr 360px; }
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-main { padding: 2rem 1.5rem 2rem; }
+      .hero-title { font-size: 30px; }
+      .hero-editorial { font-size: 1rem; }
+      .hero-sidebar { display: none; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .article-card { border-right: none; border-bottom: 0.5px solid var(--borda-f); }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100px;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border-bottom: 2px solid var(--ouro);
+        padding: 1rem 2rem;
+        gap: 16px;
+        z-index: 99;
+      }
+      .nav-links.open a { font-size: 18px; padding: 4px 0; }
+      .menu-toggle { display: block; }
+      .footer { grid-template-columns: 1fr; gap: 1.5rem; }
+      .ticker { padding: 6px 1rem; }
+      .section-header { padding: 1rem 1rem 0.8rem; }
+      .btc-banner { flex-wrap: wrap; padding: 1rem; gap: 12px; }
+    }
+    @media (max-width: 600px) {
+      .nav { padding: 0 1rem; height: 76px; }
+      .nav-logo .title { font-size: 26px; }
+      .nav-logo .subtitle { font-size: 11px; }
+      .nav-btc { display: none; }
+      .nav-date { display: none; }
+      .hero-main { padding: 1.5rem 1rem 1.5rem; }
+      .hero-title { font-size: 26px; }
+      .hero-editorial { font-size: 0.95rem; }
+      .article-card { padding: 1.2rem 1rem; }
+      .article-card h3 { font-size: 17px; }
+      .a-resumo { font-size: 14px; }
+      .footer { padding: 1.5rem 1rem; }
+      .footer-bottom { padding: 10px 1rem; flex-direction: column; gap: 4px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <span class="title">Ordem <span>&amp;</span> Liberdade</span>
+    <span class="subtitle">BSafe Bitcoin · Est. 2026</span>
+  </div>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" class="active">Digest do Dia</a></li>
+    <li><a href="arquivo.html">Arquivo</a></li>
+    <li><a href="analisar.html">Analisar Notícia</a></li>
+    <li><a href="https://bsafebitcoin.org" target="_blank">BSafe Bitcoin ↗</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-btc">₿ $ 64,224</span>
+    <span class="nav-date">11 de agosto de 2026</span>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-item"><span class="label">BTC/USD</span> $ 64,224</div>
+  <div class="ticker-item"><span class="label">BSafe Bitcoin</span> <a href="https://bsafebitcoin.org" target="_blank">bsafebitcoin.org ↗</a></div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-main">
+    <svg class="hero-chart" viewBox="0 0 700 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="700" height="380" fill="#0d0900"/>
+      <polyline points="0,320 70,300 140,310 210,260 280,210 350,230 420,170 490,110 560,85 630,60 700,35"
+        fill="none" stroke="#e5a810" stroke-width="1.5" opacity="0.5"/>
+      <polygon points="0,320 70,300 140,310 210,260 280,210 350,230 420,170 490,110 560,85 630,60 700,35 700,380 0,380"
+        fill="#e5a810" opacity="0.04"/>
+    </svg>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-tag">Editorial do Dia</span>
+      <h2 class="hero-title">Ordem &amp; Liberdade — 11 de agosto de 2026</h2>
+      <p class="hero-editorial">O dia 11 de agosto de 2026 expõe uma tríade de crises: a regulação crescente sobre esferas privadas (dados digitais), a fragmentação de comunidades (religiosa e nacional), e o colapso de confiança nas instituições (presidência ocultista, mídia enganada). Não são fenômenos isolados, mas sintomas de um Estado e uma ordem supranacional em decomposição. A Espanha e Itália destroem Schengen quando enfrentam migração real; Trump esconde-se em containers quando a concentração presidencial torna-o vulnerável; plataformas digitais recebem regulações que as asfixiam; igrejas multiplicam-se porque instituições tradicionais (família, comunidade) esvaziaram-se. Chesterton nos lembrava que antes de derrubar cercas é preciso saber por que foram erguidas—hoje, as cercas institucionais caem justamente porque ninguém mais defende suas razões originais. O futuro próximo exigirá retorno à subsidiariedade, federalismo autêntico e comunidades locais que Bastiat e Hayek compreendiam: poder próximo ao cidadão, não remoto em capitais ou algoritmos.</p>
+      <p class="hero-meta">Burke · Mises · Hayek · Sowell · Roberto Campos</p>
+    </div>
+  </div>
+
+  <div class="hero-sidebar">
+    <div class="sidebar-title">Destaques de Hoje</div>
+  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">G1 / GLOBO · REGULAÇÃO · REDES SOCIAIS</div>
+    <h4>ECA Digital obriga plataformas a publicar relatórios sobre proteção de menores</h4>
+    <div class="s-meta">🇧🇷 G1 / Globo</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">FOLHA DE S.PAULO · RELIGIÃO · PENTECOSTALISMO</div>
+    <h4>Reflexão sobre a proliferação de igrejas evangélicas e a identidade religiosa brasileira</h4>
+    <div class="s-meta">🇧🇷 Folha de S.Paulo</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">NEW YORK TIMES · TRUMP · SEGURANÇA PRESIDENCIAL</div>
+    <h4>Trump terá se escondido em container de catering para fugir de ameaças no aeroporto turco</h4>
+    <div class="s-meta">🌐 New York Times</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">THE GUARDIAN · MIGRAÇÃO · FRONTEIRAS</div>
+    <h4>Espanha implementa controles fronteiriços temporários contra Itália em resposta à crise migratória</h4>
+    <div class="s-meta">🌐 The Guardian</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">BBC NEWS · TRUMP · SEGURANÇA</div>
+    <h4>Trump teria se ocultado em caminhão de catering para fuga secreta durante cúpula da NATO</h4>
+    <div class="s-meta">🌐 BBC News</div>
+  </a>
+  </div>
+</div>
+
+<!-- SEÇÃO BRASIL -->
+<div class="section-header">
+  <div class="accent-line"></div>
+  <h2>🇧🇷 Brasil</h2>
+  <div class="sh-line"></div>
+</div>
+<div class="articles-grid">
+<div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🇧🇷&nbsp;G1 / GLOBO</div>
+  <span class="a-tag-chip">regulação</span><span class="a-tag-chip">redes sociais</span>
+  <h3>ECA Digital obriga plataformas a publicar relatórios sobre proteção de menores</h3>
+  <p class="a-resumo">Redes sociais com mais de 1 milhão de usuários menores de idade deverão divulgar relatórios de transparência até 17 de setembro, com reiteração semestral, informando medidas de proteção adotadas. A exigência faz parte da nova regulamentação digital brasileira.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>A intenção de proteger crianças é louvável, mas Bastiat nos adverte: "há sempre consequências que não se veem". Regulações sobre transparência transferem custos compliance às empresas, podendo resultar em saída de plataformas do Brasil ou encarecimento de serviços justamente para usuários mais pobres. A pergunta pertinente é se fiscalização estatal realmente protege melhor que responsabilidade civil e reputação de mercado.</p>
+  </div>
+  <div class="a-atencao">👁 Monitore se a regulação efetivamente aumenta segurança infantil ou apenas gera custos que reduzem inovação e competição no mercado de redes sociais.</div>
+<div class="a-pensador">✍️ Bastiat</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="ECA Digital obriga plataformas a publicar relatórios sobre proteção de menores"
+    data-resumo="Redes sociais com mais de 1 milhão de usuários menores de idade deverão divulgar relatórios de transparência até 17 de setembro, com reiteração semestral, informando medidas de proteção adotadas. A exigência faz parte da nova regulamentação digital brasileira."
+    data-analise="A intenção de proteger crianças é louvável, mas Bastiat nos adverte: &quot;há sempre consequências que não se veem&quot;. Regulações sobre transparência transferem custos compliance às empresas, podendo resultar em saída de plataformas do Brasil ou encarecimento de serviços justamente para usuários mais pobres. A pergunta pertinente é se fiscalização estatal realmente protege melhor que responsabilidade civil e reputação de mercado."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div><div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🇧🇷&nbsp;FOLHA DE S.PAULO</div>
+  <span class="a-tag-chip">religião</span><span class="a-tag-chip">pentecostalismo</span>
+  <h3>Reflexão sobre a proliferação de igrejas evangélicas e a identidade religiosa brasileira</h3>
+  <p class="a-resumo">Artigo questiona o fenômeno da multiplicação de templos evangélicos pentecostais desde os anos 1990, passando de percepção anedótica a dado estatístico relevante na sociedade brasileira. Levanta questão sobre quando um estabelecimento religioso deixa de ser verdadeiramente uma "igreja".</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Chesterton não "derrubaria a cerca" sem questionar seu propósito: a multiplicação de igrejas reflete liberdade religiosa e competição de ideias, mas também expõe fragmentação comunitária e possível oportunismo comercial. A pergunta não é quantas igrejas há, mas se representam genuína fé ou exploração espiritual—questão que apenas comunidades e fiéis podem responder.</p>
+  </div>
+  <div class="a-atencao">👁 Observe se crítica à proliferação evangélica emerge de ceticismo legítimo sobre qualidade espiritual ou de viés secularista contra religiosidade popular.</div>
+<div class="a-pensador">✍️ Chesterton</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Reflexão sobre a proliferação de igrejas evangélicas e a identidade religiosa brasileira"
+    data-resumo="Artigo questiona o fenômeno da multiplicação de templos evangélicos pentecostais desde os anos 1990, passando de percepção anedótica a dado estatístico relevante na sociedade brasileira. Levanta questão sobre quando um estabelecimento religioso deixa de ser verdadeiramente uma &quot;igreja&quot;."
+    data-analise="Chesterton não &quot;derrubaria a cerca&quot; sem questionar seu propósito: a multiplicação de igrejas reflete liberdade religiosa e competição de ideias, mas também expõe fragmentação comunitária e possível oportunismo comercial. A pergunta não é quantas igrejas há, mas se representam genuína fé ou exploração espiritual—questão que apenas comunidades e fiéis podem responder."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div>
+</div>
+
+<!-- BANNER BSAFE -->
+<div class="btc-banner">
+  <span class="btc-icon">₿</span>
+  <div class="btc-text">
+    <h4>BSafe Bitcoin — Sua segurança, sua soberania</h4>
+    <p>Aprenda a guardar Bitcoin com segurança. Custódia própria, sem depender de terceiros.</p>
+  </div>
+  <a href="https://bsafebitcoin.org" target="_blank" class="btc-cta">Conhecer →</a>
+</div>
+
+<!-- SEÇÃO INTERNACIONAL -->
+<div class="section-header">
+  <div class="accent-line"></div>
+  <h2>🌐 Internacional</h2>
+  <div class="sh-line"></div>
+</div>
+<div class="articles-grid">
+<div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🌐&nbsp;NEW YORK TIMES</div>
+  <span class="a-tag-chip">Trump</span><span class="a-tag-chip">segurança presidencial</span>
+  <h3>Trump terá se escondido em container de catering para fugir de ameaças no aeroporto turco</h3>
+  <p class="a-resumo">Reportagem relata que o presidente Trump teria utilizado disfarce e transporte secreto (container de catering) para deixar aeroporto na Turquia após cúpula da NATO, escapando de supostas ameaças iranianas. Repórteres foram enganados com informação de que Trump seguia em Air Force One.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>A centralização extrema de poder em torno de uma figura presidencial (problema que Hayek identificava no executivo crescente) torna-o alvo de assassinato e o força a operações cada vez mais clandestinas e corrosivas à confiança institucional. Quando a segurança de um homem exige engano estruturado aos cidadãos e mídia, indica-se fragilidade sistêmica.</p>
+  </div>
+  <div class="a-atencao">👁 Investigue se a ameaça iraniana era substancial ou se serviu a narrativa de expansão de segurança presidencial—aplique ceticismo a ambos os lados.</div>
+<div class="a-pensador">✍️ Hayek</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Trump terá se escondido em container de catering para fugir de ameaças no aeroporto turco"
+    data-resumo="Reportagem relata que o presidente Trump teria utilizado disfarce e transporte secreto (container de catering) para deixar aeroporto na Turquia após cúpula da NATO, escapando de supostas ameaças iranianas. Repórteres foram enganados com informação de que Trump seguia em Air Force One."
+    data-analise="A centralização extrema de poder em torno de uma figura presidencial (problema que Hayek identificava no executivo crescente) torna-o alvo de assassinato e o força a operações cada vez mais clandestinas e corrosivas à confiança institucional. Quando a segurança de um homem exige engano estruturado aos cidadãos e mídia, indica-se fragilidade sistêmica."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div><div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🌐&nbsp;THE GUARDIAN</div>
+  <span class="a-tag-chip">migração</span><span class="a-tag-chip">fronteiras</span>
+  <h3>Espanha implementa controles fronteiriços temporários contra Itália em resposta à crise migratória</h3>
+  <p class="a-resumo">Espanha anunciou verificações de fronteira com Itália a partir de sábado até 7 de setembro, em resposta à Roma ter adotado medidas similares após fluxo migratório massivo de Marrocos para Ceuta. Movimentação integra pressão migratória irregular no Mediterrâneo.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Sowell perguntaria: "comparado a quê?" O colapso do acordo Schengen em prol de fronteiras nacionais revela que ideologia supranacional falhou quando testada pela realidade demográfica. A migração desenfreada não é caridade—gera conflito entre nações aliadas e transfere custos a cidadãos que não consentiram.</p>
+  </div>
+  <div class="a-atencao">👁 Acompanhe se controles fronteiriços evoluem para desintegração da zona Schengen e rediscussão de soberania nacional europeia.</div>
+<div class="a-pensador">✍️ Sowell</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Espanha implementa controles fronteiriços temporários contra Itália em resposta à crise migratória"
+    data-resumo="Espanha anunciou verificações de fronteira com Itália a partir de sábado até 7 de setembro, em resposta à Roma ter adotado medidas similares após fluxo migratório massivo de Marrocos para Ceuta. Movimentação integra pressão migratória irregular no Mediterrâneo."
+    data-analise="Sowell perguntaria: &quot;comparado a quê?&quot; O colapso do acordo Schengen em prol de fronteiras nacionais revela que ideologia supranacional falhou quando testada pela realidade demográfica. A migração desenfreada não é caridade—gera conflito entre nações aliadas e transfere custos a cidadãos que não consentiram."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div><div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🌐&nbsp;BBC NEWS</div>
+  <span class="a-tag-chip">Trump</span><span class="a-tag-chip">segurança</span>
+  <h3>Trump teria se ocultado em caminhão de catering para fuga secreta durante cúpula da NATO</h3>
+  <p class="a-resumo">BBC confirma relato de que Trump utilizou artifício de ocultação em container de catering para embarcar em jato militar secretamente, saindo da Turquia após cúpula da NATO. Repórteres foram informados falsamente que presidente estava em Air Force One.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Bastiat via na concentração estatal a origem de enganos sistêmicos: quando poder é centralizado numa figura, manipulação informativa torna-se "arte de Estado". O engano aos repórteres não é falha operacional, mas consecução lógica de poder absoluto fugindo a controles.</p>
+  </div>
+  <div class="a-atencao">👁 Questione por que mídia hegemônica divulga fatos dias após ocorrência—investigue coordenação entre segurança presidencial e narrativa jornalística.</div>
+<div class="a-pensador">✍️ Bastiat</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Trump teria se ocultado em caminhão de catering para fuga secreta durante cúpula da NATO"
+    data-resumo="BBC confirma relato de que Trump utilizou artifício de ocultação em container de catering para embarcar em jato militar secretamente, saindo da Turquia após cúpula da NATO. Repórteres foram informados falsamente que presidente estava em Air Force One."
+    data-analise="Bastiat via na concentração estatal a origem de enganos sistêmicos: quando poder é centralizado numa figura, manipulação informativa torna-se &quot;arte de Estado&quot;. O engano aos repórteres não é falha operacional, mas consecução lógica de poder absoluto fugindo a controles."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div>
+</div>
+
+<!-- NAVEGAÇÃO ENTRE DIAS -->
+<div class="pag-nav"><div class="pag-nav-inner"><a class="pag-nav-link arquivo" href="arquivo.html">📅 Arquivo de Edições</a></div></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-col">
+    <div class="footer-logo">Ordem <span>&amp;</span> Liberdade</div>
+    <p>Jornalismo independente sobre Bitcoin, economia e liberdade individual. Sem anunciantes, sem agenda oculta.</p>
+  </div>
+  <div class="footer-col">
+    <h5>Editorias</h5>
+    <a href="#">Brasil</a>
+    <a href="#">Internacional</a>
+    <a href="analisar.html">Analisar Notícia</a>
+  </div>
+  <div class="footer-col">
+    <h5>BSafe Bitcoin</h5>
+    <a href="https://bsafebitcoin.org" target="_blank">bsafebitcoin.org</a>
+    <a href="mailto:bsafe@bsafebitcoin.org">bsafe@bsafebitcoin.org</a>
+    <a href="https://bsafebitcoin.org" target="_blank">Apoie com Bitcoin</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2026 Ordem &amp; Liberdade · BSafe Bitcoin</span>
+  <span>Atualizado em 11 de agosto de 2026</span>
+</div>
+
+<script>
+  // Menu hamburger
+  const toggle = document.getElementById('menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+  if (toggle && navLinks) {
+    toggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      toggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+    });
+    document.addEventListener('click', (e) => {
+      if (!toggle.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('open');
+        toggle.textContent = '☰';
+      }
+    });
+  }
+
+  // Compartilhamento individual: título + resumo + análise
+  function compartilharArtigo(e, btn) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const titulo  = btn.dataset.titulo;
+    const resumo  = btn.dataset.resumo;
+    const analise = btn.dataset.analise;
+    const url     = btn.dataset.url;
+
+    const texto = titulo
+      + '\n\n' + resumo
+      + '\n\n⚖️ Ordem & Liberdade: ' + analise
+      + (url ? '\n\n🔗 ' + url : '');
+
+    function feedback(ok) {
+      btn.classList.add(ok ? 'copiado' : '');
+      const orig = btn.textContent;
+      btn.textContent = ok ? '✓ Copiado!' : '✗ Erro';
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('copiado');
+      }, 2200);
+    }
+
+    if (navigator.share) {
+      navigator.share({ title: titulo, text: texto, url: url || undefined })
+        .catch(() => {}); // user dismissed — silencioso
+    } else {
+      navigator.clipboard.writeText(texto)
+        .then(() => feedback(true))
+        .catch(() => feedback(false));
+    }
+  }
+</script>
+
+</body>
+</html>
