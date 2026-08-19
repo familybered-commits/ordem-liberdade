@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ordem &amp; Liberdade — 12 de agosto de 2026</title>
+  <meta name="description" content="Digest diário de notícias interpretadas sob a ótica conservadora-libertária. Fundamentado em Mises, Hayek, Burke e Sowell.">
+  <meta property="og:title" content="Ordem &amp; Liberdade — 12 de agosto de 2026">
+  <meta property="og:description" content="Digest conservador-libertário do dia.">
+  <style>
+    :root {
+      --ouro:      #e5a810;
+      --ouro-esc:  #b8860b;
+      --ouro-clr:  #f0c040;
+      --bg:        #0f0f0f;
+      --surface:   #141414;
+      --surface-1: #1a1a1a;
+      --surface-2: #222;
+      --texto:     #e0e0e0;
+      --texto-sec: #aaa;
+      --texto-fra: #666;
+      --borda:     #222;
+      --borda-f:   #333;
+      --verde:     #4caf82;
+      --fonte-ser: 'Georgia', 'Times New Roman', serif;
+      --fonte-san: Arial, 'Helvetica Neue', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--fonte-san);
+      background: var(--bg);
+      color: var(--texto);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV (mais alto e com fontes maiores) ── */
+    .nav {
+      background: var(--bg);
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100px;
+      border-bottom: 3px solid var(--ouro);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+      gap: 5px;
+    }
+    .nav-logo .title {
+      font-family: var(--fonte-ser);
+      font-size: 34px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo .title span { color: var(--ouro); }
+    .nav-logo .subtitle {
+      font-size: 13px;
+      color: var(--ouro);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--texto-sec);
+      font-size: 16px;
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ouro); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .nav-btc {
+      font-size: 15px;
+      color: var(--ouro);
+      font-weight: 600;
+      border: 1px solid var(--ouro-esc);
+      padding: 7px 16px;
+      border-radius: 4px;
+      font-family: var(--fonte-san);
+      letter-spacing: 0.3px;
+    }
+    .nav-date {
+      font-size: 14px;
+      color: var(--texto-fra);
+      letter-spacing: 0.5px;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--texto-sec);
+      font-size: 26px;
+      cursor: pointer;
+      padding: 4px 8px;
+      line-height: 1;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--surface-1);
+      padding: 8px 2.5rem;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .ticker::-webkit-scrollbar { display: none; }
+    .ticker-item {
+      font-size: 13px;
+      color: var(--texto-sec);
+      white-space: nowrap;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 0 22px;
+      border-right: 0.5px solid var(--borda-f);
+    }
+    .ticker-item:first-child { padding-left: 0; }
+    .ticker-item:last-child { border-right: none; }
+    .ticker-item .label { color: var(--ouro); font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
+    .ticker-item a { color: var(--ouro); opacity: 0.75; transition: opacity 0.2s; }
+    .ticker-item a:hover { opacity: 1; }
+
+    /* ── HERO (sidebar mais larga) ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      border-bottom: 0.5px solid var(--borda-f);
+      min-height: 500px;
+    }
+    .hero-main {
+      position: relative;
+      background: var(--surface-1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 3rem 3rem 2.5rem;
+    }
+    .hero-chart {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to top, rgba(10,8,0,0.97) 40%, rgba(10,8,0,0.65) 75%, rgba(10,8,0,0.3) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--ouro);
+      color: #0f0f0f;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 5px 13px;
+      border-radius: 2px;
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-family: var(--fonte-ser);
+      font-size: 44px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 18px;
+      max-width: 700px;
+    }
+    .hero-editorial {
+      font-family: var(--fonte-ser);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #c8bc96;
+      line-height: 1.8;
+      max-width: 660px;
+      text-align: justify;
+    }
+    .hero-meta {
+      margin-top: 1.4rem;
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── SIDEBAR (mais larga) ── */
+    .hero-sidebar {
+      border-left: 0.5px solid var(--borda-f);
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+    }
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--texto-fra);
+      padding: 18px 22px 14px;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .sidebar-article {
+      display: block;
+      padding: 18px 22px;
+      border-bottom: 0.5px solid var(--borda);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .sidebar-article:hover { background: var(--surface-1); }
+    .sidebar-article .s-tag {
+      font-size: 10px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+    .sidebar-article h4 {
+      font-family: var(--fonte-ser);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--texto);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .sidebar-article .s-meta {
+      font-size: 12px;
+      color: var(--texto-fra);
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 1.4rem 2.5rem 1rem;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .section-header .accent-line {
+      width: 36px;
+      height: 2px;
+      background: var(--ouro);
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+    .section-header h2 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--texto);
+      white-space: nowrap;
+    }
+    .section-header .sh-line {
+      flex: 1;
+      height: 0.5px;
+      background: var(--borda-f);
+    }
+
+    /* ── ARTICLES GRID — 3 colunas fixas ── */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .article-card {
+      display: block;
+      padding: 1.8rem;
+      border-right: 0.5px solid var(--borda-f);
+      transition: background 0.2s;
+      position: relative;
+    }
+    .article-card:nth-child(3n) { border-right: none; }
+    .article-card:hover { background: var(--surface-1); }
+    .a-fonte {
+      font-size: 10px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+    .a-tag-chip {
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 7px;
+      background: var(--surface-2);
+      border: 0.5px solid var(--borda-f);
+      border-radius: 3px;
+      color: var(--texto-fra);
+      margin: 0 3px 7px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .article-card h3 {
+      font-family: var(--fonte-ser);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--texto);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .a-resumo {
+      font-size: 15px;
+      color: var(--texto-sec);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .a-analise {
+      background: #0d0900;
+      border: 0.5px solid var(--borda-f);
+      border-top: 1.5px solid var(--ouro-esc);
+      border-radius: 4px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
+    .a-analise-label {
+      font-size: 10px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .a-analise p {
+      font-size: 14px;
+      color: #c8bc96;
+      line-height: 1.65;
+      font-family: var(--fonte-ser);
+    }
+    .a-atencao {
+      font-size: 13.5px;
+      color: var(--ouro);
+      font-weight: 500;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .a-pensador {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 9px;
+      background: #1a1400;
+      border: 0.5px solid var(--ouro-esc);
+      border-radius: 3px;
+      color: var(--ouro-clr);
+      font-style: italic;
+      font-family: var(--fonte-ser);
+    }
+
+    /* ── NAVEGAÇÃO ENTRE DIAS ── */
+    .pag-nav {
+      background: var(--surface-1);
+      border-top: 0.5px solid var(--borda-f);
+      border-bottom: 0.5px solid var(--borda-f);
+      padding: 14px 2.5rem;
+    }
+    .pag-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    .pag-nav-link {
+      font-size: 14px;
+      color: var(--texto-sec);
+      letter-spacing: 0.3px;
+      padding: 8px 20px;
+      border: 0.5px solid var(--borda-f);
+      border-radius: 4px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      background: transparent;
+    }
+    .pag-nav-link:hover {
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      background: #1a1400;
+    }
+    .pag-nav-link.arquivo {
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      font-weight: 600;
+    }
+    .pag-nav-link.prev::before { content: ''; }
+    .pag-nav-link.next::after  { content: ''; }
+
+    /* ── SHARE BUTTON ── */
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--texto-fra);
+      background: var(--surface-2);
+      border: 0.5px solid var(--borda-f);
+      border-radius: 4px;
+      padding: 7px 14px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      font-family: var(--fonte-san);
+      letter-spacing: 0.3px;
+    }
+    .share-btn:hover {
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      background: #1a1400;
+    }
+    .share-btn.copiado {
+      color: var(--verde);
+      border-color: var(--verde);
+    }
+
+    /* ── BSAFE BANNER ── */
+    .btc-banner {
+      background: var(--surface);
+      border-top: 0.5px solid var(--borda-f);
+      border-bottom: 0.5px solid var(--borda-f);
+      padding: 1.2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btc-banner .btc-icon {
+      font-size: 28px;
+      color: var(--ouro);
+      flex-shrink: 0;
+    }
+    .btc-banner .btc-text { flex: 1; }
+    .btc-banner .btc-text h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .btc-banner .btc-text p {
+      font-size: 13px;
+      color: var(--texto-fra);
+    }
+    .btc-banner .btc-cta {
+      font-size: 13px;
+      color: var(--ouro);
+      border: 1px solid var(--ouro-esc);
+      padding: 8px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+      font-weight: 500;
+    }
+    .btc-banner .btc-cta:hover { background: var(--ouro); color: #0f0f0f; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--bg);
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 2.5rem;
+      border-top: 2px solid var(--ouro);
+    }
+    .footer-col h5 {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ouro);
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .footer-logo {
+      font-family: var(--fonte-ser);
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .footer-logo span { color: var(--ouro); }
+    .footer-col p, .footer-col a {
+      font-size: 13px;
+      color: var(--texto-fra);
+      line-height: 1.85;
+      display: block;
+    }
+    .footer-col a:hover { color: var(--texto-sec); }
+    .footer-bottom {
+      background: var(--bg);
+      padding: 14px 2.5rem;
+      border-top: 0.5px solid var(--borda);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom span {
+      font-size: 11px;
+      color: #3a3a3a;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr 360px; }
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-main { padding: 2rem 1.5rem 2rem; }
+      .hero-title { font-size: 30px; }
+      .hero-editorial { font-size: 1rem; }
+      .hero-sidebar { display: none; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .article-card { border-right: none; border-bottom: 0.5px solid var(--borda-f); }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100px;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border-bottom: 2px solid var(--ouro);
+        padding: 1rem 2rem;
+        gap: 16px;
+        z-index: 99;
+      }
+      .nav-links.open a { font-size: 18px; padding: 4px 0; }
+      .menu-toggle { display: block; }
+      .footer { grid-template-columns: 1fr; gap: 1.5rem; }
+      .ticker { padding: 6px 1rem; }
+      .section-header { padding: 1rem 1rem 0.8rem; }
+      .btc-banner { flex-wrap: wrap; padding: 1rem; gap: 12px; }
+    }
+    @media (max-width: 600px) {
+      .nav { padding: 0 1rem; height: 76px; }
+      .nav-logo .title { font-size: 26px; }
+      .nav-logo .subtitle { font-size: 11px; }
+      .nav-btc { display: none; }
+      .nav-date { display: none; }
+      .hero-main { padding: 1.5rem 1rem 1.5rem; }
+      .hero-title { font-size: 26px; }
+      .hero-editorial { font-size: 0.95rem; }
+      .article-card { padding: 1.2rem 1rem; }
+      .article-card h3 { font-size: 17px; }
+      .a-resumo { font-size: 14px; }
+      .footer { padding: 1.5rem 1rem; }
+      .footer-bottom { padding: 10px 1rem; flex-direction: column; gap: 4px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <span class="title">Ordem <span>&amp;</span> Liberdade</span>
+    <span class="subtitle">BSafe Bitcoin · Est. 2026</span>
+  </div>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" class="active">Digest do Dia</a></li>
+    <li><a href="arquivo.html">Arquivo</a></li>
+    <li><a href="analisar.html">Analisar Notícia</a></li>
+    <li><a href="https://bsafebitcoin.org" target="_blank">BSafe Bitcoin ↗</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-btc">₿ $ 64,082</span>
+    <span class="nav-date">12 de agosto de 2026</span>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-item"><span class="label">BTC/USD</span> $ 64,082</div>
+  <div class="ticker-item"><span class="label">BSafe Bitcoin</span> <a href="https://bsafebitcoin.org" target="_blank">bsafebitcoin.org ↗</a></div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-main">
+    <svg class="hero-chart" viewBox="0 0 700 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="700" height="380" fill="#0d0900"/>
+      <polyline points="0,320 70,300 140,310 210,260 280,210 350,230 420,170 490,110 560,85 630,60 700,35"
+        fill="none" stroke="#e5a810" stroke-width="1.5" opacity="0.5"/>
+      <polygon points="0,320 70,300 140,310 210,260 280,210 350,230 420,170 490,110 560,85 630,60 700,35 700,380 0,380"
+        fill="#e5a810" opacity="0.04"/>
+    </svg>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-tag">Editorial do Dia</span>
+      <h2 class="hero-title">Ordem &amp; Liberdade — 12 de agosto de 2026</h2>
+      <p class="hero-editorial">O dia 12 de agosto de 2026 apresenta um mosaico revelador das falhas sistêmicas contemporâneas. Uma catástrofe natural na Colômbia expõe a fragilidade das estruturas humanas e a tentação governamental de expandir-se em nome da emergência; simultaneamente, o BNDES brasileiro ultrapassa R$ 1 trilhão em ativos, sintoma não de prosperidade econômica mas de crescente substituição da poupança genuína por intermediação burocrática distorcionista. Nos EUA, uma primária democrata moderada vence, mas a verdade mais incômoda é que tanto moderados quanto progressistas compartilham fé na expansão estatal. Já o navio que vira no Zimbábue — superlotado, desregulado, gerido pela ganância imediata — é parábola perfeita: não é desigualdade econômica que mata, mas irresponsabilidade pessoal institucionalizada e ausência de enforcement real de regras básicas. Estas manchetes, tomadas em conjunto, sugerem que o mundo ocidental continua diagnosticando seus males como déficit de planejamento e controle, quando na verdade sofre de excesso precisamente disso — e de deficit severo de responsabilidade individual e sabedoria tradicional.</p>
+      <p class="hero-meta">Burke · Mises · Hayek · Sowell · Roberto Campos</p>
+    </div>
+  </div>
+
+  <div class="hero-sidebar">
+    <div class="sidebar-title">Destaques de Hoje</div>
+  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">G1 / GLOBO · CATÁSTROFE NATURAL · COLÔMBIA</div>
+    <h4>Terremoto de magnitude 7,4 mata 233 na Colômbia; buscas continuam no terceiro dia</h4>
+    <div class="s-meta">🇧🇷 G1 / Globo</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">FOLHA DE S.PAULO · BNDES · ECONOMIA ESTATAL</div>
+    <h4>Ativos do BNDES ultrapassam R$ 1 trilhão pela primeira vez</h4>
+    <div class="s-meta">🇧🇷 Folha de S.Paulo</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">NEW YORK TIMES · POLÍTICA AMERICANA · PRIMÁRIAS DEMOCRÁTICAS</div>
+    <h4>Moderado vence primária democrata para governador em Wisconsin em disputa interna</h4>
+    <div class="s-meta">🌐 New York Times</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">THE GUARDIAN · ZIMBABWE · SEGURANÇA LACUSTRE</div>
+    <h4>Ferry com superlotação vira em Lago Kariba no Zimbábue; pelo menos 15 mortos</h4>
+    <div class="s-meta">🌐 The Guardian</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">BBC NEWS · ECLIPSE SOLAR · SEGURANÇA DO CONSUMIDOR</div>
+    <h4>Eclipses solar: três métodos caseiros seguros para observar sem óculos especializados</h4>
+    <div class="s-meta">🌐 BBC News</div>
+  </a>
+  </div>
+</div>
+
+<!-- SEÇÃO BRASIL -->
+<div class="section-header">
+  <div class="accent-line"></div>
+  <h2>🇧🇷 Brasil</h2>
+  <div class="sh-line"></div>
+</div>
+<div class="articles-grid">
+<div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🇧🇷&nbsp;G1 / GLOBO</div>
+  <span class="a-tag-chip">catástrofe natural</span><span class="a-tag-chip">Colômbia</span>
+  <h3>Terremoto de magnitude 7,4 mata 233 na Colômbia; buscas continuam no terceiro dia</h3>
+  <p class="a-resumo">Um tremor de 7,4 graus de magnitude atingiu a Colômbia na segunda-feira (10), com epicentro em San José del Palmar a 103 km de profundidade, deixando 233 mortos, 570 feridos e mais de 3 mil desaparecidos. O governo declarou emergência nacional e as operações de resgate seguem em andamento.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Tragédias naturais revelam a fragilidade das estruturas humanas e a importância de preparação civil preventiva, não de promessas políticas pós-desastre. O foco deve ser em reconstrução com base em lições aprendidas e responsabilidade pessoal da população, não em dependência estatal crescente.</p>
+  </div>
+  <div class="a-atencao">👁 Monitore se recursos de ajuda serão canalizados eficientemente ou se gerarão expansão burocrática e corrupção administrativa.</div>
+
+  </a>
+  <button class="share-btn"
+    data-titulo="Terremoto de magnitude 7,4 mata 233 na Colômbia; buscas continuam no terceiro dia"
+    data-resumo="Um tremor de 7,4 graus de magnitude atingiu a Colômbia na segunda-feira (10), com epicentro em San José del Palmar a 103 km de profundidade, deixando 233 mortos, 570 feridos e mais de 3 mil desaparecidos. O governo declarou emergência nacional e as operações de resgate seguem em andamento."
+    data-analise="Tragédias naturais revelam a fragilidade das estruturas humanas e a importância de preparação civil preventiva, não de promessas políticas pós-desastre. O foco deve ser em reconstrução com base em lições aprendidas e responsabilidade pessoal da população, não em dependência estatal crescente."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div><div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🇧🇷&nbsp;FOLHA DE S.PAULO</div>
+  <span class="a-tag-chip">BNDES</span><span class="a-tag-chip">economia estatal</span>
+  <h3>Ativos do BNDES ultrapassam R$ 1 trilhão pela primeira vez</h3>
+  <p class="a-resumo">O BNDES atingiu R$ 1,058 trilhão em ativos totais em junho de 2026, o maior valor da história da instituição, conforme será anunciado oficialmente nesta quarta-feira.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Segundo Mises, toda instituição estatal de crédito funciona como alocador de capital distorcionista, preterizando investimentos genuínos de mercado por favoritismo político. O crescimento exponencial do BNDES não indica vitalidade econômica, mas sim a progressiva substituição da poupança privada pela intermediação burocrática — sintoma de economia doente, não saudável.</p>
+  </div>
+  <div class="a-atencao">👁 Investigue quais setores e empresas (particularmente conectadas ao poder) concentram empréstimos subsidiados, para mensurar o grau real de distorção alocativa.</div>
+<div class="a-pensador">✍️ Mises</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Ativos do BNDES ultrapassam R$ 1 trilhão pela primeira vez"
+    data-resumo="O BNDES atingiu R$ 1,058 trilhão em ativos totais em junho de 2026, o maior valor da história da instituição, conforme será anunciado oficialmente nesta quarta-feira."
+    data-analise="Segundo Mises, toda instituição estatal de crédito funciona como alocador de capital distorcionista, preterizando investimentos genuínos de mercado por favoritismo político. O crescimento exponencial do BNDES não indica vitalidade econômica, mas sim a progressiva substituição da poupança privada pela intermediação burocrática — sintoma de economia doente, não saudável."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div>
+</div>
+
+<!-- BANNER BSAFE -->
+<div class="btc-banner">
+  <span class="btc-icon">₿</span>
+  <div class="btc-text">
+    <h4>BSafe Bitcoin — Sua segurança, sua soberania</h4>
+    <p>Aprenda a guardar Bitcoin com segurança. Custódia própria, sem depender de terceiros.</p>
+  </div>
+  <a href="https://bsafebitcoin.org" target="_blank" class="btc-cta">Conhecer →</a>
+</div>
+
+<!-- SEÇÃO INTERNACIONAL -->
+<div class="section-header">
+  <div class="accent-line"></div>
+  <h2>🌐 Internacional</h2>
+  <div class="sh-line"></div>
+</div>
+<div class="articles-grid">
+<div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🌐&nbsp;NEW YORK TIMES</div>
+  <span class="a-tag-chip">política americana</span><span class="a-tag-chip">primárias democráticas</span>
+  <h3>Moderado vence primária democrata para governador em Wisconsin em disputa interna</h3>
+  <p class="a-resumo">Um candidato moderado venceu a primária democrata disputada para governador de Wisconsin, refletindo tensão contínua entre as alas progressista e moderada do Partido Democrata.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Russell Kirk alertava contra a tirania das ideologias utópicas que descartam a sabedoria acumulada. A vitória moderada em Wisconsin sugere que até dentro da esquerda americana há resistência ao dogmatismo progressista radical — mas questão mais profunda é se moderação defensiva consegue deter expansão do Estado ou apenas a desacelera.</p>
+  </div>
+  <div class="a-atencao">👁 Observe se o candidato moderado mantém compromissos com a base progressista ou reconstrói coalização mais ampla com eleitores independentes e conservadores pragmáticos.</div>
+<div class="a-pensador">✍️ Kirk</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Moderado vence primária democrata para governador em Wisconsin em disputa interna"
+    data-resumo="Um candidato moderado venceu a primária democrata disputada para governador de Wisconsin, refletindo tensão contínua entre as alas progressista e moderada do Partido Democrata."
+    data-analise="Russell Kirk alertava contra a tirania das ideologias utópicas que descartam a sabedoria acumulada. A vitória moderada em Wisconsin sugere que até dentro da esquerda americana há resistência ao dogmatismo progressista radical — mas questão mais profunda é se moderação defensiva consegue deter expansão do Estado ou apenas a desacelera."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div><div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🌐&nbsp;THE GUARDIAN</div>
+  <span class="a-tag-chip">Zimbabwe</span><span class="a-tag-chip">segurança lacustre</span>
+  <h3>Ferry com superlotação vira em Lago Kariba no Zimbábue; pelo menos 15 mortos</h3>
+  <p class="a-resumo">Uma balsa capotou no Lago Kariba (maior lago artificial do mundo) transportando 114 passageiros adultos, cinco tripulantes e um número desconhecido de crianças, embora sua capacidade fosse de apenas 90 pessoas. O acidente deixou pelo menos 15 mortos e 27 desaparecidos.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Sowell ensinaria que culpar 'indigência' ou 'sistemas injustos' mascara o problema real: regulação frouxa (ou inexistente) e responsabilidade pessoal ausente de proprietários e passageiros. Superlotação de transportes é consequência previsível quando não há enforcement de segurança e quando lucro imediato supera prudência — nem renda redistributiva nem caridade estatal evitam tragedias de má-administração.</p>
+  </div>
+  <div class="a-atencao">👁 Verifique se o governo do Zimbábue responsabilizará o operador da balsa ou se atribuirá o desastre a causas abstratas para evitar regulação efetiva.</div>
+<div class="a-pensador">✍️ Sowell</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Ferry com superlotação vira em Lago Kariba no Zimbábue; pelo menos 15 mortos"
+    data-resumo="Uma balsa capotou no Lago Kariba (maior lago artificial do mundo) transportando 114 passageiros adultos, cinco tripulantes e um número desconhecido de crianças, embora sua capacidade fosse de apenas 90 pessoas. O acidente deixou pelo menos 15 mortos e 27 desaparecidos."
+    data-analise="Sowell ensinaria que culpar &#x27;indigência&#x27; ou &#x27;sistemas injustos&#x27; mascara o problema real: regulação frouxa (ou inexistente) e responsabilidade pessoal ausente de proprietários e passageiros. Superlotação de transportes é consequência previsível quando não há enforcement de segurança e quando lucro imediato supera prudência — nem renda redistributiva nem caridade estatal evitam tragedias de má-administração."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div><div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🌐&nbsp;BBC NEWS</div>
+  <span class="a-tag-chip">eclipse solar</span><span class="a-tag-chip">segurança do consumidor</span>
+  <h3>Eclipses solar: três métodos caseiros seguros para observar sem óculos especializados</h3>
+  <p class="a-resumo">Diante da escassez de óculos de eclipse nos comércios, a BBC oferece alternativas seguras usando itens domésticos para observação do fenômeno.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Nota-se aqui uma lição libertária involuntária: quando o mercado opera livremente, escassez de óculos de eclipse gera preços altos, estimulando fabricação acelerada; quando há controle de preços ou demanda imprevista, esvaziamento de estoque é inevitável. A solução não é intervenção estatal, mas precisamente deixar sinais de preço funcionarem.</p>
+  </div>
+  <div class="a-atencao">👁 Observe se governos locais tentarão 'regular' vendas de óculos de eclipse ou impor tabelamentos de preço, sabotando o próprio mecanismo que resolve escassez.</div>
+
+  </a>
+  <button class="share-btn"
+    data-titulo="Eclipses solar: três métodos caseiros seguros para observar sem óculos especializados"
+    data-resumo="Diante da escassez de óculos de eclipse nos comércios, a BBC oferece alternativas seguras usando itens domésticos para observação do fenômeno."
+    data-analise="Nota-se aqui uma lição libertária involuntária: quando o mercado opera livremente, escassez de óculos de eclipse gera preços altos, estimulando fabricação acelerada; quando há controle de preços ou demanda imprevista, esvaziamento de estoque é inevitável. A solução não é intervenção estatal, mas precisamente deixar sinais de preço funcionarem."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div>
+</div>
+
+<!-- NAVEGAÇÃO ENTRE DIAS -->
+<div class="pag-nav"><div class="pag-nav-inner"><a class="pag-nav-link arquivo" href="arquivo.html">📅 Arquivo de Edições</a></div></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-col">
+    <div class="footer-logo">Ordem <span>&amp;</span> Liberdade</div>
+    <p>Jornalismo independente sobre Bitcoin, economia e liberdade individual. Sem anunciantes, sem agenda oculta.</p>
+  </div>
+  <div class="footer-col">
+    <h5>Editorias</h5>
+    <a href="#">Brasil</a>
+    <a href="#">Internacional</a>
+    <a href="analisar.html">Analisar Notícia</a>
+  </div>
+  <div class="footer-col">
+    <h5>BSafe Bitcoin</h5>
+    <a href="https://bsafebitcoin.org" target="_blank">bsafebitcoin.org</a>
+    <a href="mailto:bsafe@bsafebitcoin.org">bsafe@bsafebitcoin.org</a>
+    <a href="https://bsafebitcoin.org" target="_blank">Apoie com Bitcoin</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2026 Ordem &amp; Liberdade · BSafe Bitcoin</span>
+  <span>Atualizado em 12 de agosto de 2026</span>
+</div>
+
+<script>
+  // Menu hamburger
+  const toggle = document.getElementById('menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+  if (toggle && navLinks) {
+    toggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      toggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+    });
+    document.addEventListener('click', (e) => {
+      if (!toggle.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('open');
+        toggle.textContent = '☰';
+      }
+    });
+  }
+
+  // Compartilhamento individual: título + resumo + análise
+  function compartilharArtigo(e, btn) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const titulo  = btn.dataset.titulo;
+    const resumo  = btn.dataset.resumo;
+    const analise = btn.dataset.analise;
+    const url     = btn.dataset.url;
+
+    const texto = titulo
+      + '\n\n' + resumo
+      + '\n\n⚖️ Ordem & Liberdade: ' + analise
+      + (url ? '\n\n🔗 ' + url : '');
+
+    function feedback(ok) {
+      btn.classList.add(ok ? 'copiado' : '');
+      const orig = btn.textContent;
+      btn.textContent = ok ? '✓ Copiado!' : '✗ Erro';
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('copiado');
+      }, 2200);
+    }
+
+    if (navigator.share) {
+      navigator.share({ title: titulo, text: texto, url: url || undefined })
+        .catch(() => {}); // user dismissed — silencioso
+    } else {
+      navigator.clipboard.writeText(texto)
+        .then(() => feedback(true))
+        .catch(() => feedback(false));
+    }
+  }
+</script>
+
+</body>
+</html>
