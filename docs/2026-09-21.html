@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ordem &amp; Liberdade — 21 de setembro de 2026</title>
+  <meta name="description" content="Digest diário de notícias interpretadas sob a ótica conservadora-libertária. Fundamentado em Mises, Hayek, Burke e Sowell.">
+  <meta property="og:title" content="Ordem &amp; Liberdade — 21 de setembro de 2026">
+  <meta property="og:description" content="Digest conservador-libertário do dia.">
+  <style>
+    :root {
+      --ouro:      #e5a810;
+      --ouro-esc:  #b8860b;
+      --ouro-clr:  #f0c040;
+      --bg:        #0f0f0f;
+      --surface:   #141414;
+      --surface-1: #1a1a1a;
+      --surface-2: #222;
+      --texto:     #e0e0e0;
+      --texto-sec: #aaa;
+      --texto-fra: #666;
+      --borda:     #222;
+      --borda-f:   #333;
+      --verde:     #4caf82;
+      --fonte-ser: 'Georgia', 'Times New Roman', serif;
+      --fonte-san: Arial, 'Helvetica Neue', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--fonte-san);
+      background: var(--bg);
+      color: var(--texto);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV (mais alto e com fontes maiores) ── */
+    .nav {
+      background: var(--bg);
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100px;
+      border-bottom: 3px solid var(--ouro);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+      gap: 5px;
+    }
+    .nav-logo .title {
+      font-family: var(--fonte-ser);
+      font-size: 34px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo .title span { color: var(--ouro); }
+    .nav-logo .subtitle {
+      font-size: 13px;
+      color: var(--ouro);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--texto-sec);
+      font-size: 16px;
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ouro); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .nav-btc {
+      font-size: 15px;
+      color: var(--ouro);
+      font-weight: 600;
+      border: 1px solid var(--ouro-esc);
+      padding: 7px 16px;
+      border-radius: 4px;
+      font-family: var(--fonte-san);
+      letter-spacing: 0.3px;
+    }
+    .nav-date {
+      font-size: 14px;
+      color: var(--texto-fra);
+      letter-spacing: 0.5px;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--texto-sec);
+      font-size: 26px;
+      cursor: pointer;
+      padding: 4px 8px;
+      line-height: 1;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--surface-1);
+      padding: 8px 2.5rem;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .ticker::-webkit-scrollbar { display: none; }
+    .ticker-item {
+      font-size: 13px;
+      color: var(--texto-sec);
+      white-space: nowrap;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 0 22px;
+      border-right: 0.5px solid var(--borda-f);
+    }
+    .ticker-item:first-child { padding-left: 0; }
+    .ticker-item:last-child { border-right: none; }
+    .ticker-item .label { color: var(--ouro); font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
+    .ticker-item a { color: var(--ouro); opacity: 0.75; transition: opacity 0.2s; }
+    .ticker-item a:hover { opacity: 1; }
+
+    /* ── HERO (sidebar mais larga) ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      border-bottom: 0.5px solid var(--borda-f);
+      min-height: 500px;
+    }
+    .hero-main {
+      position: relative;
+      background: var(--surface-1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 3rem 3rem 2.5rem;
+    }
+    .hero-chart {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to top, rgba(10,8,0,0.97) 40%, rgba(10,8,0,0.65) 75%, rgba(10,8,0,0.3) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--ouro);
+      color: #0f0f0f;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 5px 13px;
+      border-radius: 2px;
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-family: var(--fonte-ser);
+      font-size: 44px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 18px;
+      max-width: 700px;
+    }
+    .hero-editorial {
+      font-family: var(--fonte-ser);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #c8bc96;
+      line-height: 1.8;
+      max-width: 660px;
+      text-align: justify;
+    }
+    .hero-meta {
+      margin-top: 1.4rem;
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── SIDEBAR (mais larga) ── */
+    .hero-sidebar {
+      border-left: 0.5px solid var(--borda-f);
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+    }
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--texto-fra);
+      padding: 18px 22px 14px;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .sidebar-article {
+      display: block;
+      padding: 18px 22px;
+      border-bottom: 0.5px solid var(--borda);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .sidebar-article:hover { background: var(--surface-1); }
+    .sidebar-article .s-tag {
+      font-size: 10px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+    .sidebar-article h4 {
+      font-family: var(--fonte-ser);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--texto);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .sidebar-article .s-meta {
+      font-size: 12px;
+      color: var(--texto-fra);
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 1.4rem 2.5rem 1rem;
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .section-header .accent-line {
+      width: 36px;
+      height: 2px;
+      background: var(--ouro);
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+    .section-header h2 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--texto);
+      white-space: nowrap;
+    }
+    .section-header .sh-line {
+      flex: 1;
+      height: 0.5px;
+      background: var(--borda-f);
+    }
+
+    /* ── ARTICLES GRID — 3 colunas fixas ── */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 0.5px solid var(--borda-f);
+    }
+    .article-card {
+      display: block;
+      padding: 1.8rem;
+      border-right: 0.5px solid var(--borda-f);
+      transition: background 0.2s;
+      position: relative;
+    }
+    .article-card:nth-child(3n) { border-right: none; }
+    .article-card:hover { background: var(--surface-1); }
+    .a-fonte {
+      font-size: 10px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+    .a-tag-chip {
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 7px;
+      background: var(--surface-2);
+      border: 0.5px solid var(--borda-f);
+      border-radius: 3px;
+      color: var(--texto-fra);
+      margin: 0 3px 7px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .article-card h3 {
+      font-family: var(--fonte-ser);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--texto);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .a-resumo {
+      font-size: 15px;
+      color: var(--texto-sec);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .a-analise {
+      background: #0d0900;
+      border: 0.5px solid var(--borda-f);
+      border-top: 1.5px solid var(--ouro-esc);
+      border-radius: 4px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
+    .a-analise-label {
+      font-size: 10px;
+      color: var(--ouro);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .a-analise p {
+      font-size: 14px;
+      color: #c8bc96;
+      line-height: 1.65;
+      font-family: var(--fonte-ser);
+    }
+    .a-atencao {
+      font-size: 13.5px;
+      color: var(--ouro);
+      font-weight: 500;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .a-pensador {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 9px;
+      background: #1a1400;
+      border: 0.5px solid var(--ouro-esc);
+      border-radius: 3px;
+      color: var(--ouro-clr);
+      font-style: italic;
+      font-family: var(--fonte-ser);
+    }
+
+    /* ── NAVEGAÇÃO ENTRE DIAS ── */
+    .pag-nav {
+      background: var(--surface-1);
+      border-top: 0.5px solid var(--borda-f);
+      border-bottom: 0.5px solid var(--borda-f);
+      padding: 14px 2.5rem;
+    }
+    .pag-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    .pag-nav-link {
+      font-size: 14px;
+      color: var(--texto-sec);
+      letter-spacing: 0.3px;
+      padding: 8px 20px;
+      border: 0.5px solid var(--borda-f);
+      border-radius: 4px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      background: transparent;
+    }
+    .pag-nav-link:hover {
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      background: #1a1400;
+    }
+    .pag-nav-link.arquivo {
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      font-weight: 600;
+    }
+    .pag-nav-link.prev::before { content: ''; }
+    .pag-nav-link.next::after  { content: ''; }
+
+    /* ── SHARE BUTTON ── */
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--texto-fra);
+      background: var(--surface-2);
+      border: 0.5px solid var(--borda-f);
+      border-radius: 4px;
+      padding: 7px 14px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      font-family: var(--fonte-san);
+      letter-spacing: 0.3px;
+    }
+    .share-btn:hover {
+      color: var(--ouro);
+      border-color: var(--ouro-esc);
+      background: #1a1400;
+    }
+    .share-btn.copiado {
+      color: var(--verde);
+      border-color: var(--verde);
+    }
+
+    /* ── BSAFE BANNER ── */
+    .btc-banner {
+      background: var(--surface);
+      border-top: 0.5px solid var(--borda-f);
+      border-bottom: 0.5px solid var(--borda-f);
+      padding: 1.2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btc-banner .btc-icon {
+      font-size: 28px;
+      color: var(--ouro);
+      flex-shrink: 0;
+    }
+    .btc-banner .btc-text { flex: 1; }
+    .btc-banner .btc-text h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .btc-banner .btc-text p {
+      font-size: 13px;
+      color: var(--texto-fra);
+    }
+    .btc-banner .btc-cta {
+      font-size: 13px;
+      color: var(--ouro);
+      border: 1px solid var(--ouro-esc);
+      padding: 8px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+      font-weight: 500;
+    }
+    .btc-banner .btc-cta:hover { background: var(--ouro); color: #0f0f0f; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--bg);
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 2.5rem;
+      border-top: 2px solid var(--ouro);
+    }
+    .footer-col h5 {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ouro);
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .footer-logo {
+      font-family: var(--fonte-ser);
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .footer-logo span { color: var(--ouro); }
+    .footer-col p, .footer-col a {
+      font-size: 13px;
+      color: var(--texto-fra);
+      line-height: 1.85;
+      display: block;
+    }
+    .footer-col a:hover { color: var(--texto-sec); }
+    .footer-bottom {
+      background: var(--bg);
+      padding: 14px 2.5rem;
+      border-top: 0.5px solid var(--borda);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom span {
+      font-size: 11px;
+      color: #3a3a3a;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr 360px; }
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-main { padding: 2rem 1.5rem 2rem; }
+      .hero-title { font-size: 30px; }
+      .hero-editorial { font-size: 1rem; }
+      .hero-sidebar { display: none; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .article-card { border-right: none; border-bottom: 0.5px solid var(--borda-f); }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100px;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border-bottom: 2px solid var(--ouro);
+        padding: 1rem 2rem;
+        gap: 16px;
+        z-index: 99;
+      }
+      .nav-links.open a { font-size: 18px; padding: 4px 0; }
+      .menu-toggle { display: block; }
+      .footer { grid-template-columns: 1fr; gap: 1.5rem; }
+      .ticker { padding: 6px 1rem; }
+      .section-header { padding: 1rem 1rem 0.8rem; }
+      .btc-banner { flex-wrap: wrap; padding: 1rem; gap: 12px; }
+    }
+    @media (max-width: 600px) {
+      .nav { padding: 0 1rem; height: 76px; }
+      .nav-logo .title { font-size: 26px; }
+      .nav-logo .subtitle { font-size: 11px; }
+      .nav-btc { display: none; }
+      .nav-date { display: none; }
+      .hero-main { padding: 1.5rem 1rem 1.5rem; }
+      .hero-title { font-size: 26px; }
+      .hero-editorial { font-size: 0.95rem; }
+      .article-card { padding: 1.2rem 1rem; }
+      .article-card h3 { font-size: 17px; }
+      .a-resumo { font-size: 14px; }
+      .footer { padding: 1.5rem 1rem; }
+      .footer-bottom { padding: 10px 1rem; flex-direction: column; gap: 4px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <span class="title">Ordem <span>&amp;</span> Liberdade</span>
+    <span class="subtitle">BSafe Bitcoin · Est. 2026</span>
+  </div>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" class="active">Digest do Dia</a></li>
+    <li><a href="arquivo.html">Arquivo</a></li>
+    <li><a href="analisar.html">Analisar Notícia</a></li>
+    <li><a href="https://bsafebitcoin.org" target="_blank">BSafe Bitcoin ↗</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-btc">₿ $ 85,929</span>
+    <span class="nav-date">21 de setembro de 2026</span>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-item"><span class="label">BTC/USD</span> $ 85,929</div>
+  <div class="ticker-item"><span class="label">BSafe Bitcoin</span> <a href="https://bsafebitcoin.org" target="_blank">bsafebitcoin.org ↗</a></div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-main">
+    <svg class="hero-chart" viewBox="0 0 700 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="700" height="380" fill="#0d0900"/>
+      <polyline points="0,320 70,300 140,310 210,260 280,210 350,230 420,170 490,110 560,85 630,60 700,35"
+        fill="none" stroke="#e5a810" stroke-width="1.5" opacity="0.5"/>
+      <polygon points="0,320 70,300 140,310 210,260 280,210 350,230 420,170 490,110 560,85 630,60 700,35 700,380 0,380"
+        fill="#e5a810" opacity="0.04"/>
+    </svg>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-tag">Editorial do Dia</span>
+      <h2 class="hero-title">Ordem &amp; Liberdade — 21 de setembro de 2026</h2>
+      <p class="hero-editorial">O dia reflete um padrão recorrente: o Estado age após o dano (desapropriação pós-colapso), acumula passivos que depois transfere ao contribuinte (INSS atrasado), governa em sombra (deportações secretas) e opera monopólios que falham sistematicamente (controle aéreo). Não é coincidência: quando a responsabilidade é diluída, a inovação cessa, os custos se escondem e a dignidade humana fica subordinada à conveniência administrativa. Desde Bastiat até Mises, o diagnóstico é o mesmo — concentração de poder sem accountability produz ineficiência, corrupção e dano colateral. A solução não reside em mais burocracia ou transparência performática, mas em devolver aos indivíduos e ao mercado aquilo que o Estado provou ser incapaz de gerir com competência.</p>
+      <p class="hero-meta">Burke · Mises · Hayek · Sowell · Roberto Campos</p>
+    </div>
+  </div>
+
+  <div class="hero-sidebar">
+    <div class="sidebar-title">Destaques de Hoje</div>
+  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">G1 / GLOBO · PROPRIEDADE · NEGLIGÊNCIA</div>
+    <h4>Prefeitura desapropria casarão que desabou e feriu mãe e criança no Cosme Velho</h4>
+    <div class="s-meta">🇧🇷 G1 / Globo</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">FOLHA DE S.PAULO · INSS · JUSTIÇA</div>
+    <h4>Justiça libera R$ 2,7 bi para pagar atrasados do INSS a beneficiários</h4>
+    <div class="s-meta">🇧🇷 Folha de S.Paulo</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">THE NEW YORK TIMES · ANTITRUST · CONCENTRAÇÃO DE MÍDIA</div>
+    <h4>Paramount resolve ação antitruste e abre caminho para aquisição pela Warner Bros.</h4>
+    <div class="s-meta">🌐 The New York Times</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">THE GUARDIAN · DEPORTAÇÃO · DIREITOS</div>
+    <h4>Investigação revela esquema secreto de deportações dos EUA para países remotos</h4>
+    <div class="s-meta">🌐 The Guardian</div>
+  </a>  <a class="sidebar-article" href="#" target="_blank" rel="noopener">
+    <div class="s-tag">BBC NEWS · INFRAESTRUTURA · MONOPÓLIO ESTATAL</div>
+    <h4>Companhias aéreas criticam controle de tráfego aéreo após segundo incidente de falha</h4>
+    <div class="s-meta">🌐 BBC News</div>
+  </a>
+  </div>
+</div>
+
+<!-- SEÇÃO BRASIL -->
+<div class="section-header">
+  <div class="accent-line"></div>
+  <h2>🇧🇷 Brasil</h2>
+  <div class="sh-line"></div>
+</div>
+<div class="articles-grid">
+<div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🇧🇷&nbsp;G1 / GLOBO</div>
+  <span class="a-tag-chip">propriedade</span><span class="a-tag-chip">negligência</span>
+  <h3>Prefeitura desapropria casarão que desabou e feriu mãe e criança no Cosme Velho</h3>
+  <p class="a-resumo">Após desabamento de imóvel histórico no Rio que deixou mãe e filha feridas, a Prefeitura publicou decreto de desapropriação do casarão e imóvel vizinho. A ação ocorre após acidente que poderia ter sido evitado com fiscalização adequada.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>A desapropriação é um remédio administrativo posterior ao dano — exatamente o tipo de solução que Chesterton criticaria: derribamos a cerca depois que ela machucou alguém. A questão real é por que a cidade permitiu um imóvel em ruína pôr em risco vidas; transferir propriedade não resolve a raiz: inspeção negligente e responsabilidades difusas.</p>
+  </div>
+  <div class="a-atencao">👁 Monitore se haverá responsabilização fiscal de quem omitiu inspeção ou se o custo da indenização será simplesmente socializado entre contribuintes.</div>
+<div class="a-pensador">✍️ Chesterton</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Prefeitura desapropria casarão que desabou e feriu mãe e criança no Cosme Velho"
+    data-resumo="Após desabamento de imóvel histórico no Rio que deixou mãe e filha feridas, a Prefeitura publicou decreto de desapropriação do casarão e imóvel vizinho. A ação ocorre após acidente que poderia ter sido evitado com fiscalização adequada."
+    data-analise="A desapropriação é um remédio administrativo posterior ao dano — exatamente o tipo de solução que Chesterton criticaria: derribamos a cerca depois que ela machucou alguém. A questão real é por que a cidade permitiu um imóvel em ruína pôr em risco vidas; transferir propriedade não resolve a raiz: inspeção negligente e responsabilidades difusas."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div><div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🇧🇷&nbsp;FOLHA DE S.PAULO</div>
+  <span class="a-tag-chip">INSS</span><span class="a-tag-chip">Justiça</span>
+  <h3>Justiça libera R$ 2,7 bi para pagar atrasados do INSS a beneficiários</h3>
+  <p class="a-resumo">A Justiça Federal autorizou o pagamento de R$ 2,7 bilhões em benefícios atrasados do INSS a aposentados e pensionistas que venceram ações contra o instituto. A liberação mostra acúmulo de débitos administrativos.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Bastiat observaria aqui a 'via invisível' do desperdício: quando o Estado assume monopólio de pensões sem mecanismos de eficiência, acumula passivos que a Justiça é forçada a cobrar a posteriori, transferindo o custo político do erro administrativo para o contribuinte futuro. O sistema não corrige a origem — a má gestão.</p>
+  </div>
+  <div class="a-atencao">👁 Verifique se houve punição àqueles que causaram os atrasos e se o INSS implementou mudanças para evitar novo acúmulo de débitos.</div>
+<div class="a-pensador">✍️ Bastiat</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Justiça libera R$ 2,7 bi para pagar atrasados do INSS a beneficiários"
+    data-resumo="A Justiça Federal autorizou o pagamento de R$ 2,7 bilhões em benefícios atrasados do INSS a aposentados e pensionistas que venceram ações contra o instituto. A liberação mostra acúmulo de débitos administrativos."
+    data-analise="Bastiat observaria aqui a &#x27;via invisível&#x27; do desperdício: quando o Estado assume monopólio de pensões sem mecanismos de eficiência, acumula passivos que a Justiça é forçada a cobrar a posteriori, transferindo o custo político do erro administrativo para o contribuinte futuro. O sistema não corrige a origem — a má gestão."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div>
+</div>
+
+<!-- BANNER BSAFE -->
+<div class="btc-banner">
+  <span class="btc-icon">₿</span>
+  <div class="btc-text">
+    <h4>BSafe Bitcoin — Sua segurança, sua soberania</h4>
+    <p>Aprenda a guardar Bitcoin com segurança. Custódia própria, sem depender de terceiros.</p>
+  </div>
+  <a href="https://bsafebitcoin.org" target="_blank" class="btc-cta">Conhecer →</a>
+</div>
+
+<!-- SEÇÃO INTERNACIONAL -->
+<div class="section-header">
+  <div class="accent-line"></div>
+  <h2>🌐 Internacional</h2>
+  <div class="sh-line"></div>
+</div>
+<div class="articles-grid">
+<div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🌐&nbsp;THE NEW YORK TIMES</div>
+  <span class="a-tag-chip">antitrust</span><span class="a-tag-chip">concentração de mídia</span>
+  <h3>Paramount resolve ação antitruste e abre caminho para aquisição pela Warner Bros.</h3>
+  <p class="a-resumo">A Paramount concordou em resolver processo antitruste que bloqueava sua aquisição por David Ellison, permitindo a criação de um grande conglomerado de mídia com estúdios, HBO, CBS e CNN. A decisão remove o último obstáculo regulatório.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Hayek alertaria para o paradoxo: leis antitruste, criadas para evitar poder concentrado, frequentemente protegem incumbentes e impedem reestruturações que poderiam trazer eficiência. A questão não é o tamanho, mas se há barreiras à entrada; aqui, transferência de propriedade entre gigantes pode ser menos problemática que monopólio estático.</p>
+  </div>
+  <div class="a-atencao">👁 Acompanhe se a fusão resultar em redução de competição editorial ou se novas plataformas digitais já fragmentaram o poder de mídia tradicional.</div>
+<div class="a-pensador">✍️ Hayek</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Paramount resolve ação antitruste e abre caminho para aquisição pela Warner Bros."
+    data-resumo="A Paramount concordou em resolver processo antitruste que bloqueava sua aquisição por David Ellison, permitindo a criação de um grande conglomerado de mídia com estúdios, HBO, CBS e CNN. A decisão remove o último obstáculo regulatório."
+    data-analise="Hayek alertaria para o paradoxo: leis antitruste, criadas para evitar poder concentrado, frequentemente protegem incumbentes e impedem reestruturações que poderiam trazer eficiência. A questão não é o tamanho, mas se há barreiras à entrada; aqui, transferência de propriedade entre gigantes pode ser menos problemática que monopólio estático."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div><div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🌐&nbsp;THE GUARDIAN</div>
+  <span class="a-tag-chip">deportação</span><span class="a-tag-chip">direitos</span>
+  <h3>Investigação revela esquema secreto de deportações dos EUA para países remotos</h3>
+  <p class="a-resumo">Reportagem expõe que os EUA fazem acordos secretos com dezenas de países para deportar imigrantes ilegais, incluindo mulheres enviadas para terras desconhecidas em aviões com detidos acorrentados, com custo de milhões aos contribuintes. O programa opera sem transparência.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Rothbard via nisto a marca do Estado: exercício de poder coercitivo sem prestação de contas nem consentimento dos afetados. Acordos secretos com terceiros países, custos ocultos e violação da dignidade humana são sintomas de quando imigração é tratada como questão de autoridade estatal, não de direito de propriedade ou contrato voluntário.</p>
+  </div>
+  <div class="a-atencao">👁 Investigue quais governos recebem essas deportações, se há pressão diplomática velada e se cidadãos americanos sabem quanto pagam por esse programa paralelo.</div>
+<div class="a-pensador">✍️ Rothbard</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Investigação revela esquema secreto de deportações dos EUA para países remotos"
+    data-resumo="Reportagem expõe que os EUA fazem acordos secretos com dezenas de países para deportar imigrantes ilegais, incluindo mulheres enviadas para terras desconhecidas em aviões com detidos acorrentados, com custo de milhões aos contribuintes. O programa opera sem transparência."
+    data-analise="Rothbard via nisto a marca do Estado: exercício de poder coercitivo sem prestação de contas nem consentimento dos afetados. Acordos secretos com terceiros países, custos ocultos e violação da dignidade humana são sintomas de quando imigração é tratada como questão de autoridade estatal, não de direito de propriedade ou contrato voluntário."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div><div class="article-card">
+  <a href="#" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+  <div class="a-fonte">🌐&nbsp;BBC NEWS</div>
+  <span class="a-tag-chip">infraestrutura</span><span class="a-tag-chip">monopólio estatal</span>
+  <h3>Companhias aéreas criticam controle de tráfego aéreo após segundo incidente de falha</h3>
+  <p class="a-resumo">Segundo incidente de falha no sistema de controle de tráfego aéreo causa novos atrasos; companhias aéreas reclamam da falta de resiliência do sistema, controlado por entidade estatal. EasyJet questionou a confiabilidade da infraestrutura.</p>
+  <div class="a-analise">
+    <div class="a-analise-label">⚖️ ANÁLISE — ORDEM &amp; LIBERDADE</div>
+    <p>Mises diagnosticaria isso como resultado previsível do monopólio: sem concorrência, não há incentivo à inovação ou redundância de sistemas; o operador estatal não enfrenta consequências comerciais por falhas. Infraestrutura crítica sob controle monopolista produz ineficiência sistemática que afeta toda a cadeia.</p>
+  </div>
+  <div class="a-atencao">👁 Monitore se há propostas reais de privatização ou desestatização do controle aéreo, ou se a resposta será apenas mais regulação sobre um sistema que já falhou.</div>
+<div class="a-pensador">✍️ Mises</div>
+  </a>
+  <button class="share-btn"
+    data-titulo="Companhias aéreas criticam controle de tráfego aéreo após segundo incidente de falha"
+    data-resumo="Segundo incidente de falha no sistema de controle de tráfego aéreo causa novos atrasos; companhias aéreas reclamam da falta de resiliência do sistema, controlado por entidade estatal. EasyJet questionou a confiabilidade da infraestrutura."
+    data-analise="Mises diagnosticaria isso como resultado previsível do monopólio: sem concorrência, não há incentivo à inovação ou redundância de sistemas; o operador estatal não enfrenta consequências comerciais por falhas. Infraestrutura crítica sob controle monopolista produz ineficiência sistemática que afeta toda a cadeia."
+    data-url="#"
+    onclick="compartilharArtigo(event, this)">↗ Compartilhar</button>
+</div>
+</div>
+
+<!-- NAVEGAÇÃO ENTRE DIAS -->
+<div class="pag-nav"><div class="pag-nav-inner"><a class="pag-nav-link arquivo" href="arquivo.html">📅 Arquivo de Edições</a></div></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-col">
+    <div class="footer-logo">Ordem <span>&amp;</span> Liberdade</div>
+    <p>Jornalismo independente sobre Bitcoin, economia e liberdade individual. Sem anunciantes, sem agenda oculta.</p>
+  </div>
+  <div class="footer-col">
+    <h5>Editorias</h5>
+    <a href="#">Brasil</a>
+    <a href="#">Internacional</a>
+    <a href="analisar.html">Analisar Notícia</a>
+  </div>
+  <div class="footer-col">
+    <h5>BSafe Bitcoin</h5>
+    <a href="https://bsafebitcoin.org" target="_blank">bsafebitcoin.org</a>
+    <a href="mailto:bsafe@bsafebitcoin.org">bsafe@bsafebitcoin.org</a>
+    <a href="https://bsafebitcoin.org" target="_blank">Apoie com Bitcoin</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2026 Ordem &amp; Liberdade · BSafe Bitcoin</span>
+  <span>Atualizado em 21 de setembro de 2026</span>
+</div>
+
+<script>
+  // Menu hamburger
+  const toggle = document.getElementById('menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+  if (toggle && navLinks) {
+    toggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      toggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+    });
+    document.addEventListener('click', (e) => {
+      if (!toggle.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('open');
+        toggle.textContent = '☰';
+      }
+    });
+  }
+
+  // Compartilhamento individual: título + resumo + análise
+  function compartilharArtigo(e, btn) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const titulo  = btn.dataset.titulo;
+    const resumo  = btn.dataset.resumo;
+    const analise = btn.dataset.analise;
+    const url     = btn.dataset.url;
+
+    const texto = titulo
+      + '\n\n' + resumo
+      + '\n\n⚖️ Ordem & Liberdade: ' + analise
+      + (url ? '\n\n🔗 ' + url : '');
+
+    function feedback(ok) {
+      btn.classList.add(ok ? 'copiado' : '');
+      const orig = btn.textContent;
+      btn.textContent = ok ? '✓ Copiado!' : '✗ Erro';
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('copiado');
+      }, 2200);
+    }
+
+    if (navigator.share) {
+      navigator.share({ title: titulo, text: texto, url: url || undefined })
+        .catch(() => {}); // user dismissed — silencioso
+    } else {
+      navigator.clipboard.writeText(texto)
+        .then(() => feedback(true))
+        .catch(() => feedback(false));
+    }
+  }
+</script>
+
+</body>
+</html>
